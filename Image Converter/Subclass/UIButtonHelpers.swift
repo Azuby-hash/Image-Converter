@@ -9,6 +9,11 @@ import UIKit
 
 class UIButtonPro: UIButton {
     @IBInspectable var inset: CGPoint = .init(x: -10, y: -10)
+    @IBInspectable var backgroundAlpha: Int = 80 {
+        didSet {
+            commonInit()
+        }
+    }
     
     private var titleContainer = AttributeContainer()
     private var subtitleContainer = AttributeContainer()
@@ -44,8 +49,13 @@ class UIButtonPro: UIButton {
                 updatedConfig = button.configuration
             }
             
-            guard var updatedConfig = updatedConfig else {
-                return
+            guard var updatedConfig = updatedConfig,
+                  var backgroundColor = configuration?.baseBackgroundColor
+            else { return }
+            
+            var (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
+            if backgroundColor.getRed(&r, green: &g, blue: &b, alpha: &a) {
+                backgroundColor = UIColor(red: r, green: g, blue: b, alpha: a * CGFloat(backgroundAlpha) / 100)
             }
             
             updatedConfig.title = button.configuration?.title
@@ -53,10 +63,11 @@ class UIButtonPro: UIButton {
             updatedConfig.image = button.configuration?.image
             updatedConfig.imagePlacement = button.configuration?.imagePlacement ?? updatedConfig.imagePlacement
             updatedConfig.imagePadding = button.configuration?.imagePadding ?? updatedConfig.imagePadding
-            updatedConfig.baseBackgroundColor = button.configuration?.baseBackgroundColor
+            updatedConfig.baseBackgroundColor = backgroundColor
             updatedConfig.baseForegroundColor = button.configuration?.baseForegroundColor
             updatedConfig.contentInsets = button.configuration?.contentInsets ?? updatedConfig.contentInsets
             updatedConfig.cornerStyle = button.configuration?.cornerStyle ?? updatedConfig.cornerStyle
+            updatedConfig.titleLineBreakMode = .byTruncatingTail
             
             if let title = button.configuration?.title {
                 updatedConfig.attributedTitle = AttributedString(title, attributes: titleContainer)
@@ -68,6 +79,8 @@ class UIButtonPro: UIButton {
             
             self.configuration = updatedConfig
         }
+        
+        tintAdjustmentMode = .normal
     }
 
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
