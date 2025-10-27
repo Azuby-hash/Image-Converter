@@ -20,6 +20,7 @@ class PhotosVC: UIViewController {
     @IBOutlet weak var convertNow: UIButton!
     @IBOutlet weak var albumSelect: UIButton!
     @IBOutlet weak var botBlur: BoxGradient!
+    @IBOutlet weak var botConstant: NSLayoutConstraint!
     
     private let library = AssetLibrary.shared
     private var didLoad = false
@@ -35,7 +36,9 @@ class PhotosVC: UIViewController {
         collection.dataSource = self
         collection.allowsSelection = true
         
-        updateButtonAppear()
+        UIView.performWithoutAnimation {
+            updateButtonAppear()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -179,6 +182,9 @@ extension PhotosVC {
             limitAdd.alpha = library.getCurrentStatus() == .limited && selectedAsset.isEmpty ? 1 : 0
             convertNow.alpha = selectedAsset.isEmpty ? 0 : 1
             botBlur.alpha = library.getCurrentStatus() != .limited && selectedAsset.isEmpty ? 0 : 1
+            botConstant.constant = library.getCurrentStatus() != .limited && selectedAsset.isEmpty ? -200 : 44
+            
+            view.layoutIfNeeded()
         }
     }
 }

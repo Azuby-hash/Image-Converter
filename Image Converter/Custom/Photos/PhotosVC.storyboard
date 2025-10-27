@@ -117,6 +117,9 @@
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g6o-bE-sV7" customClass="BoxGradient" customModule="Image_Converter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="640" width="393" height="212"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="900" constant="1" id="4sA-xu-P7c"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="firstColor">
                                         <color key="value" name="Background"/>
@@ -135,7 +138,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKp-j6-2fU">
                                 <rect key="frame" x="0.0" y="142" width="393" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLj-hk-6BB">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLj-hk-6BB" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
                                         <rect key="frame" x="16" y="12" width="100" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="PZp-vQ-3D1"/>
@@ -151,7 +154,7 @@
                                             <action selector="albumSelect:" destination="Y6W-OH-hqX" eventType="touchDown" id="9M2-xG-zwo"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORm-4h-fZ7">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORm-4h-fZ7" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
                                         <rect key="frame" x="345" y="14" width="32" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ORm-4h-fZ7" secondAttribute="height" id="vSJ-0k-if1"/>
@@ -177,7 +180,7 @@
                                     <constraint firstAttribute="height" constant="60" id="yz4-7N-Yoa"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dFm-qT-cMQ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dFm-qT-cMQ" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
                                 <rect key="frame" x="88.666666666666686" y="690" width="216" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="216" id="GJk-QZ-agI"/>
@@ -193,7 +196,7 @@
                                     <action selector="convertNow:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="ImJ-Hx-M2c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s6x-iO-QIs">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s6x-iO-QIs" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
                                 <rect key="frame" x="88.666666666666686" y="690" width="216" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="AXS-Or-Qe1"/>
@@ -218,19 +221,19 @@
                             <constraint firstItem="g6o-bE-sV7" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="6eo-uW-IPG"/>
                             <constraint firstItem="jyd-6u-9o4" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" constant="-32" id="8Vg-pr-R3x"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="BKp-j6-2fU" secondAttribute="trailing" id="AUW-Bd-p9u"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="s6x-iO-QIs" secondAttribute="bottom" constant="44" id="ApO-JJ-MRL"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="top" secondItem="BKp-j6-2fU" secondAttribute="top" constant="-24" id="DPZ-Qm-ADS"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="g6o-bE-sV7" secondAttribute="trailing" id="Dup-Cp-eEk"/>
                             <constraint firstItem="s6x-iO-QIs" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="F5r-c2-SX6"/>
                             <constraint firstItem="Dcb-KH-FfG" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="LaM-8I-OLL"/>
                             <constraint firstAttribute="bottom" secondItem="g6o-bE-sV7" secondAttribute="bottom" id="Nmm-ES-047"/>
+                            <constraint firstItem="s6x-iO-QIs" firstAttribute="centerY" secondItem="dFm-qT-cMQ" secondAttribute="centerY" id="RMY-to-Llq"/>
                             <constraint firstItem="Dcb-KH-FfG" firstAttribute="bottom" secondItem="BKp-j6-2fU" secondAttribute="bottom" constant="30" id="Rgi-Mn-G0R"/>
                             <constraint firstItem="BKp-j6-2fU" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="TIX-kc-Ra8"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Dcb-KH-FfG" secondAttribute="trailing" id="UNP-tP-ggH"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="dFm-qT-cMQ" secondAttribute="bottom" constant="44" id="fDH-jr-Sjl"/>
                             <constraint firstItem="BKp-j6-2fU" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" id="fsW-Y3-C5Q"/>
                             <constraint firstItem="BKp-j6-2fU" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="kM0-sT-WvM"/>
-                            <constraint firstItem="g6o-bE-sV7" firstAttribute="top" secondItem="dFm-qT-cMQ" secondAttribute="top" constant="-50" id="kfd-0V-ivG"/>
+                            <constraint firstItem="g6o-bE-sV7" firstAttribute="top" relation="lessThanOrEqual" secondItem="dFm-qT-cMQ" secondAttribute="top" constant="-50" id="kfd-0V-ivG"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="jyd-6u-9o4" secondAttribute="bottom" constant="-184" id="vxv-a1-dzk"/>
                             <constraint firstItem="Dcb-KH-FfG" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="wsa-8x-PeJ"/>
                             <constraint firstItem="dFm-qT-cMQ" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="xv5-i1-nTf"/>
@@ -239,6 +242,7 @@
                     <connections>
                         <outlet property="albumSelect" destination="vLj-hk-6BB" id="9HM-KU-fY9"/>
                         <outlet property="botBlur" destination="g6o-bE-sV7" id="7cp-WG-ynv"/>
+                        <outlet property="botConstant" destination="fDH-jr-Sjl" id="Jye-nj-pmf"/>
                         <outlet property="collection" destination="jyd-6u-9o4" id="Ldx-em-fXl"/>
                         <outlet property="convertNow" destination="dFm-qT-cMQ" id="TiF-yQ-chD"/>
                         <outlet property="limitAdd" destination="s6x-iO-QIs" id="uad-wq-XQX"/>

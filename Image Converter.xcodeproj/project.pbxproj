@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF97C0202EAEFF3B00F317FB /* UIButtonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */; };
 		CE3D9CE72EAA979B002C29B5 /* HomeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D9CE62EAA9794002C29B5 /* HomeConverter.swift */; };
 		CE3D9CE92EAA9871002C29B5 /* HomeUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D9CE82EAA986A002C29B5 /* HomeUtility.swift */; };
 		CE3D9CEC2EAB0126002C29B5 /* PhotosVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3D9CEB2EAB0126002C29B5 /* PhotosVC.storyboard */; };
@@ -106,6 +107,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonHelpers.swift; sourceTree = "<group>"; };
 		CE3D9CE62EAA9794002C29B5 /* HomeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeConverter.swift; sourceTree = "<group>"; };
 		CE3D9CE82EAA986A002C29B5 /* HomeUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUtility.swift; sourceTree = "<group>"; };
 		CE3D9CEB2EAB0126002C29B5 /* PhotosVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PhotosVC.storyboard; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				CEA4F8D52EAA36190041BDAC /* UILabelHighlightColor.swift */,
 				CEA4F8D62EAA36190041BDAC /* UIScrollViewPointOut.swift */,
 				CEA4F8D72EAA36190041BDAC /* UITextFieldPlaceholder.swift */,
+				AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */,
 			);
 			path = Subclass;
 			sourceTree = "<group>";
@@ -589,6 +592,7 @@
 				CEA4F95B2EAA384A0041BDAC /* VisionStillImage.swift in Sources */,
 				CEA4F95E2EAA384A0041BDAC /* VisionImageSequence.swift in Sources */,
 				CEA4F9632EAA384A0041BDAC /* VisionFABDetection.swift in Sources */,
+				AF97C0202EAEFF3B00F317FB /* UIButtonHelpers.swift in Sources */,
 				CEA4F9642EAA384A0041BDAC /* VisionHandler.swift in Sources */,
 				CE3D9CE72EAA979B002C29B5 /* HomeConverter.swift in Sources */,
 				CEA4F9662EAA384A0041BDAC /* VisionTrajectoryDetection.swift in Sources */,
@@ -694,7 +698,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.azubylabs.imageconverter.Image-Converter";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azubylabs.imageconverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -727,7 +731,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.azubylabs.imageconverter.Image-Converter";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azubylabs.imageconverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;

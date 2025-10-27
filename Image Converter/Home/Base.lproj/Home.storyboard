@@ -22,7 +22,7 @@
                                 <color key="textColor" name="Black"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZfD-cv-WIU">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZfD-cv-WIU" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
                                 <rect key="frame" x="341" y="142.33333333333334" width="28" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="28" id="8Dc-ZH-wcB"/>
@@ -69,8 +69,9 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="kM8-aV-iso">
                                                 <rect key="frame" x="25.666666666666657" y="76" width="278" height="50"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbL-Uy-idC">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbL-Uy-idC" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="tbL-Uy-idC" secondAttribute="height" id="rff-3b-7Iy"/>
                                                         </constraints>
@@ -83,8 +84,9 @@
                                                             <action selector="openFiles:" destination="l0Q-9K-OYA" eventType="touchUpInside" id="k0m-ph-tlN"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OGG-Jy-o8w">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OGG-Jy-o8w" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
                                                         <rect key="frame" x="62" y="0.0" width="216" height="50"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="216" id="HHG-xa-oOC"/>
                                                         </constraints>
@@ -171,6 +173,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="o7O-Rg-Q3p" firstAttribute="leading" secondItem="ZI3-16-qi3" secondAttribute="leading" constant="16" id="1zo-XP-0cO"/>
+                                                    <constraint firstAttribute="width" secondItem="ZI3-16-qi3" secondAttribute="height" id="906-tG-QDQ"/>
                                                     <constraint firstItem="ZnW-ee-tJ2" firstAttribute="centerY" secondItem="ZI3-16-qi3" secondAttribute="centerY" id="GZg-Ab-h7B"/>
                                                     <constraint firstItem="s3u-eL-ueo" firstAttribute="centerX" secondItem="ZI3-16-qi3" secondAttribute="centerX" id="H9J-iU-TpY"/>
                                                     <constraint firstAttribute="width" secondItem="ZI3-16-qi3" secondAttribute="height" id="Hb5-P7-qnq"/>
@@ -184,9 +187,6 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="ZI3-16-qi3" firstAttribute="width" secondItem="ZI3-16-qi3" secondAttribute="height" id="906-tG-QDQ"/>
-                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Mdk-WJ-zWo">
                                         <rect key="frame" x="0.0" y="180.66666666666663" width="345" height="164.33333333333337"/>
@@ -259,12 +259,10 @@
                                                     <constraint firstItem="wCe-Zn-aqb" firstAttribute="height" secondItem="aWa-GG-3hX" secondAttribute="height" id="oEf-Da-Izu"/>
                                                     <constraint firstItem="qKg-Sy-4be" firstAttribute="centerY" secondItem="aWa-GG-3hX" secondAttribute="centerY" id="oaK-Ya-wsN"/>
                                                     <constraint firstItem="qKg-Sy-4be" firstAttribute="centerX" secondItem="aWa-GG-3hX" secondAttribute="centerX" id="qsR-iJ-D3I"/>
+                                                    <constraint firstAttribute="width" secondItem="aWa-GG-3hX" secondAttribute="height" id="yBn-yj-Gbb"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="aWa-GG-3hX" firstAttribute="width" secondItem="aWa-GG-3hX" secondAttribute="height" id="yBn-yj-Gbb"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
                             </stackView>
