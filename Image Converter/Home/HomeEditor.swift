@@ -1,14 +1,15 @@
 //
-//  HomeConverter.swift
+//  HomeEditor.swift
 //  Image Converter
 //
 //  Created by Azuby on 10/24/25.
 //
 
 import UIKit
-import Photos
 
-class HomeConverter: UIStackView {
+class HomeEditor: UIView {
+    @IBOutlet weak var clear: UIButton!
+    
     private var didLoad = false
     
     override func draw(_ rect: CGRect) {
@@ -21,24 +22,13 @@ class HomeConverter: UIStackView {
         noti()
     }
     
-    @IBAction func openFiles(_ sender: Any) {
-        
-    }
-    
-    @IBAction func openPhotos(_ sender: Any) {
-        guard let vc = findViewController() as? Home else { return }
-        
-        PhotosVC.present(vc: vc)
+    @IBAction func clear(_ sender: Any) {
+        cHome.clearSelectedAssets()
+        cHome.setTab(CHomeTab.convert.rawValue)
     }
 }
 
-extension Home: PhotosDelegate {
-    func didSelectPHAssets(controller: PhotosVC, assets: [PHAsset]) {
-        cHome.setTab(CHomeTab.edit.rawValue)
-    }
-}
-
-extension HomeConverter {
+extension HomeEditor {
     private func setup() {
         UIView.performWithoutAnimation {
             tabUpdate()
@@ -46,14 +36,15 @@ extension HomeConverter {
     }
 }
 
-extension HomeConverter {
+extension HomeEditor {
     private func noti() {
         NotificationCenter.default.addObserver(self, selector: #selector(tabUpdate), name: CHome.tabUpdate, object: nil)
     }
     
     @objc private func tabUpdate() {
         UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [self] in
-            alpha = cHome.getTab() == .convert ? 1 : 0
+            alpha = cHome.getTab() == .edit ? 1 : 0
+            clear.alpha = cHome.getTab() == .edit ? 1 : 0
         }
     }
 }

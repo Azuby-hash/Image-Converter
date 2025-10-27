@@ -16,6 +16,7 @@ extension UIColor {
     static let _light10 = UIColor(named: "Light10")!
     static let _light20 = UIColor(named: "Light20")!
     static let _background = UIColor(named: "Background")!
+    static let _background0 = UIColor(named: "Background0")!
     static let _red = UIColor(named: "Red")!
     static let _secondary = UIColor(named: "Secondary")!
     static let _low = UIColor(named: "Low")!
@@ -37,6 +38,7 @@ extension CGColor {
     static let _light10 = UIColor._light10.cgColor
     static let _light20 = UIColor._light20.cgColor
     static let _background = UIColor._background.cgColor
+    static let _background0 = UIColor._background0.cgColor
     static let _red = UIColor._red.cgColor
     static let _secondary = UIColor._secondary.cgColor
     static let _low = UIColor._low.cgColor
@@ -58,6 +60,7 @@ extension CIColor {
     static let _light10 = CIColor(color: UIColor._light10)
     static let _light20 = CIColor(color: UIColor._light20)
     static let _background = CIColor(color: UIColor._background)
+    static let _background0 = CIColor(color: UIColor._background0)
     static let _red = CIColor(color: UIColor._red)
     static let _secondary = CIColor(color: UIColor._secondary)
     static let _low = CIColor(color: UIColor._low)

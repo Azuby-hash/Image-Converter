@@ -23,7 +23,9 @@ class HomeUtility: UIStackView {
 
 extension HomeUtility {
     private func setup() {
-        tabUpdate()
+        UIView.performWithoutAnimation {
+            tabUpdate()
+        }
     }
 }
 

@@ -23,7 +23,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZfD-cv-WIU">
-                                <rect key="frame" x="341" y="142" width="28" height="28"/>
+                                <rect key="frame" x="341" y="142.33333333333334" width="28" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="28" id="8Dc-ZH-wcB"/>
                                     <constraint firstAttribute="width" secondItem="ZfD-cv-WIU" secondAttribute="height" id="wDu-V8-1l7"/>
@@ -33,6 +33,9 @@
                                     <color key="baseForegroundColor" name="Gray60"/>
                                     <color key="baseBackgroundColor" name="Light10"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="clear:" destination="sf6-w7-x46" eventType="touchUpInside" id="kh8-aF-ibQ"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="l0Q-9K-OYA" customClass="HomeConverter" customModule="Image_Converter" customModuleProvider="target">
                                 <rect key="frame" x="32" y="194.66666666666666" width="329.33333333333331" height="433.33333333333337"/>
@@ -76,6 +79,9 @@
                                                             <color key="baseForegroundColor" name="White"/>
                                                             <color key="baseBackgroundColor" name="Black"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="openFiles:" destination="l0Q-9K-OYA" eventType="touchUpInside" id="k0m-ph-tlN"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OGG-Jy-o8w">
                                                         <rect key="frame" x="62" y="0.0" width="216" height="50"/>
@@ -88,6 +94,9 @@
                                                             <color key="baseForegroundColor" name="White"/>
                                                             <color key="baseBackgroundColor" name="Primary"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="openPhotos:" destination="l0Q-9K-OYA" eventType="touchUpInside" id="x2a-R7-oZf"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -469,9 +478,12 @@
                                     <outlet property="tabTitle" destination="Csk-Qp-Ery" id="BMc-ze-AHb"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sf6-w7-x46">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sf6-w7-x46" customClass="HomeEditor" customModule="Image_Converter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="186.66666666666669" width="393" height="597.33333333333326"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="clear" destination="ZfD-cv-WIU" id="D3w-2x-7tt"/>
+                                </connections>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -487,11 +499,11 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="038-nN-wMx" secondAttribute="bottom" constant="46" id="Wgk-qt-pzV"/>
                             <constraint firstItem="l0Q-9K-OYA" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="X1d-hM-w8M"/>
                             <constraint firstItem="l0Q-9K-OYA" firstAttribute="top" secondItem="Csk-Qp-Ery" secondAttribute="bottom" constant="24" id="YgB-DT-ZoK"/>
+                            <constraint firstItem="ZfD-cv-WIU" firstAttribute="centerY" secondItem="Csk-Qp-Ery" secondAttribute="centerY" id="aaf-ZR-rPe"/>
                             <constraint firstItem="sf6-w7-x46" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="g0t-ff-4zf"/>
                             <constraint firstItem="038-nN-wMx" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="jbh-oo-YNd"/>
                             <constraint firstItem="tYS-Mb-7X1" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" constant="-48" id="mXf-cI-xN6"/>
                             <constraint firstItem="038-nN-wMx" firstAttribute="top" secondItem="l0Q-9K-OYA" secondAttribute="bottom" constant="48" id="nd1-qF-vao"/>
-                            <constraint firstItem="ZfD-cv-WIU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="24" id="qV9-OE-MTI"/>
                             <constraint firstItem="l0Q-9K-OYA" firstAttribute="width" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="width" constant="-48" id="yQM-wt-piT"/>
                             <constraint firstItem="Csk-Qp-Ery" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="zpR-AY-yux"/>
                         </constraints>

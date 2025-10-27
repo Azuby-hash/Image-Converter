@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 extension UIView {
     var cHome: CHome {
@@ -21,6 +22,8 @@ extension UIViewController {
 
 extension CHome {
     static let tabUpdate = Notification.Name(UUID().uuidString)
+    static let convertNumberUpdate = Notification.Name(UUID().uuidString)
+    static let convertSettingsUpdate = Notification.Name(UUID().uuidString)
 }
 
 extension Controller {
@@ -43,14 +46,33 @@ enum CHomeTab: Int {
 
 class CHome {
     private var selectTab = CHomeTab.convert
+    private var selectedAssets: [PHAsset] = []
     
     func getTab() -> CHomeTab {
         return selectTab
     }
     
+    func getSelectedAssets() -> [PHAsset] {
+        return selectedAssets
+    }
+    
     func setTab(_ index: Int) {
         selectTab = CHomeTab(rawValue: index) ?? selectTab
-        print(selectTab)
         NotificationCenter.default.post(name: CHome.tabUpdate, object: nil)
+    }
+    
+    func setSelectedAssets(_ assets: [PHAsset]) {
+        selectedAssets = assets
+        NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
+    }
+    
+    func appendSelectedAsset(_ asset: PHAsset) {
+        selectedAssets.append(asset)
+        NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
+    }
+    
+    func clearSelectedAssets() {
+        selectedAssets.removeAll()
+        NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
     }
 }
