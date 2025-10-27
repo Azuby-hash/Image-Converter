@@ -18,6 +18,8 @@ class UIButtonPro: UIButton {
     private var titleContainer = AttributeContainer()
     private var subtitleContainer = AttributeContainer()
     
+    private var didLoad = false
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
@@ -26,19 +28,25 @@ class UIButtonPro: UIButton {
     private func commonInit() {
         var configuration = configuration
         
-        configuration?.titleTextAttributesTransformer = .init({ container in
-            self.titleContainer = container
+        configuration?.titleTextAttributesTransformer = .init({ [self] container in
+            if !didLoad {
+                self.titleContainer = container
+            }
             
             return container
         })
         
-        configuration?.subtitleTextAttributesTransformer = .init({ container in
-            self.subtitleContainer = container
+        configuration?.subtitleTextAttributesTransformer = .init({ [self] container in
+            if !didLoad {
+                self.subtitleContainer = container
+            }
             
             return container
         })
 
         self.configuration = configuration
+        
+        didLoad = true
         
         configurationUpdateHandler = { [self] button in
             var updatedConfig: UIButton.Configuration?
@@ -53,9 +61,11 @@ class UIButtonPro: UIButton {
                   var backgroundColor = configuration?.baseBackgroundColor
             else { return }
             
-            var (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
-            if backgroundColor.getRed(&r, green: &g, blue: &b, alpha: &a) {
-                backgroundColor = UIColor(red: r, green: g, blue: b, alpha: a * CGFloat(backgroundAlpha) / 100)
+            if #available(iOS 26, *) {
+                var (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
+                if backgroundColor.getRed(&r, green: &g, blue: &b, alpha: &a) {
+                    backgroundColor = UIColor(red: r, green: g, blue: b, alpha: a * CGFloat(backgroundAlpha) / 100)
+                }
             }
             
             updatedConfig.title = button.configuration?.title
