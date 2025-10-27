@@ -78,6 +78,7 @@ class UIButtonPro: UIButton {
             updatedConfig.contentInsets = button.configuration?.contentInsets ?? updatedConfig.contentInsets
             updatedConfig.cornerStyle = button.configuration?.cornerStyle ?? updatedConfig.cornerStyle
             updatedConfig.titleLineBreakMode = .byTruncatingTail
+            updatedConfig.background.backgroundColor = backgroundColor
             
             if let title = button.configuration?.title {
                 updatedConfig.attributedTitle = AttributedString(title, attributes: titleContainer)
