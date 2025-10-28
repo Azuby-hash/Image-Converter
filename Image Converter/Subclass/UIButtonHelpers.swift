@@ -17,6 +17,7 @@ class UIButtonPro: UIButton {
     
     private var titleContainer = AttributeContainer()
     private var subtitleContainer = AttributeContainer()
+    private var backgroundColorConfig = UIColor.clear
     
     private var didLoad = false
     
@@ -43,6 +44,18 @@ class UIButtonPro: UIButton {
             
             return container
         })
+        
+        if !didLoad,
+           var backgroundColor = configuration?.baseBackgroundColor {
+            if #available(iOS 26, *) {
+                var (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
+                if backgroundColor.getRed(&r, green: &g, blue: &b, alpha: &a) {
+                    backgroundColor = UIColor(red: r, green: g, blue: b, alpha: a * CGFloat(backgroundAlpha) / 100)
+                }
+            }
+            
+            self.backgroundColorConfig = backgroundColor
+        }
 
         self.configuration = configuration
         
@@ -57,28 +70,20 @@ class UIButtonPro: UIButton {
                 updatedConfig = button.configuration
             }
             
-            guard var updatedConfig = updatedConfig,
-                  var backgroundColor = configuration?.baseBackgroundColor
-            else { return }
-            
-            if #available(iOS 26, *) {
-                var (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
-                if backgroundColor.getRed(&r, green: &g, blue: &b, alpha: &a) {
-                    backgroundColor = UIColor(red: r, green: g, blue: b, alpha: a * CGFloat(backgroundAlpha) / 100)
-                }
-            }
-            
+            guard var updatedConfig = updatedConfig else { return }
+
             updatedConfig.title = button.configuration?.title
             updatedConfig.subtitle = button.configuration?.subtitle
             updatedConfig.image = button.configuration?.image
             updatedConfig.imagePlacement = button.configuration?.imagePlacement ?? updatedConfig.imagePlacement
             updatedConfig.imagePadding = button.configuration?.imagePadding ?? updatedConfig.imagePadding
-            updatedConfig.baseBackgroundColor = backgroundColor
             updatedConfig.baseForegroundColor = button.configuration?.baseForegroundColor
             updatedConfig.contentInsets = button.configuration?.contentInsets ?? updatedConfig.contentInsets
             updatedConfig.cornerStyle = button.configuration?.cornerStyle ?? updatedConfig.cornerStyle
             updatedConfig.titleLineBreakMode = .byTruncatingTail
-            updatedConfig.background.backgroundColor = backgroundColor
+            updatedConfig.background = button.configuration?.background ?? updatedConfig.background
+            updatedConfig.background.backgroundColor = backgroundColorConfig
+            updatedConfig.baseBackgroundColor = .clear
             
             if let title = button.configuration?.title {
                 updatedConfig.attributedTitle = AttributedString(title, attributes: titleContainer)
@@ -92,6 +97,19 @@ class UIButtonPro: UIButton {
         }
         
         tintAdjustmentMode = .normal
+    }
+    
+    func setContentColor(_ color: UIColor) {
+        configuration?.baseForegroundColor = color
+    }
+    
+    func setBackgroundColor(_ color: UIColor) {
+        configuration?.baseBackgroundColor = color
+        configuration?.background.backgroundColor = color
+        configuration?.background.backgroundColorTransformer = .init({ _ in
+            return color
+        })
+        backgroundColor = color
     }
 
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
