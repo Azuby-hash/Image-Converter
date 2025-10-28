@@ -12,6 +12,14 @@ import AVFoundation
 
 protocol PhotosDelegate: AnyObject {
     func didSelectPHAssets(controller: PhotosVC, assets: [PHAsset])
+    func didSelectPHAsset(controller: PhotosVC, asset: PHAsset)
+    func didDeselectPHAsset(controller: PhotosVC, asset: PHAsset)
+}
+
+extension PhotosDelegate {
+    func didSelectPHAssets(controller: PhotosVC, assets: [PHAsset]) { }
+    func didSelectPHAsset(controller: PhotosVC, asset: PHAsset) { }
+    func didDeselectPHAsset(controller: PhotosVC, asset: PHAsset) { }
 }
 
 class PhotosVC: UIViewController {
@@ -60,6 +68,8 @@ class PhotosVC: UIViewController {
     }
     
     private func reload() {
+        albumSelect.setTitle(library.getCurrentAlbum()?.getName() ?? "Recents", for: .normal)
+        
         DispatchQueue.main.async { [self] in
             let indexSet = IndexSet(integersIn: 0...0)
             
@@ -117,8 +127,10 @@ extension PhotosVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayo
         
         if selectedAsset.contains(asset) {
             selectedAsset = selectedAsset.filter { $0 != asset }
+            delegate?.didDeselectPHAsset(controller: self, asset: asset)
         } else {
             selectedAsset.append(asset)
+            delegate?.didSelectPHAsset(controller: self, asset: asset)
         }
         
         collection.indexPathsForVisibleItems.forEach { indexPath in

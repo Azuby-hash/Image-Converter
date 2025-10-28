@@ -16,3 +16,6 @@ var IOS26: Bool {
         return false
     }
 }
+
+let PREVIEW_WIDTH: CGFloat = 512
+let PREVIEW_SIZE: CGSize = CGSize(width: 512, height: 512)

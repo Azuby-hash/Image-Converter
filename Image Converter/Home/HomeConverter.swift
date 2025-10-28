@@ -36,6 +36,14 @@ extension Home: PhotosDelegate {
     func didSelectPHAssets(controller: PhotosVC, assets: [PHAsset]) {
         cHome.setTab(CHomeTab.edit.rawValue)
     }
+    
+    func didSelectPHAsset(controller: PhotosVC, asset: PHAsset) {
+        cHome.appendSelected(asset)
+    }
+    
+    func didDeselectPHAsset(controller: PhotosVC, asset: PHAsset) {
+        cHome.removeSelected(asset)
+    }
 }
 
 extension HomeConverter {

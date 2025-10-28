@@ -175,6 +175,7 @@
                                 <constraints>
                                     <constraint firstItem="vLj-hk-6BB" firstAttribute="leading" secondItem="BKp-j6-2fU" secondAttribute="leading" constant="16" id="2yd-fI-qZR"/>
                                     <constraint firstItem="vLj-hk-6BB" firstAttribute="centerY" secondItem="BKp-j6-2fU" secondAttribute="centerY" id="7pi-DG-SFU"/>
+                                    <constraint firstItem="ORm-4h-fZ7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vLj-hk-6BB" secondAttribute="trailing" constant="36" id="Xig-6J-ce9"/>
                                     <constraint firstAttribute="trailing" secondItem="ORm-4h-fZ7" secondAttribute="trailing" constant="16" id="YJL-F8-i06"/>
                                     <constraint firstItem="ORm-4h-fZ7" firstAttribute="centerY" secondItem="BKp-j6-2fU" secondAttribute="centerY" id="ZV7-56-nwu"/>
                                     <constraint firstAttribute="height" constant="60" id="yz4-7N-Yoa"/>

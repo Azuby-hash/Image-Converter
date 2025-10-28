@@ -10,13 +10,13 @@ import Photos
 
 extension UIView {
     var cHome: CHome {
-        get { Controller.cHome }
+        get { Controller.shared.cHome }
     }
 }
 
 extension UIViewController {
     var cHome: CHome {
-        get { Controller.cHome }
+        get { Controller.shared.cHome }
     }
 }
 
@@ -24,10 +24,6 @@ extension CHome {
     static let tabUpdate = Notification.Name(UUID().uuidString)
     static let convertNumberUpdate = Notification.Name(UUID().uuidString)
     static let convertSettingsUpdate = Notification.Name(UUID().uuidString)
-}
-
-extension Controller {
-    static let cHome = CHome()
 }
 
 enum CHomeTab: Int {
@@ -46,14 +42,13 @@ enum CHomeTab: Int {
 
 class CHome {
     private var selectTab = CHomeTab.convert
-    private var selectedAssets: [PHAsset] = []
     
     func getTab() -> CHomeTab {
         return selectTab
     }
     
-    func getSelectedAssets() -> [PHAsset] {
-        return selectedAssets
+    func getSelecteds() -> [ConvertItem] {
+        return Model.convert.getSelecteds()
     }
     
     func setTab(_ index: Int) {
@@ -61,18 +56,18 @@ class CHome {
         NotificationCenter.default.post(name: CHome.tabUpdate, object: nil)
     }
     
-    func setSelectedAssets(_ assets: [PHAsset]) {
-        selectedAssets = assets
+    func appendSelected(_ asset: PHAsset) {
+        Model.convert.setSelecteds(Model.convert.getSelecteds() + [ConvertItem(asset: asset)])
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
     }
     
-    func appendSelectedAsset(_ asset: PHAsset) {
-        selectedAssets.append(asset)
+    func removeSelected(_ asset: PHAsset) {
+        Model.convert.setSelecteds(Model.convert.getSelecteds().filter({ $0.getAsset() != asset }))
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
     }
     
     func clearSelectedAssets() {
-        selectedAssets.removeAll()
+        Model.convert.setSelecteds([])
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
     }
 }
