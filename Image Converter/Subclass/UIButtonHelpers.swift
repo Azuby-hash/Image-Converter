@@ -11,7 +11,7 @@ class UIButtonPro: UIButton {
     @IBInspectable var inset: CGPoint = .init(x: -10, y: -10)
     @IBInspectable var backgroundAlpha: Int = 80 {
         didSet {
-            commonInit()
+            updateUI()
         }
     }
     
@@ -23,10 +23,10 @@ class UIButtonPro: UIButton {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        commonInit()
+        updateUI()
     }
     
-    private func commonInit() {
+    private func updateUI() {
         var configuration = configuration
         
         configuration?.titleTextAttributesTransformer = .init({ [self] container in
@@ -86,10 +86,22 @@ class UIButtonPro: UIButton {
             updatedConfig.baseBackgroundColor = .clear
             
             if let title = button.configuration?.title {
+                if let foregroundColor = button.configuration?.baseForegroundColor {
+                    titleContainer.merge(.init([
+                        .foregroundColor: foregroundColor
+                    ]))
+                }
+                
                 updatedConfig.attributedTitle = AttributedString(title, attributes: titleContainer)
             }
             
             if let subtitle = button.configuration?.subtitle {
+                if let foregroundColor = button.configuration?.baseForegroundColor {
+                    subtitleContainer.merge(.init([
+                        .foregroundColor: foregroundColor
+                    ]))
+                }
+                
                 updatedConfig.attributedSubtitle = AttributedString(subtitle, attributes: subtitleContainer)
             }
             
@@ -101,15 +113,17 @@ class UIButtonPro: UIButton {
     
     func setContentColor(_ color: UIColor) {
         configuration?.baseForegroundColor = color
+        
+        updateUI()
     }
     
     func setBackgroundColor(_ color: UIColor) {
+        backgroundColorConfig = color
+        
         configuration?.baseBackgroundColor = color
         configuration?.background.backgroundColor = color
-        configuration?.background.backgroundColorTransformer = .init({ _ in
-            return color
-        })
-        backgroundColor = color
+        
+        updateUI()
     }
 
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
