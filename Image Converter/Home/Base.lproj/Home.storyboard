@@ -372,6 +372,23 @@
                                                                                 </stackView>
                                                                             </subviews>
                                                                         </stackView>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LOJ-2P-Eln" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
+                                                                            <rect key="frame" x="145" y="-8" width="24" height="24"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" secondItem="LOJ-2P-Eln" secondAttribute="height" id="7A2-bs-8Xa"/>
+                                                                                <constraint firstAttribute="width" constant="24" id="PUn-pl-4MV"/>
+                                                                            </constraints>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="filled" image="Remove">
+                                                                                <color key="baseForegroundColor" name="White"/>
+                                                                                <color key="baseBackgroundColor" name="Red"/>
+                                                                            </buttonConfiguration>
+                                                                            <userDefinedRuntimeAttributes>
+                                                                                <userDefinedRuntimeAttribute type="point" keyPath="inset">
+                                                                                    <point key="value" x="-10" y="-10"/>
+                                                                                </userDefinedRuntimeAttribute>
+                                                                            </userDefinedRuntimeAttributes>
+                                                                        </button>
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstItem="Mmb-Bz-raz" firstAttribute="top" secondItem="ZvK-5m-6Hg" secondAttribute="top" constant="16" id="95X-T1-yQJ"/>
@@ -381,6 +398,8 @@
                                                                         <constraint firstItem="Mmb-Bz-raz" firstAttribute="centerX" secondItem="ZvK-5m-6Hg" secondAttribute="centerX" id="YBW-Bh-4dy"/>
                                                                         <constraint firstItem="lKN-IZ-BSS" firstAttribute="height" secondItem="ZvK-5m-6Hg" secondAttribute="height" id="cL9-bd-om3"/>
                                                                         <constraint firstItem="lKN-IZ-BSS" firstAttribute="width" secondItem="ZvK-5m-6Hg" secondAttribute="width" id="hyg-tU-kNQ"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="LOJ-2P-Eln" secondAttribute="trailing" constant="-8" id="nhT-WZ-F66"/>
+                                                                        <constraint firstItem="LOJ-2P-Eln" firstAttribute="top" secondItem="ZvK-5m-6Hg" secondAttribute="top" constant="-8" id="vak-2T-h4p"/>
                                                                     </constraints>
                                                                 </collectionViewCellContentView>
                                                                 <size key="customSize" width="161" height="199"/>
@@ -389,6 +408,7 @@
                                                                     <outlet property="imageExtension" destination="mvH-dW-FJ4" id="JQF-Dk-gDt"/>
                                                                     <outlet property="imageView" destination="EgO-fX-a35" id="F64-pm-Fv4"/>
                                                                     <outlet property="lowerLabel" destination="lbk-L1-dpN" id="pNV-Jt-ZMI"/>
+                                                                    <outlet property="remove" destination="LOJ-2P-Eln" id="hRx-NP-waa"/>
                                                                     <outlet property="stack" destination="Mmb-Bz-raz" id="k2O-Wi-dQx"/>
                                                                     <outlet property="upperLabel" destination="GsE-Jm-lO3" id="rhz-XA-XGW"/>
                                                                 </connections>
@@ -672,6 +692,7 @@
         <image name="ConvertEmpty" width="324" height="324"/>
         <image name="File" width="24" height="24"/>
         <image name="GIF" width="154" height="154"/>
+        <image name="Remove" width="24" height="24"/>
         <image name="SVG" width="154" height="154"/>
         <image name="Upscale" width="154" height="154"/>
         <image name="Utility" width="24" height="24"/>
@@ -692,6 +713,9 @@
         </namedColor>
         <namedColor name="Primary">
             <color red="0.51399999856948853" green="0.3059999942779541" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Red">
+            <color red="1" green="0.23100000619888306" blue="0.18799999356269836" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Sort">
             <color red="0.92500001192092896" green="0.89399999380111694" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

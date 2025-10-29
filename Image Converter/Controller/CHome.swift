@@ -66,6 +66,11 @@ class CHome {
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
     }
     
+    func removeSelected(_ item: ConvertItem) {
+        Model.convert.setSelecteds(Model.convert.getSelecteds().filter({ $0 != item }))
+        NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
+    }
+    
     func clearSelectedAssets() {
         Model.convert.setSelecteds([])
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)

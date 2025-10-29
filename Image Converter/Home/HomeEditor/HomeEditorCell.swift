@@ -21,6 +21,7 @@ class HomeEditorCell: UICollectionViewCell {
     
     @IBOutlet weak var addPhoto: UIButtonPro!
     @IBOutlet weak var stack: UIStackView!
+    @IBOutlet weak var remove: UIButtonPro!
     
     weak var delegate: HomeEditorCellDelegate?
     
@@ -44,14 +45,18 @@ class HomeEditorCell: UICollectionViewCell {
             addPhoto.setContentColor(._black)
             addPhoto.addTarget(self, action: #selector(addMorePhoto), for: .touchUpInside)
             addPhoto.isUserInteractionEnabled = true
+            remove.removeTarget(self, action: #selector(removePhoto), for: .touchUpInside)
             stack.alpha = 0
+            remove.alpha = 0
             return
         }
         
         addPhoto.setContentColor(._white)
         addPhoto.removeTarget(self, action: #selector(addMorePhoto), for: .touchUpInside)
         addPhoto.isUserInteractionEnabled = false
+        remove.addTarget(self, action: #selector(removePhoto), for: .touchUpInside)
         stack.alpha = 1
+        remove.alpha = 1
         
         try? item.getPreview { [weak self] image in
             guard let self = self else { return }
@@ -68,6 +73,12 @@ class HomeEditorCell: UICollectionViewCell {
         guard let vc = findViewController() as? Home else { return }
         
         PhotosVC.present(vc: vc)
+    }
+    
+    @objc private func removePhoto() {
+        if let item = item {
+            cHome.removeSelected(item)
+        }
     }
 }
 
