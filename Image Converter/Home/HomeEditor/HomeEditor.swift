@@ -70,7 +70,11 @@ extension HomeEditor: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         
         if cHome.getSelecteds().indices.contains(indexPath.row) {
             cell.initCell(cHome.getSelecteds()[indexPath.row])
+        } else {
+            cell.initCell(nil)
         }
+        
+        cell.delegate = self
         
         return cell
     }
@@ -83,5 +87,11 @@ extension HomeEditor: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
+    }
+}
+
+extension HomeEditor: HomeEditorCellDelegate {
+    func indexPath(for cell: HomeEditorCell) -> IndexPath? {
+        return selected.indexPath(for: cell)
     }
 }

@@ -26,53 +26,35 @@ class Convert {
     }
 }
 
-class ConvertItem {
+class ConvertItem: Equatable {
+    private let id = UUID().uuidString
+    
     private var preview: Data?
     private var image: Data?
     private var asset: PHAsset?
     
     init(asset: PHAsset) {
-        AssetLibrary.shared.getUIImage(from: asset, size: PREVIEW_SIZE, quality: .opportunistic, resizeMode: .fast) { image in
-            DispatchQueue.global(qos: .default).async { [self] in
-                preview = image.pngData()
-            }
-        }
-        
-        AssetLibrary.shared.getUIImage(from: asset, quality: .highQualityFormat, resizeMode: .exact) { image in
-            DispatchQueue.global(qos: .default).async { [self] in
-                self.image = image.pngData()
-            }
-        }
-        
         self.asset = asset
     }
     
-    func getImage() throws -> UIImage {
-        guard let data = image else {
-            throw ConvertError.data("No image data")
+    func getPreview(completion: @escaping (UIImage) -> Void) throws {
+        if let asset = asset {
+            AssetLibrary.shared.getUIImage(from: asset, size: PREVIEW_SIZE, quality: .opportunistic, resizeMode: .fast) { image in
+                completion(image)
+            }
+            
+            return
         }
         
-        guard let image = UIImage(data: data) else {
-            throw ConvertError.data("Cant decode image")
-        }
-        
-        return image
-    }
-    
-    func getPreview() throws -> UIImage {
-        guard let data = preview else {
-            throw ConvertError.data("No preview data")
-        }
-        
-        guard let preview = UIImage(data: data) else {
-            throw ConvertError.data("Cant decode preview")
-        }
-        
-        return preview
+        throw ConvertError.data("No preview")
     }
     
     func getAsset() -> PHAsset? {
         return asset
+    }
+    
+    static func == (lhs: ConvertItem, rhs: ConvertItem) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 

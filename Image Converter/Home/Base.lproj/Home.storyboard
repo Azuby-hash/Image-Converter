@@ -301,14 +301,16 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="161" height="199"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
-                                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKN-IZ-BSS">
+                                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKN-IZ-BSS" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="161" height="199"/>
                                                                             <state key="normal" title="Button"/>
-                                                                            <buttonConfiguration key="configuration" style="filled" cornerStyle="dynamic">
+                                                                            <buttonConfiguration key="configuration" style="filled" image="Add" imagePlacement="top" title="Add Photos" imagePadding="8" cornerStyle="dynamic">
+                                                                                <fontDescription key="titleFontDescription" type="boldSystem" pointSize="16"/>
+                                                                                <color key="baseForegroundColor" name="Black"/>
                                                                                 <color key="baseBackgroundColor" name="White"/>
                                                                             </buttonConfiguration>
                                                                         </button>
-                                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Mmb-Bz-raz">
+                                                                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Mmb-Bz-raz">
                                                                             <rect key="frame" x="16" y="16" width="129" height="172.33333333333334"/>
                                                                             <subviews>
                                                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EuT-3x-1O7">
@@ -383,9 +385,11 @@
                                                                 </collectionViewCellContentView>
                                                                 <size key="customSize" width="161" height="199"/>
                                                                 <connections>
+                                                                    <outlet property="addPhoto" destination="lKN-IZ-BSS" id="LQN-Bb-CXU"/>
                                                                     <outlet property="imageExtension" destination="mvH-dW-FJ4" id="JQF-Dk-gDt"/>
                                                                     <outlet property="imageView" destination="EgO-fX-a35" id="F64-pm-Fv4"/>
                                                                     <outlet property="lowerLabel" destination="lbk-L1-dpN" id="pNV-Jt-ZMI"/>
+                                                                    <outlet property="stack" destination="Mmb-Bz-raz" id="k2O-Wi-dQx"/>
                                                                     <outlet property="upperLabel" destination="GsE-Jm-lO3" id="rhz-XA-XGW"/>
                                                                 </connections>
                                                             </collectionViewCell>
@@ -661,6 +665,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Add" width="36" height="36"/>
         <image name="Close" width="24" height="24"/>
         <image name="Compare" width="154" height="154"/>
         <image name="Convert" width="24" height="24"/>
