@@ -13,7 +13,7 @@ class GrayShadow: UIViewShadow {
         
         shadowRadius = 10
         shadowColor = ._gray60
-        shadowOpacity = 0.1
+        shadowOpacity = 0.05
         shadowOffset = .init(width: -2, height: 4)
     }
 }

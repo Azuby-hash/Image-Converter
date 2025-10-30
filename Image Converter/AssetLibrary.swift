@@ -196,11 +196,12 @@ class AssetLibrary {
             options.isNetworkAccessAllowed = true
             
             req = manager.requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: options, resultHandler: {(result, _)->Void in
-                guard let results = result else{
+                guard let result = result else {
                     return
                 }
+
                 DispatchQueue.main.async {
-                    completion?(results)
+                    completion?(result)
                 }
             })
         }
@@ -325,7 +326,7 @@ extension AssetLibrary {
                 let result = PHAsset.fetchAssets(in: collection, options: fetchOptions)
                 let count = result.count
                 
-                if count > 0 && collection.localizedTitle != "Recents" {
+                if count > 0 && !albums.contains(where: { $0.getName().contains(collection.localizedTitle ?? UUID().uuidString) }) {
                     append(result, collection.localizedTitle ?? "")
                 }
             }
