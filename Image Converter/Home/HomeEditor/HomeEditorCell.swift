@@ -67,6 +67,8 @@ class HomeEditorCell: UICollectionViewCell {
                 }
             }
         }
+        
+        updateInfo()
     }
     
     @objc private func addMorePhoto() {

@@ -13,6 +13,8 @@ class HomeEditor: UIView {
     
     private var didLoad = false
     
+    private var items: [ConvertItem] = []
+    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
@@ -35,6 +37,8 @@ extension HomeEditor {
             tabUpdate()
         }
         
+        items = cHome.getSelecteds()
+        
         selected.delegate = self
         selected.dataSource = self
     }
@@ -54,7 +58,27 @@ extension HomeEditor {
     }
     
     @objc private func numberUpdate() {
-        selected.reloadSections(IndexSet(0...0))
+        let newItems = cHome.getSelecteds()
+        
+        let oldItems = items
+        
+        oldItems.transformArray(to: newItems) { [self] item, index in
+            selected.performBatchUpdates {
+                selected.insertItems(at: [IndexPath(row: index, section: 0)])
+                items.insert(item, at: index)
+            }
+        } remove: { [self] index in
+            selected.performBatchUpdates {
+                selected.deleteItems(at: [IndexPath(row: index, section: 0)])
+                items.remove(at: index)
+            }
+        } move: { [self] from, to in
+            selected.performBatchUpdates {
+                selected.moveItem(at: IndexPath(row: from, section: 0), to: IndexPath(row: to, section: 0))
+                let paper = items.remove(at: from)
+                items.insert(paper, at: to)
+            }
+        }
     }
 }
 
