@@ -72,7 +72,7 @@ class HomeEditorCell: UICollectionViewCell {
     @objc private func addMorePhoto() {
         guard let vc = findViewController() as? Home else { return }
         
-        PhotosVC.present(vc: vc)
+        PhotosVC.present(vc: vc, config: .init(doneTitle: "Add Photos"))
     }
     
     @objc private func removePhoto() {

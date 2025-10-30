@@ -9,9 +9,11 @@ import UIKit
 
 class HomeEditor: UIView {
     @IBOutlet weak var clear: UIButton!
-    @IBOutlet weak var selected: UICollectionView!
+    @IBOutlet weak var collection: UICollectionView!
     
     private var didLoad = false
+    
+    private var items: [ConvertItem] = []
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
@@ -35,8 +37,10 @@ extension HomeEditor {
             tabUpdate()
         }
         
-        selected.delegate = self
-        selected.dataSource = self
+        items = cHome.getSelecteds()
+        
+        collection.delegate = self
+        collection.dataSource = self
     }
 }
 
@@ -54,17 +58,36 @@ extension HomeEditor {
     }
     
     @objc private func numberUpdate() {
-        selected.reloadSections(IndexSet(0...0))
+        let newItems = cHome.getSelecteds()
+        let oldItems = items
+        
+        oldItems.transformArray(to: newItems) { [self] item, index in
+            collection.performBatchUpdates {
+                collection.insertItems(at: [IndexPath(row: index, section: 0)])
+                items.insert(item, at: index)
+            }
+        } remove: { [self] index in
+            collection.performBatchUpdates {
+                collection.deleteItems(at: [IndexPath(row: index, section: 0)])
+                items.remove(at: index)
+            }
+        } move: { [self] from, to in
+            collection.performBatchUpdates {
+                collection.moveItem(at: IndexPath(row: from, section: 0), to: IndexPath(row: to, section: 0))
+                let item = items.remove(at: from)
+                items.insert(item, at: to)
+            }
+        }
     }
 }
 
 extension HomeEditor: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cHome.getSelecteds().count + 1
+        return items.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = selected.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HomeEditorCell else {
+        guard let cell = collection.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HomeEditorCell else {
             return UICollectionViewCell()
         }
         
@@ -80,9 +103,9 @@ extension HomeEditor: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = selected.bounds.height / 200 * 154
+        let width = collection.bounds.height / 200 * 154
         
-        return CGSize(width: width, height: selected.bounds.height)
+        return CGSize(width: width, height: collection.bounds.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -92,6 +115,6 @@ extension HomeEditor: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 
 extension HomeEditor: HomeEditorCellDelegate {
     func indexPath(for cell: HomeEditorCell) -> IndexPath? {
-        return selected.indexPath(for: cell)
+        return collection.indexPath(for: cell)
     }
 }

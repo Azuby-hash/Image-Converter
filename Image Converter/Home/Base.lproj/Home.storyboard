@@ -442,7 +442,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="clear" destination="ZfD-cv-WIU" id="D3w-2x-7tt"/>
-                                    <outlet property="selected" destination="1ev-QX-HFS" id="sgb-cX-w9w"/>
+                                    <outlet property="collection" destination="1ev-QX-HFS" id="sgb-cX-w9w"/>
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="038-nN-wMx" customClass="HomeTab" customModule="Image_Converter" customModuleProvider="target">

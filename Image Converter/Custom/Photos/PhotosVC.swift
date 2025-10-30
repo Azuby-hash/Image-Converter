@@ -22,6 +22,14 @@ extension PhotosDelegate {
     func didDeselectPHAsset(controller: PhotosVC, asset: PHAsset) { }
 }
 
+class PhotosConfig {
+    let doneTitle: String
+    
+    init(doneTitle: String = "Convert Now") {
+        self.doneTitle = doneTitle
+    }
+}
+
 class PhotosVC: UIViewController {
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var limitAdd: UIButton!
@@ -36,6 +44,7 @@ class PhotosVC: UIViewController {
     private var selectedAsset: [PHAsset] = []
     
     weak var delegate: PhotosDelegate?
+    weak var config: PhotosConfig?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +52,10 @@ class PhotosVC: UIViewController {
         collection.delegate = self
         collection.dataSource = self
         collection.allowsSelection = true
+        
+        if let config = config {
+            convertNow.setTitle(config.doneTitle, for: .normal)
+        }
         
         UIView.performWithoutAnimation {
             updateButtonAppear()
@@ -102,11 +115,12 @@ class PhotosVC: UIViewController {
         dismiss(animated: true)
     }
     
-    static func present(vc: UIViewController & PhotosDelegate) {
+    static func present(vc: UIViewController & PhotosDelegate, config: PhotosConfig = .init()) {
         AssetLibrary.shared.request { status in
             if status == .authorized || status == .limited {
                 let nextVC = PhotosVC.create()
                 (nextVC as? PhotosVC)?.delegate = vc
+                (nextVC as? PhotosVC)?.config = config
                 vc.present(nextVC, animated: true)
                 return
             }
