@@ -12,13 +12,33 @@ extension Model {
     static let convert = Convert()
 }
 
+enum ConvertMime: String, CaseIterable {
+    case jpg = "jpg"
+    case png = "png"
+    case heic = "heic"
+    case pdf = "pdf"
+    case webp = "webp"
+    case gif = "gif"
+    case tiff = "tiff"
+    case bmp = "bmp"
+}
+
 class Convert {
     private var selecteds: [ConvertItem] = []
+    private var mimeType: ConvertMime = .jpg
     
     fileprivate init() { }
     
+    func getMimeType() -> ConvertMime {
+        return mimeType
+    }
+    
     func getSelecteds() -> [ConvertItem] {
         return selecteds
+    }
+    
+    func setMimeType(_ mimeType: ConvertMime) {
+        self.mimeType = mimeType
     }
     
     func setSelecteds(_ selecteds: [ConvertItem]) {

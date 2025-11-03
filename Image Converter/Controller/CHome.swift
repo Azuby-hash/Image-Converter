@@ -51,6 +51,12 @@ class CHome {
         return Model.convert.getSelecteds()
     }
     
+    func setMime(_ mime: ConvertMime) {
+        print(mime)
+        Model.convert.setMimeType(mime)
+        NotificationCenter.default.post(name: CHome.convertSettingsUpdate, object: nil)
+    }
+    
     func setTab(_ index: Int) {
         selectTab = CHomeTab(rawValue: index) ?? selectTab
         NotificationCenter.default.post(name: CHome.tabUpdate, object: nil)
