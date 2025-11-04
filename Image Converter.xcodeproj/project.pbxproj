@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF97C0202EAEFF3B00F317FB /* UIButtonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */; };
+		AFA30FB92EB994D5008C9023 /* ImageConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA30FB82EB994D0008C9023 /* ImageConverter.swift */; };
 		CE3D9CE72EAA979B002C29B5 /* HomeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D9CE62EAA9794002C29B5 /* HomeConverter.swift */; };
 		CE3D9CE92EAA9871002C29B5 /* HomeUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D9CE82EAA986A002C29B5 /* HomeUtility.swift */; };
 		CE3D9CEC2EAB0126002C29B5 /* PhotosVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3D9CEB2EAB0126002C29B5 /* PhotosVC.storyboard */; };
@@ -113,6 +114,7 @@
 
 /* Begin PBXFileReference section */
 		AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonHelpers.swift; sourceTree = "<group>"; };
+		AFA30FB82EB994D0008C9023 /* ImageConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConverter.swift; sourceTree = "<group>"; };
 		CE3D9CE62EAA9794002C29B5 /* HomeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeConverter.swift; sourceTree = "<group>"; };
 		CE3D9CE82EAA986A002C29B5 /* HomeUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUtility.swift; sourceTree = "<group>"; };
 		CE3D9CEB2EAB0126002C29B5 /* PhotosVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PhotosVC.storyboard; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 		CEA4F8892EA914810041BDAC /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				AFA30FB82EB994D0008C9023 /* ImageConverter.swift */,
 				CE3D9D042EB3B95C002C29B5 /* Slider.swift */,
 				CE3D9CED2EAB01E9002C29B5 /* BoxGradient.swift */,
 				CEA4F9492EAA384A0041BDAC /* Vision */,
@@ -634,6 +637,7 @@
 				CE72D26F2EAA5BCE00DDE5A8 /* CHome.swift in Sources */,
 				CEA4F9812EAA384A0041BDAC /* VisionContourDetection.swift in Sources */,
 				CEA4F9842EAA384A0041BDAC /* VisionImageAlignment.swift in Sources */,
+				AFA30FB92EB994D5008C9023 /* ImageConverter.swift in Sources */,
 				CE3D9CE92EAA9871002C29B5 /* HomeUtility.swift in Sources */,
 				CEA4F9872EAA384A0041BDAC /* VisionUsage.swift in Sources */,
 				CEA4F9892EAA384A0041BDAC /* VisionHorizonDetection.swift in Sources */,

@@ -7,6 +7,7 @@
 
 import UIKit
 import Photos
+import ImageIO
 
 extension Model {
     static let convert = Convert()
@@ -17,10 +18,27 @@ enum ConvertMime: String, CaseIterable {
     case png = "png"
     case heic = "heic"
     case pdf = "pdf"
-    case webp = "webp"
     case gif = "gif"
+    case ico = "ico"
     case tiff = "tiff"
     case bmp = "bmp"
+    
+    func getUTType() -> UTType {
+        switch self {
+            case .jpg: return .jpeg
+            case .png: return .png
+            case .heic: return .heic
+            case .pdf: return .pdf
+            case .gif: return .gif
+            case .ico: return .ico
+            case .tiff: return .tiff
+            case .bmp: return .bmp
+        }
+    }
+    
+    static func supportCompression() -> [ConvertMime] {
+        return [.jpg, .heic, .tiff]
+    }
 }
 
 class Convert {
