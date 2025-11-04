@@ -51,9 +51,17 @@ class CHome {
         return Model.convert.getSelecteds()
     }
     
+    func getCompression() -> CGFloat {
+        return Model.convert.getCompression()
+    }
+    
     func setMime(_ mime: ConvertMime) {
-        print(mime)
         Model.convert.setMimeType(mime)
+        NotificationCenter.default.post(name: CHome.convertSettingsUpdate, object: nil)
+    }
+    
+    func setCompression(_ compression: CGFloat) {
+        Model.convert.setCompression(compression)
         NotificationCenter.default.post(name: CHome.convertSettingsUpdate, object: nil)
     }
     

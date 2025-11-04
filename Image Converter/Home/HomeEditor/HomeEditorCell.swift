@@ -14,7 +14,7 @@ protocol HomeEditorCellDelegate: AnyObject {
 
 class HomeEditorCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var imageExtension: UIButtonPro!
+    @IBOutlet weak var imageExtension: UILabel!
     
     @IBOutlet weak var upperLabel: UILabel!
     @IBOutlet weak var lowerLabel: UILabel!
@@ -87,13 +87,15 @@ class HomeEditorCell: UICollectionViewCell {
 extension HomeEditorCell {
     private func noti() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateInfo), name: Controller.globalTimer01, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateInfo), name: CHome.convertSettingsUpdate, object: nil)
     }
     
     @objc private func updateInfo() {
         guard let item = item else { return }
         
-//        upperLabel.text = "\(item.input.count) files"
-//        lowerLabel.text = "\(item.output.count) files"
+        upperLabel.text = "OUTPUT: 0.0 MB"
+        lowerLabel.text = "ORIGINAL: 0.0 MB"
+        imageExtension.text = "JPG"
     }
 }
 
