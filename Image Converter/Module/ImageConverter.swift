@@ -5,11 +5,66 @@
 //  Created by TapUniverse Dev9 on 4/11/25.
 //
 
-import Foundation
-import ImageIO
+import UIKit
 import Photos
-import UniformTypeIdentifiers
-import CoreGraphics
+
+/// An enumeration to specify the source of metadata to be applied to a converted image.
+enum MetadataSource {
+    /// Use metadata from an image file at the specified URL.
+    case url(URL)
+    /// Use metadata from a PHAsset instance from the Photo library.
+    case asset(PHAsset)
+    /// Use metadata from a PHAsset data instance from the Photo library.
+    case data(Data)
+    /// Use a pre-existing dictionary of metadata properties.
+    case properties([String: Any])
+    /// Do not apply any additional metadata.
+    case none
+    
+    func extract() async -> [String: Any]? {
+        switch self {
+        case .url(let url):
+            guard let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil),
+                  CGImageSourceGetCount(imageSource) > 0 else {
+                return nil
+            }
+            return CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any]
+
+        case .data(let data):
+            guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
+                  CGImageSourceGetCount(imageSource) > 0 else {
+                return nil
+            }
+            return CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any]
+            
+        case .asset(let asset):
+            let options = PHImageRequestOptions()
+            options.isNetworkAccessAllowed = true
+            options.version = .current
+            
+            // Use withCheckedContinuation to bridge the callback-based Photos API to async/await.
+            return await withCheckedContinuation { continuation in
+                PHImageManager.default().requestImageDataAndOrientation(for: asset, options: options) { data, _, _, _ in
+                    guard let data = data,
+                          let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
+                          CGImageSourceGetCount(imageSource) > 0 else {
+                        continuation.resume(returning: nil)
+                        return
+                    }
+                    let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any]
+                    continuation.resume(returning: properties)
+                }
+            }
+
+        case .properties(let properties):
+            return properties
+
+        case .none:
+            return nil
+        }
+    }
+}
+
 
 /// A utility for converting images from various sources to different formats using best practices.
 /// This enum acts as a namespace for the static conversion methods and cannot be instantiated.
@@ -55,7 +110,7 @@ enum ImageConverter {
     ///   - sourceURL: The URL of the source image file.
     ///   - destinationURL: The URL where the converted JPEG file will be saved.
     ///   - compressionQuality: The quality of the resulting JPEG image, from 0.0 (lowest) to 1.0 (highest).
-    static func convert(to utType: UTType, from sourceURL: URL, to destinationURL: URL, compressionQuality: CGFloat = 0.8) throws {
+    static func convert(to utType: UTType, from sourceURL: URL, to destinationURL: URL, compressionQuality: CGFloat) throws {
         if utType == .pdf {
             guard let source = CGImageSourceCreateWithURL(sourceURL as CFURL, nil) else {
                 throw ConversionError.failedToCreateImageSource(sourceURL.path)
@@ -74,7 +129,7 @@ enum ImageConverter {
     ///   - asset: The `PHAsset` representing the source image.
     ///   - destinationURL: The URL where the converted JPEG file will be saved.
     ///   - compressionQuality: The quality of the resulting JPEG image, from 0.0 (lowest) to 1.0 (highest).
-    static func convert(to utType: UTType, from asset: PHAsset, to destinationURL: URL, compressionQuality: CGFloat = 0.8) async throws {
+    static func convert(to utType: UTType, from asset: PHAsset, to destinationURL: URL, compressionQuality: CGFloat) async throws {
         if utType == .pdf {
             let imageData = try await requestImageData(for: asset)
             guard let source = CGImageSourceCreateWithData(imageData as CFData, nil) else {
@@ -87,6 +142,22 @@ enum ImageConverter {
         
         let options = [kCGImageDestinationLossyCompressionQuality: compressionQuality] as [CFString: Any]
         try await performImageIOConversion(from: asset, to: destinationURL, as: utType, options: options)
+    }
+    
+    // MARK: - Public Conversion Methods
+
+    /// Converts a UIImage to JPEG data, preserving metadata from a given source.
+    /// - Parameters:
+    ///   - image: The source UIImage.
+    ///   - quality: The compression quality, from 0.0 (lowest) to 1.0 (highest). Defaults to 0.8.
+    ///   - metadataSource: The source for EXIF, TIFF, and other metadata.
+    /// - Returns: A `Data` object containing the JPEG image, or `nil` on failure.
+    public static func convert(to utType: UTType, image: UIImage, compressionQuality: Double, metadataSource: MetadataSource) async -> Data? {
+        var properties = await metadataSource.extract() ?? [:]
+        
+        properties[kCGImageDestinationLossyCompressionQuality as String] = compressionQuality
+        
+        return convertWithImageIO(image: image, to: utType, properties: properties)
     }
 
     // MARK: - Private Core Logic
@@ -178,6 +249,31 @@ enum ImageConverter {
                 }
             }
         }
+    }
+    
+    /// The core conversion function using ImageIO.
+    private static func convertWithImageIO(image: UIImage, to uttype: UTType, properties: [String: Any]) -> Data? {
+        guard let cgImage = image.cgImage else {
+            // Error: Could not get a CGImage from the input UIImage.
+            return nil
+        }
+
+        let imageData = NSMutableData()
+        guard let destination = CGImageDestinationCreateWithData(imageData, uttype.identifier as CFString, 1, nil) else {
+            // Error: Could not create the CGImageDestination.
+            return nil
+        }
+
+        // Add the image with its properties to the destination.
+        CGImageDestinationAddImage(destination, cgImage, properties as CFDictionary)
+
+        // Finalize the image data creation.
+        guard CGImageDestinationFinalize(destination) else {
+            // Error: Could not write the final image data.
+            return nil
+        }
+
+        return imageData as Data
     }
 }
 
