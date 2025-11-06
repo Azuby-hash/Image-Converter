@@ -124,9 +124,11 @@ class Convert {
     }
     
     func setSelecteds(_ selecteds: [ConvertItem]) {
+        let oldSelecteds = self.selecteds
         self.selecteds = selecteds
         
-        queues.append(contentsOf: selecteds.filter({ !queues.map({ $0.item }).contains($0) }).map({ selected in
+        queues.removeAll(where: { !selecteds.contains($0.item) })
+        queues.append(contentsOf: selecteds.filter({ !oldSelecteds.contains($0) }).map({ selected in
             return .init(completion: { [self] in
                 await selected.convert(to: mimeType, compression: compression)
             }, item: selected)

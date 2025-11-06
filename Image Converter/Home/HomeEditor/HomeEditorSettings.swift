@@ -24,7 +24,7 @@ class HomeEditorSettings: GrayShadow {
 }
 
 extension HomeEditorSettings: SliderDelegate {
-    func onChanged(_ slider: Slider) {
+    func onEnd(_ slider: Slider) {
         cHome.setCompression(slider.value)
     }
 }
