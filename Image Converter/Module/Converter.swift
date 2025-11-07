@@ -10,32 +10,21 @@ import Photos
 
 /// An enumeration to specify the source of metadata to be applied to a converted image.
 enum ConvertSource {
-    /// Use metadata from an image file at the specified URL.
-    case url(URL)
     /// Use metadata from a PHAsset instance from the Photo library.
     case asset(PHAsset)
-    /// Use metadata from a PHAsset data instance from the Photo library.
+    /// Use metadata from a PHAsset data instance from the Photo library or URL data.
     case data(Data)
-    /// Use a pre-existing dictionary of metadata properties.
-    case properties([String: Any])
     /// Do not apply any additional metadata.
     case none
     
-    func extract() async -> [String: Any]? {
+    func source() async -> CGImageSource? {
         switch self {
-        case .url(let url):
-            guard let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil),
-                  CGImageSourceGetCount(imageSource) > 0 else {
-                return nil
-            }
-            return CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any]
-
         case .data(let data):
             guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
                   CGImageSourceGetCount(imageSource) > 0 else {
                 return nil
             }
-            return CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any]
+            return imageSource
             
         case .asset(let asset):
             let options = PHImageRequestOptions()
@@ -51,14 +40,44 @@ enum ConvertSource {
                         continuation.resume(returning: nil)
                         return
                     }
-                    let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any]
+                    
+                    continuation.resume(returning: imageSource)
+                }
+            }
+            
+        case .none:
+            return nil
+        }
+    }
+    
+    func extract() async -> [CFString: Any]? {
+        switch self {
+        case .data(let data):
+            guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
+                  CGImageSourceGetCount(imageSource) > 0 else {
+                return nil
+            }
+            return CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any]
+            
+        case .asset(let asset):
+            let options = PHImageRequestOptions()
+            options.isNetworkAccessAllowed = true
+            options.version = .current
+            
+            // Use withCheckedContinuation to bridge the callback-based Photos API to async/await.
+            return await withCheckedContinuation { continuation in
+                PHImageManager.default().requestImageDataAndOrientation(for: asset, options: options) { data, _, _, _ in
+                    guard let data = data,
+                          let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
+                          CGImageSourceGetCount(imageSource) > 0 else {
+                        continuation.resume(returning: nil)
+                        return
+                    }
+                    let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any]
                     continuation.resume(returning: properties)
                 }
             }
-
-        case .properties(let properties):
-            return properties
-
+            
         case .none:
             return nil
         }
@@ -72,7 +91,6 @@ enum Converter {
 
     /// Describes errors that can occur during the image conversion process.
     enum ConversionError: Error, LocalizedError {
-        case invalidInputURL(URL)
         case failedToAccessAssetData(Error?)
         case failedToCreateImageSource(String)
         case failedToCreateImageDestination
@@ -83,8 +101,6 @@ enum Converter {
 
         var errorDescription: String? {
             switch self {
-            case .invalidInputURL(let url):
-                return "The provided input URL is invalid or the file does not exist: \(url.path)."
             case .failedToAccessAssetData(let underlyingError):
                 return "Failed to access image data from the PHAsset. Underlying error: \(underlyingError?.localizedDescription ?? "Unknown error")."
             case .failedToCreateImageSource(let sourceDescription):
@@ -110,104 +126,59 @@ enum Converter {
     ///   - sourceURL: The URL of the source image file.
     ///   - destinationURL: The URL where the converted JPEG file will be saved.
     ///   - compressionQuality: The quality of the resulting JPEG image, from 0.0 (lowest) to 1.0 (highest).
-    static func convert(to utType: UTType, from sourceURL: URL, to destinationURL: URL, compression: CGFloat) throws {
+    static func convert(to utType: UTType, image: UIImage?, from sourceData: ConvertSource, compression: CGFloat) async throws -> Data {
+        guard var options = await sourceData.extract(),
+              let source = await sourceData.source() else {
+            throw ConversionError.failedToCreateImageSource("PDF source invalid")
+        }
+        
         if utType == .pdf {
-            guard let source = CGImageSourceCreateWithURL(sourceURL as CFURL, nil) else {
-                throw ConversionError.failedToCreateImageSource(sourceURL.path)
-            }
-            try performPDFConversion(from: source, to: destinationURL)
-            
-            return
+            return try performPDFConversion(image: image, from: source, options: options)
         }
         
-        let options = [kCGImageDestinationLossyCompressionQuality: compression] as [CFString: Any]
-        try performImageIOConversion(from: sourceURL, to: destinationURL, as: utType, options: options)
-    }
-
-    /// Converts an image from a PHAsset to JPEG format.
-    /// - Parameters:
-    ///   - asset: The `PHAsset` representing the source image.
-    ///   - destinationURL: The URL where the converted JPEG file will be saved.
-    ///   - compressionQuality: The quality of the resulting JPEG image, from 0.0 (lowest) to 1.0 (highest).
-    static func convert(to utType: UTType, from asset: PHAsset, to destinationURL: URL, compression: CGFloat) async throws {
-        if utType == .pdf {
-            let imageData = try await requestImageData(for: asset)
-            guard let source = CGImageSourceCreateWithData(imageData as CFData, nil) else {
-                throw ConversionError.failedToCreateImageSource("PHAsset Data")
-            }
-            try performPDFConversion(from: source, to: destinationURL)
-            
-            return
-        }
-        
-        let options = [kCGImageDestinationLossyCompressionQuality: compression] as [CFString: Any]
-        try await performImageIOConversion(from: asset, to: destinationURL, as: utType, options: options)
-    }
-    
-    // MARK: - Public Conversion Methods
-
-    /// Converts a UIImage to JPEG data, preserving metadata from a given source.
-    /// - Parameters:
-    ///   - image: The source UIImage.
-    ///   - quality: The compression quality, from 0.0 (lowest) to 1.0 (highest). Defaults to 0.8.
-    ///   - metadataSource: The source for EXIF, TIFF, and other metadata.
-    /// - Returns: A `Data` object containing the JPEG image, or `nil` on failure.
-    static func convert(to utType: UTType, image: UIImage, compressionQuality: Double, metadataSource: ConvertSource) async -> Data? {
-        var properties = await metadataSource.extract() ?? [:]
-        
-        properties[kCGImageDestinationLossyCompressionQuality as String] = compressionQuality
-        
-        return convertWithImageIO(image: image, to: utType, properties: properties)
-    }
-
-    // MARK: - Private Core Logic
-
-    private static func performImageIOConversion(from sourceURL: URL, to destinationURL: URL, as utType: UTType, options: [CFString: Any]? = nil) throws {
-        guard let source = CGImageSourceCreateWithURL(sourceURL as CFURL, nil) else {
-            throw ConversionError.failedToCreateImageSource(sourceURL.path)
-        }
-        try performImageIOConversion(from: source, to: destinationURL, as: utType, options: options)
-    }
-
-    private static func performImageIOConversion(from asset: PHAsset, to destinationURL: URL, as utType: UTType, options: [CFString: Any]? = nil) async throws {
-        let imageData = try await requestImageData(for: asset)
-        guard let source = CGImageSourceCreateWithData(imageData as CFData, nil) else {
-            throw ConversionError.failedToCreateImageSource("PHAsset Data")
-        }
-        try performImageIOConversion(from: source, to: destinationURL, as: utType, options: options)
+        options[kCGImageDestinationLossyCompressionQuality] = compression
+       
+        return try performImageIOConversion(image: image, from: source, as: utType, options: options)
     }
 
     /// The core conversion function that takes a CGImageSource and writes to a destination using ImageIO.
     /// This approach is highly efficient as it avoids fully decoding and re-encoding image data into memory (e.g., a CGImage).
     /// It also preserves metadata and handles multi-frame images (like animated GIFs) correctly.
-    private static func performImageIOConversion(from source: CGImageSource, to destinationURL: URL, as utType: UTType, options: [CFString: Any]? = nil) throws {
-        let frameCount = CGImageSourceGetCount(source)
-        guard frameCount > 0 else {
-            throw ConversionError.sourceImageNotFound
-        }
-
-        guard let destination = CGImageDestinationCreateWithURL(destinationURL as CFURL, utType.identifier as CFString, frameCount, nil) else {
+    private static func performImageIOConversion(image: UIImage?, from source: CGImageSource, as utType: UTType, options: [CFString: Any]) throws -> Data {
+        let imageData = NSMutableData()
+        
+        guard let destination = CGImageDestinationCreateWithData(imageData, utType.identifier as CFString, 1, nil) else {
+            // Error: Could not create the CGImageDestination.
             throw ConversionError.failedToCreateImageDestination
         }
 
         // Set properties for the destination, such as compression quality.
-        if let options = options {
-            CGImageDestinationSetProperties(destination, options as CFDictionary)
-        }
+        CGImageDestinationSetProperties(destination, options as CFDictionary)
 
-        // Iterate through all frames in the source image and add them to the destination.
-        for i in 0..<frameCount {
-            // Passing nil for the properties dictionary copies the frame's original properties.
-            CGImageDestinationAddImageFromSource(destination, source, i, nil)
+        if let image = image?.cgImage {
+            CGImageDestinationAddImage(destination, image, nil)
+        } else {
+            let frameCount = CGImageSourceGetCount(source)
+            guard frameCount > 0 else {
+                throw ConversionError.sourceImageNotFound
+            }
+            
+            // Iterate through all frames in the source image and add them to the destination.
+            for i in 0..<frameCount {
+                // Passing nil for the properties dictionary copies the frame's original properties.
+                CGImageDestinationAddImageFromSource(destination, source, i, nil)
+            }
         }
 
         if !CGImageDestinationFinalize(destination) {
             throw ConversionError.failedToFinalizeImage
         }
+        
+        return imageData as Data
     }
 
     /// The core PDF conversion function using CoreGraphics.
-    private static func performPDFConversion(from source: CGImageSource, to destinationURL: URL) throws {
+    private static func performPDFConversion(image: UIImage?, from source: CGImageSource, options: [CFString: Any]) throws -> Data {
         guard let imageProperties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any],
               let width = imageProperties[kCGImagePropertyPixelWidth] as? CGFloat,
               let height = imageProperties[kCGImagePropertyPixelHeight] as? CGFloat else {
@@ -217,11 +188,17 @@ enum Converter {
         let pdfRect = CGRect(x: 0, y: 0, width: width, height: height)
         var mediaBox = pdfRect
         
-        guard let pdfContext = CGContext(destinationURL as CFURL, mediaBox: &mediaBox, nil) else {
+        let imageData = NSMutableData()
+        
+        guard let consumer = CGDataConsumer(data: imageData) else {
+            throw ConversionError.failedToCreateImageDestination
+        }
+        
+        guard let pdfContext = CGContext(consumer: consumer, mediaBox: &mediaBox, nil) else {
             throw ConversionError.pdfContextCreationFailed
         }
 
-        guard let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
+        guard let image = image?.cgImage ?? CGImageSourceCreateImageAtIndex(source, 0, nil) else {
             throw ConversionError.sourceImageNotFound
         }
 
@@ -229,6 +206,16 @@ enum Converter {
         pdfContext.draw(image, in: pdfRect)
         pdfContext.endPDFPage()
         pdfContext.closePDF()
+        
+        guard let destination = CGImageDestinationCreateWithData(imageData, UTType.pdf.identifier as CFString, 1, nil) else {
+            // Error: Could not create the CGImageDestination.
+            throw ConversionError.failedToCreateImageDestination
+        }
+
+        // Set properties for the destination, such as compression quality.
+        CGImageDestinationSetProperties(destination, options as CFDictionary)
+        
+        return imageData as Data
     }
 
     // MARK: - Private Helpers
@@ -249,31 +236,6 @@ enum Converter {
                 }
             }
         }
-    }
-    
-    /// The core conversion function using ImageIO.
-    private static func convertWithImageIO(image: UIImage, to uttype: UTType, properties: [String: Any]) -> Data? {
-        guard let cgImage = image.cgImage else {
-            // Error: Could not get a CGImage from the input UIImage.
-            return nil
-        }
-
-        let imageData = NSMutableData()
-        guard let destination = CGImageDestinationCreateWithData(imageData, uttype.identifier as CFString, 1, nil) else {
-            // Error: Could not create the CGImageDestination.
-            return nil
-        }
-
-        // Add the image with its properties to the destination.
-        CGImageDestinationAddImage(destination, cgImage, properties as CFDictionary)
-
-        // Finalize the image data creation.
-        guard CGImageDestinationFinalize(destination) else {
-            // Error: Could not write the final image data.
-            return nil
-        }
-
-        return imageData as Data
     }
 }
 
