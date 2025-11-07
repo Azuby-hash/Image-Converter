@@ -72,9 +72,19 @@ class HomeEditorCell: UICollectionViewCell {
     }
     
     @objc private func addMorePhoto() {
-        guard let vc = findViewController() as? Home else { return }
-        
-        PhotosVC.present(vc: vc, config: .init(doneTitle: "Add Photos"))
+        GDSender.request(with: GDObjectSystemAlert<Home>(source: addPhoto, title: "Add Photos From", message: nil, style: .actionSheet, actions: [
+            .init(title: "Library", style: .default, handler: { [self] _ in
+                guard let vc = findViewController() as? Home else { return }
+                
+                PhotosVC.present(vc: vc, delegate: HomeConverterStatic.shared,
+                                 config: .init(doneTitle: "Add Photos"))
+            }),
+            .init(title: "Files", style: .default, handler: { [self] _ in
+                GDSender.request(with: GDObjectOpenFiles<Home>(source: addPhoto,
+                                                               delegate: HomeConverterStatic.shared,
+                                                               files: nil, selectMultiple: true))
+            }),
+        ]))
     }
     
     @objc private func removePhoto() {
@@ -93,22 +103,18 @@ extension HomeEditorCell {
     @objc private func updateInfo() {
         guard let item = item else { return }
         
-        upperLabel.text = "OUTPUT: 0.0 MB"
-        lowerLabel.text = "ORIGINAL: 0.0 MB"
+        if let output = item.getOutput() {
+            upperLabel.text = "Estimate: \(output.count.toSizeString())"
+        } else {
+            upperLabel.text = "Calculating..."
+        }
+        
+        if let data = item.getData() {
+            lowerLabel.text = "Original: \(data.count.toSizeString())"
+        } else {
+            lowerLabel.text = "Loading..."
+        }
+        
         imageExtension.text = "JPG"
-    }
-}
-
-extension HomeEditorCell: PhotosDelegate {
-    func didSelectPHAssets(controller: PhotosVC, assets: [PHAsset]) {
-        cHome.setTab(CHomeTab.edit.rawValue)
-    }
-    
-    func didSelectPHAsset(controller: PhotosVC, asset: PHAsset) {
-        cHome.appendSelected(asset)
-    }
-    
-    func didDeselectPHAsset(controller: PhotosVC, asset: PHAsset) {
-        cHome.removeSelected(asset)
     }
 }

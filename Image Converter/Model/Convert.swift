@@ -102,6 +102,8 @@ class Convert {
         if oldMimeType != mimeType {
             queues.removeAll()
             queues.append(contentsOf: selecteds.map({ selected in
+                selected.reset()
+                
                 return .init(completion: { [self] in
                     await selected.convert(to: mimeType, compression: compression)
                 }, item: selected)
@@ -116,6 +118,8 @@ class Convert {
         if oldCompression != compression {
             queues.removeAll()
             queues.append(contentsOf: selecteds.map({ selected in
+                selected.reset()
+                
                 return .init(completion: { [self] in
                     await selected.convert(to: mimeType, compression: compression)
                 }, item: selected)
@@ -129,6 +133,8 @@ class Convert {
         
         queues.removeAll(where: { !selecteds.contains($0.item) })
         queues.append(contentsOf: selecteds.filter({ !oldSelecteds.contains($0) }).map({ selected in
+            selected.reset()
+            
             return .init(completion: { [self] in
                 await selected.convert(to: mimeType, compression: compression)
             }, item: selected)
@@ -139,57 +145,45 @@ class Convert {
 class ConvertItem: Equatable {
     private let id = UUID().uuidString
     
-    private var image: Data?
-    private var asset: PHAsset?
-    private var url: URL?
+    private var data: Data?
+    private var output: Data?
     
-    init(asset: PHAsset) {
-        self.asset = asset
-    }
-    
-    init(url: URL) {
-        self.url = url
+    init(data: Data) {
+        self.data = data
     }
     
     func getPreview(completion: @escaping (UIImage) -> Void) throws {
-        if let asset = asset {
-            AssetLibrary.shared.getUIImage(from: asset, size: PREVIEW_SIZE, quality: .opportunistic, resizeMode: .fast) { image in
-                completion(image)
-            }
-            
-            return
-        }
-        
-        if let url = url,
-           let source = CGImageSourceCreateWithURL(url as CFURL, nil),
+        if let data = data,
+           let source = CGImageSourceCreateWithData(data as CFData, nil),
            let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, nil) {
-            completion(UIImage(cgImage: cgImage))
+            DispatchQueue.main.async {
+                completion(UIImage(cgImage: cgImage))
+            }
+            return
         }
         
         throw ConvertError.data("No preview")
     }
     
-    func getAsset() -> PHAsset? {
-        return asset
+    func getData() -> Data? {
+        return data
     }
     
-    func getURL() -> URL? {
-        return url
+    func getOutput() -> Data? {
+        return output
+    }
+    
+    func reset() {
+        output = nil
     }
     
     func convert(to mime: ConvertMime, compression: CGFloat) async {
-        guard let fileExtension = mime.getUTType().preferredFilenameExtension else {
-            return
-        }
-
-        let newUrl = FileManager.url(name: "\(id).\(fileExtension)")
-        
-        if let asset = asset {
-            try? await Converter.convert(to: mime.getUTType(), from: asset, to: newUrl, compression: compression)
-        }
-        
-        if let url = url {
-            try? Converter.convert(to: mime.getUTType(), from: url, to: newUrl, compression: compression)
+        if let data = data {
+            do {
+                output = try Converter.convert(to: mime.getUTType(), image: nil, from: data, compression: compression)
+            } catch {
+                print(error)
+            }
         }
     }
     

@@ -8,115 +8,17 @@
 import UIKit
 import Photos
 
-/// An enumeration to specify the source of metadata to be applied to a converted image.
-enum ConvertSource {
-    /// Use metadata from a PHAsset instance from the Photo library.
-    case asset(PHAsset)
-    /// Use metadata from a PHAsset data instance from the Photo library or URL data.
-    case data(Data)
-    /// Do not apply any additional metadata.
-    case none
-    
-    func source() async -> CGImageSource? {
-        switch self {
-        case .data(let data):
-            guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
-                  CGImageSourceGetCount(imageSource) > 0 else {
-                return nil
-            }
-            return imageSource
-            
-        case .asset(let asset):
-            let options = PHImageRequestOptions()
-            options.isNetworkAccessAllowed = true
-            options.version = .current
-            
-            // Use withCheckedContinuation to bridge the callback-based Photos API to async/await.
-            return await withCheckedContinuation { continuation in
-                PHImageManager.default().requestImageDataAndOrientation(for: asset, options: options) { data, _, _, _ in
-                    guard let data = data,
-                          let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
-                          CGImageSourceGetCount(imageSource) > 0 else {
-                        continuation.resume(returning: nil)
-                        return
-                    }
-                    
-                    continuation.resume(returning: imageSource)
-                }
-            }
-            
-        case .none:
-            return nil
-        }
-    }
-    
-    func extract() async -> [CFString: Any]? {
-        switch self {
-        case .data(let data):
-            guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
-                  CGImageSourceGetCount(imageSource) > 0 else {
-                return nil
-            }
-            return CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any]
-            
-        case .asset(let asset):
-            let options = PHImageRequestOptions()
-            options.isNetworkAccessAllowed = true
-            options.version = .current
-            
-            // Use withCheckedContinuation to bridge the callback-based Photos API to async/await.
-            return await withCheckedContinuation { continuation in
-                PHImageManager.default().requestImageDataAndOrientation(for: asset, options: options) { data, _, _, _ in
-                    guard let data = data,
-                          let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
-                          CGImageSourceGetCount(imageSource) > 0 else {
-                        continuation.resume(returning: nil)
-                        return
-                    }
-                    let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any]
-                    continuation.resume(returning: properties)
-                }
-            }
-            
-        case .none:
-            return nil
-        }
-    }
-}
-
-
 /// A utility for converting images from various sources to different formats using best practices.
 /// This enum acts as a namespace for the static conversion methods and cannot be instantiated.
 enum Converter {
 
     /// Describes errors that can occur during the image conversion process.
     enum ConversionError: Error, LocalizedError {
-        case failedToAccessAssetData(Error?)
         case failedToCreateImageSource(String)
         case failedToCreateImageDestination
         case failedToFinalizeImage
         case pdfContextCreationFailed
         case sourceImageNotFound
-        case unsupportedOutputFormat(String)
-
-        var errorDescription: String? {
-            switch self {
-            case .failedToAccessAssetData(let underlyingError):
-                return "Failed to access image data from the PHAsset. Underlying error: \(underlyingError?.localizedDescription ?? "Unknown error")."
-            case .failedToCreateImageSource(let sourceDescription):
-                return "Could not create an image source from the input: \(sourceDescription)."
-            case .failedToCreateImageDestination:
-                return "Could not create an image destination for the output file."
-            case .failedToFinalizeImage:
-                return "Failed to write the image data to the destination."
-            case .pdfContextCreationFailed:
-                return "Failed to create a PDF graphics context."
-            case .sourceImageNotFound:
-                return "The source contains no image data or failed to be read."
-            case .unsupportedOutputFormat(let type):
-                return "The output format '\(type)' is not supported by the current system."
-            }
-        }
     }
 
     // MARK: - JPEG Conversion
@@ -126,11 +28,11 @@ enum Converter {
     ///   - sourceURL: The URL of the source image file.
     ///   - destinationURL: The URL where the converted JPEG file will be saved.
     ///   - compressionQuality: The quality of the resulting JPEG image, from 0.0 (lowest) to 1.0 (highest).
-    static func convert(to utType: UTType, image: UIImage?, from sourceData: ConvertSource, compression: CGFloat) async throws -> Data {
-        guard var options = await sourceData.extract(),
-              let source = await sourceData.source() else {
-            throw ConversionError.failedToCreateImageSource("PDF source invalid")
-        }
+    static func convert(to utType: UTType, image: UIImage?, from sourceData: Data, compression: CGFloat) throws -> Data {
+
+        guard let source = CGImageSourceCreateWithData(sourceData as CFData, nil),
+              var options = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any]
+        else { throw ConversionError.failedToCreateImageSource("Image source invalid") }
         
         if utType == .pdf {
             return try performPDFConversion(image: image, from: source, options: options)
@@ -216,35 +118,5 @@ enum Converter {
         CGImageDestinationSetProperties(destination, options as CFDictionary)
         
         return imageData as Data
-    }
-
-    // MARK: - Private Helpers
-
-    /// Asynchronously requests the original, full-quality image data for a given `PHAsset`.
-    private static func requestImageData(for asset: PHAsset) async throws -> Data {
-        let options = PHImageRequestOptions()
-        options.version = .original
-        options.isNetworkAccessAllowed = true // Allow downloading from iCloud if necessary
-
-        return try await withCheckedThrowingContinuation { continuation in
-            PHImageManager.default().requestImageDataAndOrientation(for: asset, options: options) { data, _, _, info in
-                if let data = data {
-                    continuation.resume(returning: data)
-                } else {
-                    let error = info?[PHImageErrorKey] as? Error
-                    continuation.resume(throwing: ConversionError.failedToAccessAssetData(error))
-                }
-            }
-        }
-    }
-}
-
-/// A helper extension to check if a UTType is supported for writing by ImageIO.
-fileprivate extension UTType {
-    var isSupportedByImageIO: Bool {
-        guard let supportedTypes = CGImageDestinationCopyTypeIdentifiers() as? [String] else {
-            return false
-        }
-        return supportedTypes.contains(self.identifier)
     }
 }

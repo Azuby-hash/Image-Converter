@@ -115,11 +115,11 @@ class PhotosVC: UIViewController {
         dismiss(animated: true)
     }
     
-    static func present(vc: UIViewController & PhotosDelegate, config: PhotosConfig = .init()) {
+    static func present(vc: UIViewController, delegate: PhotosDelegate, config: PhotosConfig = .init()) {
         AssetLibrary.shared.request { status in
             if status == .authorized || status == .limited {
                 let nextVC = PhotosVC.create()
-                (nextVC as? PhotosVC)?.delegate = vc
+                (nextVC as? PhotosVC)?.delegate = delegate
                 (nextVC as? PhotosVC)?.config = config
                 vc.present(nextVC, animated: true)
                 return

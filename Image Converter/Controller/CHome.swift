@@ -70,13 +70,18 @@ class CHome {
         NotificationCenter.default.post(name: CHome.tabUpdate, object: nil)
     }
     
-    func appendSelected(_ asset: PHAsset) {
-        Model.convert.setSelecteds(Model.convert.getSelecteds() + [ConvertItem(asset: asset)])
+    func appendSelected(_ data: Data) {
+        Model.convert.setSelecteds(Model.convert.getSelecteds() + [ConvertItem(data: data)])
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
     }
     
-    func removeSelected(_ asset: PHAsset) {
-        Model.convert.setSelecteds(Model.convert.getSelecteds().filter({ $0.getAsset() != asset }))
+    func appendSelecteds(_ datas: [Data]) {
+        Model.convert.setSelecteds(Model.convert.getSelecteds() + datas.map({ ConvertItem(data: $0) }))
+        NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
+    }
+    
+    func removeSelected(_ data: Data) {
+        Model.convert.setSelecteds(Model.convert.getSelecteds().filter({ $0.getData() != data }))
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
     }
     

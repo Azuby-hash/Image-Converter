@@ -33,6 +33,9 @@
 		CE72D2772EAA61F300DDE5A8 /* Materials.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE72D2762EAA61F300DDE5A8 /* Materials.xcassets */; };
 		CE72D27A2EAA671300DDE5A8 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE72D2792EAA670A00DDE5A8 /* Shadow.swift */; };
 		CE72D27C2EAA75D000DDE5A8 /* HomeTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE72D27B2EAA75CD00DDE5A8 /* HomeTab.swift */; };
+		CEA4D4572EBCD02000525D42 /* GDObjectOpenFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4D4472EBCD01F00525D42 /* GDObjectOpenFiles.swift */; };
+		CEA4D45D2EBCD02000525D42 /* GlobalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4D44F2EBCD01F00525D42 /* GlobalDelegate.swift */; };
+		CEA4D45E2EBCD02000525D42 /* GDObjectSystemAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4D44D2EBCD01F00525D42 /* GDObjectSystemAlert.swift */; };
 		CEA4F8822EA914670041BDAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEA4F8792EA914670041BDAC /* Assets.xcassets */; };
 		CEA4F8842EA914670041BDAC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEA4F87C2EA914670041BDAC /* LaunchScreen.storyboard */; };
 		CEA4F8852EA914670041BDAC /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEA4F87E2EA914670041BDAC /* Home.storyboard */; };
@@ -140,6 +143,9 @@
 		CE72D2762EAA61F300DDE5A8 /* Materials.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Materials.xcassets; sourceTree = "<group>"; };
 		CE72D2792EAA670A00DDE5A8 /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
 		CE72D27B2EAA75CD00DDE5A8 /* HomeTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTab.swift; sourceTree = "<group>"; };
+		CEA4D4472EBCD01F00525D42 /* GDObjectOpenFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDObjectOpenFiles.swift; sourceTree = "<group>"; };
+		CEA4D44D2EBCD01F00525D42 /* GDObjectSystemAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDObjectSystemAlert.swift; sourceTree = "<group>"; };
+		CEA4D44F2EBCD01F00525D42 /* GlobalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDelegate.swift; sourceTree = "<group>"; };
 		CEA4F8602EA914610041BDAC /* Image Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Image Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA4F8782EA914670041BDAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEA4F8792EA914670041BDAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -263,6 +269,16 @@
 			path = HomeEditor;
 			sourceTree = "<group>";
 		};
+		CEA4D4502EBCD01F00525D42 /* GlobalDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				CEA4D4472EBCD01F00525D42 /* GDObjectOpenFiles.swift */,
+				CEA4D44D2EBCD01F00525D42 /* GDObjectSystemAlert.swift */,
+				CEA4D44F2EBCD01F00525D42 /* GlobalDelegate.swift */,
+			);
+			path = GlobalDelegate;
+			sourceTree = "<group>";
+		};
 		CEA4F8572EA914610041BDAC = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +325,7 @@
 				AFA30FB82EB994D0008C9023 /* Converter.swift */,
 				CE3D9D042EB3B95C002C29B5 /* Slider.swift */,
 				CE3D9CED2EAB01E9002C29B5 /* BoxGradient.swift */,
+				CEA4D4502EBCD01F00525D42 /* GlobalDelegate */,
 				CEA4F9492EAA384A0041BDAC /* Vision */,
 				CEA4F89D2EAA35CA0041BDAC /* Metal */,
 			);
@@ -587,6 +604,9 @@
 				CEA4F8862EA914670041BDAC /* AppDelegate.swift in Sources */,
 				CEA4F8872EA914670041BDAC /* SceneDelegate.swift in Sources */,
 				CEA4F88D2EA914960041BDAC /* SVGConverter.metal in Sources */,
+				CEA4D4572EBCD02000525D42 /* GDObjectOpenFiles.swift in Sources */,
+				CEA4D45D2EBCD02000525D42 /* GlobalDelegate.swift in Sources */,
+				CEA4D45E2EBCD02000525D42 /* GDObjectSystemAlert.swift in Sources */,
 				CE3D9CF92EAC9C9F002C29B5 /* HomeEditor.swift in Sources */,
 				CEA4F8882EA914670041BDAC /* Home.swift in Sources */,
 				CEA4F89E2EAA35CA0041BDAC /* MetalOutput.swift in Sources */,
