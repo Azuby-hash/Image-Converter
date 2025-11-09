@@ -27,7 +27,6 @@ class HomeEditor: UIView {
     
     @IBAction func clear(_ sender: Any) {
         cHome.clearSelectedAssets()
-        cHome.setTab(CHomeTab.convert.rawValue)
     }
     
     @IBAction func convert(_ button: UIButton) {

@@ -28,6 +28,7 @@ extension CHome {
     static let tabUpdate = Notification.Name(UUID().uuidString)
     static let convertNumberUpdate = Notification.Name(UUID().uuidString)
     static let convertSettingsUpdate = Notification.Name(UUID().uuidString)
+    static let convertResetSettings = Notification.Name(UUID().uuidString)
 }
 
 enum CHomeTab: Int {
@@ -71,6 +72,12 @@ class CHome {
     
     func setTab(_ index: Int) {
         selectTab = CHomeTab(rawValue: index) ?? selectTab
+        
+        if selectTab != .edit {
+            Model.convert.reset()
+            NotificationCenter.default.post(name: CHome.convertResetSettings, object: nil)
+        }
+        
         NotificationCenter.default.post(name: CHome.tabUpdate, object: nil)
     }
     
@@ -87,16 +94,28 @@ class CHome {
     func removeSelected(_ data: Data) {
         Model.convert.setSelecteds(Model.convert.getSelecteds().filter({ $0.getData() != data }))
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
+
+        if Model.convert.getSelecteds().isEmpty {
+            setTab(CHomeTab.convert.rawValue)
+        }
     }
     
     func removeSelected(_ item: ConvertItem) {
         Model.convert.setSelecteds(Model.convert.getSelecteds().filter({ $0 != item }))
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
+        
+        if Model.convert.getSelecteds().isEmpty {
+            setTab(CHomeTab.convert.rawValue)
+        }
     }
     
     func clearSelectedAssets() {
         Model.convert.setSelecteds([])
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
+        
+        if Model.convert.getSelecteds().isEmpty {
+            setTab(CHomeTab.convert.rawValue)
+        }
     }
     
     func save(item: ConvertItem, view: UIView) throws {
@@ -130,6 +149,10 @@ class CHome {
             }
             
             urls.append(url)
+        }
+        
+        if urls.isEmpty {
+            throw CHomeError.save("No items")
         }
 
         if Model.convert.getMimeType() == .pdf {

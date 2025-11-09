@@ -51,8 +51,8 @@ class ConvertQueue {
 
 class Convert {
     private var selecteds: [ConvertItem] = []
-    private var mimeType: ConvertMime = .jpg
-    private var compression: CGFloat = 1.0
+    private var mimeType: ConvertMime = DEFAULT_MIME
+    private var compression: CGFloat = DEFAULT_COMPRESSION
     
     private var queues: [ConvertQueue] = []
     
@@ -89,6 +89,11 @@ class Convert {
                 }
             }
         }
+    }
+    
+    func reset() {
+        mimeType = DEFAULT_MIME
+        compression = DEFAULT_COMPRESSION
     }
     
     func getMimeType() -> ConvertMime {

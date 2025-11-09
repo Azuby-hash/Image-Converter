@@ -22,33 +22,8 @@ class HomeEditorMime: UIViewPointSubview {
         if didLoad { return }
         didLoad = true
         
-        stacks.enumerated().forEach { (index, stack) in
-            ConvertMime.allCases.forEach { mime in
-                let view = UIView()
-                view.translatesAutoresizingMaskIntoConstraints = false
-                
-                let label = UILabel()
-                label.translatesAutoresizingMaskIntoConstraints = false
-                label.text = mime.rawValue.uppercased()
-                label.font = .systemFont(ofSize: 16, weight: .bold)
-                label.textColor = index == 0 ? ._gray60 : ._white
-                
-                view.addSubview(label)
-                
-                NSLayoutConstraint.activate([
-                    view.widthAnchor.constraint(equalToConstant: ITEM_LENGTH),
-                    label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                    label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                ])
-                
-                stack.addArrangedSubview(view)
-            }
-        }
-        
-        scroll.delegate = self
-        scroll.decelerationRate = .fast
-        
-        selector.setBackgroundColor(._primary.withAlphaComponent(0.8))
+        setup()
+        noti()
     }
     
     override func layoutSubviews() {
@@ -103,5 +78,47 @@ extension HomeEditorMime: UIScrollViewDelegate {
             selector.transform = .identity
             selector.setBackgroundColor(._primary.withAlphaComponent(0.8))
         }
+    }
+}
+
+extension HomeEditorMime {
+    private func setup() {
+        stacks.enumerated().forEach { (index, stack) in
+            ConvertMime.allCases.forEach { mime in
+                let view = UIView()
+                view.translatesAutoresizingMaskIntoConstraints = false
+                
+                let label = UILabel()
+                label.translatesAutoresizingMaskIntoConstraints = false
+                label.text = mime.rawValue.uppercased()
+                label.font = .systemFont(ofSize: 16, weight: .bold)
+                label.textColor = index == 0 ? ._gray60 : ._white
+                
+                view.addSubview(label)
+                
+                NSLayoutConstraint.activate([
+                    view.widthAnchor.constraint(equalToConstant: ITEM_LENGTH),
+                    label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                ])
+                
+                stack.addArrangedSubview(view)
+            }
+        }
+        
+        scroll.delegate = self
+        scroll.decelerationRate = .fast
+        
+        selector.setBackgroundColor(._primary.withAlphaComponent(0.8))
+    }
+}
+
+extension HomeEditorMime {
+    private func noti() {
+        NotificationCenter.default.addObserver(self, selector: #selector(reset), name: CHome.convertResetSettings, object: nil)
+    }
+    
+    @objc private func reset() {
+        scroll.contentOffset.x = -scroll.contentInset.left
     }
 }

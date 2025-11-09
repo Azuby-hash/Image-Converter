@@ -19,12 +19,29 @@ class HomeEditorSettings: GrayShadow {
         if didLoad { return }
         didLoad = true
         
-        compressionSlider.delegate = self
+        setup()
+        noti()
     }
 }
 
 extension HomeEditorSettings: SliderDelegate {
     func onEnd(_ slider: Slider) {
         cHome.setCompression(slider.value)
+    }
+}
+
+extension HomeEditorSettings {
+    private func setup() {
+        compressionSlider.delegate = self
+    }
+}
+
+extension HomeEditorSettings {
+    private func noti() {
+        NotificationCenter.default.addObserver(self, selector: #selector(reset), name: CHome.convertResetSettings, object: nil)
+    }
+    
+    @objc private func reset() {
+        compressionSlider.setCurrentPoint(at: cHome.getCompression())
     }
 }
