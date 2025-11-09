@@ -103,8 +103,10 @@ extension HomeEditorCell {
     @objc private func updateInfo() {
         guard let item = item else { return }
         
-        if let output = item.getOutput() {
-            upperLabel.text = "Estimate: \(output.count.toSizeString())"
+        if let output = item.getOutput(),
+           let fileAttrs = try? FileManager.default.attributesOfItem(atPath: output.path),
+           let count = fileAttrs[.size] as? Int {
+            upperLabel.text = "Estimate: \(count.toSizeString())"
         } else {
             upperLabel.text = "Calculating..."
         }

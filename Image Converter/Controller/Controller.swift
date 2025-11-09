@@ -18,6 +18,8 @@ class Controller {
     let cHome = CHome()
     
     private init() {
+        FileManager.eraseDocumentAndData()
+        
         Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(globalTimer01), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(globalTimer25), userInfo: nil, repeats: true)
     }

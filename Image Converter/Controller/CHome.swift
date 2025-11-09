@@ -8,6 +8,10 @@
 import UIKit
 import Photos
 
+enum CHomeError: Error {
+    case save(String)
+}
+
 extension UIView {
     var cHome: CHome {
         get { Controller.shared.cHome }
@@ -70,13 +74,13 @@ class CHome {
         NotificationCenter.default.post(name: CHome.tabUpdate, object: nil)
     }
     
-    func appendSelected(_ data: Data) {
-        Model.convert.setSelecteds(Model.convert.getSelecteds() + [ConvertItem(data: data)])
+    func appendSelected(_ item: (data: Data, date: Date)) {
+        Model.convert.setSelecteds(Model.convert.getSelecteds() + [ConvertItem(data: item.data, date: item.date)])
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
     }
     
-    func appendSelecteds(_ datas: [Data]) {
-        Model.convert.setSelecteds(Model.convert.getSelecteds() + datas.map({ ConvertItem(data: $0) }))
+    func appendSelecteds(_ items: [(data: Data, date: Date)]) {
+        Model.convert.setSelecteds(Model.convert.getSelecteds() + items.map({ ConvertItem(data: $0.data, date: $0.date) }))
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
     }
     
@@ -93,5 +97,53 @@ class CHome {
     func clearSelectedAssets() {
         Model.convert.setSelecteds([])
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
+    }
+    
+    func save(item: ConvertItem, view: UIView) throws {
+        guard let url = item.getOutput() else {
+            throw CHomeError.save("Item undone.")
+        }
+        
+        if Model.convert.getMimeType() == .pdf {
+            GDSender.request(with: GDObjectOpenFiles<Home>(source: view, delegate: nil, files: [url], selectMultiple: false))
+        } else {
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: url)
+            }) { success, error in
+                if !success {
+                    print(error!)
+                }
+            }
+        }
+    }
+    
+    func save(view: UIView) throws {
+        if Model.convert.getSelecteds().first(where: { $0.getOutput() == nil }) != nil {
+            throw CHomeError.save("Have some items undone.")
+        }
+        
+        var urls: [URL] = []
+        
+        for item in Model.convert.getSelecteds() {
+            guard let url = item.getOutput() else {
+                continue
+            }
+            
+            urls.append(url)
+        }
+
+        if Model.convert.getMimeType() == .pdf {
+            GDSender.request(with: GDObjectOpenFiles<Home>(source: view, delegate: nil, files: urls, selectMultiple: false))
+        } else {
+            urls.forEach { url in
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: url)
+                }) { success, error in
+                    if !success {
+                        print(error!)
+                    }
+                }
+            }
+        }
     }
 }

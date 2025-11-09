@@ -29,6 +29,10 @@ class HomeEditor: UIView {
         cHome.clearSelectedAssets()
         cHome.setTab(CHomeTab.convert.rawValue)
     }
+    
+    @IBAction func convert(_ button: UIButton) {
+        try! cHome.save(view: button)
+    }
 }
 
 extension HomeEditor {

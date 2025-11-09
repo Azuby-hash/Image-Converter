@@ -77,6 +77,14 @@ class Convert {
                         }
                     }
                 } else {
+                    if selecteds.contains(where: { $0.getOutput() == nil }) {
+                        queues.append(contentsOf: selecteds.filter({ $0.getOutput() == nil }).map({ selected in
+                            return .init(completion: { [self] in
+                                await selected.convert(to: mimeType, compression: compression)
+                            }, item: selected)
+                        }))
+                    }
+                    
                     isBusy = false
                 }
             }
@@ -145,17 +153,19 @@ class Convert {
 class ConvertItem: Equatable {
     private let id = UUID().uuidString
     
-    private var data: Data?
-    private var output: Data?
+    private var data: Data
+    private var output: URL?
     
-    init(data: Data) {
+    private let date: Date
+    
+    init(data: Data, date: Date) {
         self.data = data
+        self.date = date
     }
     
     func getPreview(completion: @escaping (UIImage) -> Void) throws {
-        if let data = data,
-           let source = CGImageSourceCreateWithData(data as CFData, nil),
-           let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, nil) {
+        if let source = CGImageSourceCreateWithData(data as CFData, nil),
+           let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, [kCGImageSourceCreateThumbnailWithTransform: true] as CFDictionary) {
             DispatchQueue.main.async {
                 completion(UIImage(cgImage: cgImage))
             }
@@ -169,7 +179,7 @@ class ConvertItem: Equatable {
         return data
     }
     
-    func getOutput() -> Data? {
+    func getOutput() -> URL? {
         return output
     }
     
@@ -178,12 +188,24 @@ class ConvertItem: Equatable {
     }
     
     func convert(to mime: ConvertMime, compression: CGFloat) async {
-        if let data = data {
-            do {
-                output = try Converter.convert(to: mime.getUTType(), image: nil, from: data, compression: compression)
-            } catch {
-                print(error)
+        do {
+            for type in ConvertMime.allCases {
+                if let fileExtension = type.getUTType().preferredFilenameExtension {
+                    FileManager.remove(forKey: "\(id).\(fileExtension)")
+                }
             }
+            
+            guard let fileExtension = mime.getUTType().preferredFilenameExtension else {
+                throw ConvertError.data("No file extension")
+            }
+            
+            let url = FileManager.url(name: "\(id).\(fileExtension)")
+            
+            try Converter.convert(to: mime.getUTType(), image: nil, from: data, creationDate: .date(date), output: url, compression: compression)
+            
+            output = url
+        } catch {
+            print(error)
         }
     }
     

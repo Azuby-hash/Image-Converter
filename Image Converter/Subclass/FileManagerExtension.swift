@@ -36,8 +36,21 @@ fileprivate var icloudFolder: URL = {
 
 extension FileManager {
     static func eraseDocumentAndData() {
-        try? FileManager.default.removeItem(atPath: localFolder.path)
-        try? FileManager.default.removeItem(atPath: icloudFolder.path)
+        if let items = try? FileManager.default.contentsOfDirectory(atPath: localFolder.path) {
+            // Remove each item
+            for item in items {
+                let itemPath = localFolder.appendingPathComponent(item).path
+                try? FileManager.default.removeItem(atPath: itemPath)
+            }
+        }
+        
+        if let items = try? FileManager.default.contentsOfDirectory(atPath: icloudFolder.path) {
+            // Remove each item
+            for item in items {
+                let itemPath = icloudFolder.appendingPathComponent(item).path
+                try? FileManager.default.removeItem(atPath: itemPath)
+            }
+        }
     }
     
     static func remove(forKey key: String) {

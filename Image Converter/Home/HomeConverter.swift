@@ -69,11 +69,11 @@ extension HomeConverterStatic: PhotosDelegate {
         options.resizeMode = .exact
         
         PHImageManager.default().requestImageDataAndOrientation(for: asset, options: options) { [self] data, _, _, _ in
-            guard let data = data else {
-                return
-            }
+            guard let data = data,
+                  let date = asset.creationDate
+            else { return }
             
-            cHome.appendSelected(data)
+            cHome.appendSelected((data, date))
         }
     }
     
@@ -95,18 +95,24 @@ extension HomeConverterStatic: PhotosDelegate {
 
 extension HomeConverterStatic: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        var datas = [Data]()
+        var items = [(Data, Date)]()
         
         urls.forEach { url in
             do {
-                let data = try Data(contentsOf: url)
-                datas.append(data)
+                let item = try Data(contentsOf: url)
+                let date = try url.resourceValues(forKeys: [.creationDateKey]).creationDate
+                
+                guard let date = date else {
+                    throw NSError(domain: "No date", code: 0, userInfo: nil)
+                }
+                
+                items.append((item, date))
             } catch {
                 print(error)
             }
         }
         
-        cHome.appendSelecteds(datas)
+        cHome.appendSelecteds(items)
         cHome.setTab(CHomeTab.edit.rawValue)
     }
 }

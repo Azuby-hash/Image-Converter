@@ -786,7 +786,7 @@
                                                                     <color key="baseBackgroundColor" name="Primary"/>
                                                                 </buttonConfiguration>
                                                                 <connections>
-                                                                    <action selector="openPhotos:" destination="l0Q-9K-OYA" eventType="touchUpInside" id="edr-gx-7Jg"/>
+                                                                    <action selector="convert:" destination="sf6-w7-x46" eventType="touchUpInside" id="1HO-as-C9W"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
