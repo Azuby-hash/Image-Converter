@@ -204,9 +204,9 @@ class ConvertItem: Equatable {
                 throw ConvertError.data("No file extension")
             }
             
-            let url = FileManager.url(name: "\(id).\(fileExtension)")
+            var url = FileManager.url(name: "\(id).\(fileExtension)")
             
-            try Converter.convert(to: mime.getUTType(), image: nil, from: data, creationDate: .date(date), output: url, compression: compression)
+            try Converter.convert(to: mime.getUTType(), image: nil, from: data, creationDate: .date(date), output: &url, compression: compression)
             
             output = url
         } catch {

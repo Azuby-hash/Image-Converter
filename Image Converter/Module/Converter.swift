@@ -8,10 +8,6 @@
 import UIKit
 import Photos
 
-protocol Output { }
-extension NSMutableData: Output { }
-extension URL: Output { }
-
 enum ConverterDate {
     case date(Date)
     case pass
@@ -38,7 +34,7 @@ class Converter {
     ///   - sourceURL: The URL of the source image file.
     ///   - destinationURL: The URL where the converted JPEG file will be saved.
     ///   - compressionQuality: The quality of the resulting JPEG image, from 0.0 (lowest) to 1.0 (highest).
-    static func convert<T: Output>(to utType: UTType, image: UIImage?, from sourceData: Data, creationDate: ConverterDate, output: T, compression: CGFloat) throws {
+    static func convert(to utType: UTType, image: UIImage?, from sourceData: Data, creationDate: ConverterDate, output: inout URL, compression: CGFloat) throws {
 
         guard let source = CGImageSourceCreateWithData(sourceData as CFData, nil) else {
             throw ConversionError.failedToCreateImageSource("Image source invalid")
@@ -55,54 +51,41 @@ class Converter {
             i += 1
         }
         
-//        if var tiff = options["{TIFF}" as CFString] as? [CFString: Any] {
-//            tiff.removeValue(forKey: "Orientation" as CFString)
-//            options["{TIFF}" as CFString] = tiff
-//        }
-//        
-//        options.removeValue(forKey: kCGImagePropertyOrientation)
-//        options.removeValue(forKey: kCGImageDestinationOrientation)
-//        options.removeValue(forKey: kCGImagePropertyTIFFOrientation)
+        var resourceValues = URLResourceValues()
         
         if case .date(let date) = creationDate {
             options[kCGImageDestinationDateTime] = date
             options[kCGImagePropertyTIFFDateTime] = date
             options[kCGImagePropertyExifDateTimeOriginal] = date
             options[kCGImagePropertyExifDateTimeDigitized] = date
+            
+            resourceValues.creationDate = date
+            resourceValues.contentModificationDate = date
         } else if case .current = creationDate {
             options[kCGImageDestinationDateTime] = Date.now
             options[kCGImagePropertyTIFFDateTime] = Date.now
             options[kCGImagePropertyExifDateTimeOriginal] = Date.now
             options[kCGImagePropertyExifDateTimeDigitized] = Date.now
+            
+            resourceValues.creationDate = Date.now
+            resourceValues.contentModificationDate = Date.now
         }
         
-        let destination: CGImageDestination
-        
-        if let output = output as? NSMutableData {
-            if let dest = CGImageDestinationCreateWithData(output, utType.identifier as CFString, 1, nil) {
-                destination = dest
-            } else {
-                throw ConversionError.failedToCreateImageDestination
-            }
-        } else if let output = output as? URL {
-            if let dest = CGImageDestinationCreateWithURL(output as CFURL, utType.identifier as CFString, 1, nil) {
-                destination = dest
-            } else {
-                throw ConversionError.failedToCreateImageDestination
-            }
-        } else {
+        guard let destination = CGImageDestinationCreateWithURL(output as CFURL, utType.identifier as CFString, 1, nil) else {
             throw ConversionError.failedToCreateImageDestination
         }
 
+        options[kCGImageDestinationLossyCompressionQuality] = compression
+        
         if utType == .pdf {
-            try performPDFConversion(image: image, from: source, to: destination, output: output, options: options)
+            try performPDFConversion(image: image, from: sourceData, to: destination, output: output, compression: compression, options: options)
+            try output.setResourceValues(resourceValues)
             
             return
         }
         
-        options[kCGImageDestinationLossyCompressionQuality] = compression
-       
         try performImageIOConversion(image: image, from: source, to: destination, as: utType, options: options)
+        try output.setResourceValues(resourceValues)
         
         return
     }
@@ -135,47 +118,23 @@ class Converter {
     }
 
     /// The core PDF conversion function using CoreGraphics.
-    private static func performPDFConversion<T: Output>(image: UIImage?, from source: CGImageSource, to destination: CGImageDestination, output: T, options: [CFString: Any]) throws {
-        guard let image = image?.cgImage ?? CGImageSourceCreateImageAtIndex(source, 0, nil) else {
+    private static func performPDFConversion(image: UIImage?, from source: Data, to destination: CGImageDestination, output: URL, compression: CGFloat, options: [CFString: Any]) throws {
+        guard var image = image ?? UIImage(data: source) else {
             throw ConversionError.sourceImageNotFound
         }
+        
+        guard let data = image.jpegData(compressionQuality: compression) else {
+            throw ConversionError.sourceImageNotFound
+        }
+        
+        image = UIImage(data: data) ?? image
 
-        let pdfRect = CGRect(x: 0, y: 0, width: image.width, height: image.height)
-        var mediaBox = pdfRect
-
-        let consumer: CGDataConsumer
-        
-        if let output = output as? NSMutableData {
-            if let con = CGDataConsumer(data: output) {
-                consumer = con
-            } else {
-                throw ConversionError.pdfContextCreationFailed
-            }
-        } else if let output = output as? URL {
-            if let con = CGDataConsumer(url: output as CFURL) {
-                consumer = con
-            } else {
-                throw ConversionError.pdfContextCreationFailed
-            }
-        } else {
-            throw ConversionError.pdfContextCreationFailed
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(origin: .zero, size: image.size))
+        let pdf = renderer.pdfData { (context) in
+            context.beginPage()
+            image.draw(in: CGRect(origin: .zero, size: image.size))
         }
         
-        guard let pdfContext = CGContext(consumer: consumer, mediaBox: &mediaBox, nil) else {
-            throw ConversionError.pdfContextCreationFailed
-        }
-        
-        pdfContext.beginPDFPage(nil)
-        pdfContext.draw(image, in: pdfRect)
-        pdfContext.endPDFPage()
-        pdfContext.closePDF()
-        
-        // Set properties for the destination, such as compression quality.
-        CGImageDestinationSetProperties(destination, options as CFDictionary)
-        CGImageDestinationAddImage(destination, image, nil)
-        
-        if !CGImageDestinationFinalize(destination) {
-            throw ConversionError.failedToFinalizeImage
-        }
+        try pdf.write(to: output)
     }
 }
