@@ -10,8 +10,7 @@ import Photos
 
 enum ConverterDate {
     case date(Date)
-    case pass
-    case current
+    case now
 }
 
 /// A utility for converting images from various sources to different formats using best practices.
@@ -52,23 +51,33 @@ class Converter {
         }
         
         var resourceValues = URLResourceValues()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy:MM:dd HH:mm:ss"
+        
+        let dateTimeString: String
         
         if case .date(let date) = creationDate {
-            options[kCGImageDestinationDateTime] = date
-            options[kCGImagePropertyTIFFDateTime] = date
-            options[kCGImagePropertyExifDateTimeOriginal] = date
-            options[kCGImagePropertyExifDateTimeDigitized] = date
-            
+            dateTimeString = dateFormatter.string(from: date)
+
             resourceValues.creationDate = date
             resourceValues.contentModificationDate = date
-        } else if case .current = creationDate {
-            options[kCGImageDestinationDateTime] = Date.now
-            options[kCGImagePropertyTIFFDateTime] = Date.now
-            options[kCGImagePropertyExifDateTimeOriginal] = Date.now
-            options[kCGImagePropertyExifDateTimeDigitized] = Date.now
-            
+        } else {
+            dateTimeString = dateFormatter.string(from: Date.now)
+
             resourceValues.creationDate = Date.now
             resourceValues.contentModificationDate = Date.now
+        }
+        
+        if var tiffProperties = options[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
+            tiffProperties[kCGImagePropertyTIFFDateTime] = dateTimeString as CFString
+            options[kCGImagePropertyTIFFDictionary] = tiffProperties as CFDictionary
+        }
+        
+        if var exifProperties = options[kCGImagePropertyExifDictionary] as? [CFString: Any] {
+            exifProperties[kCGImagePropertyExifDateTimeOriginal] = dateTimeString as CFString
+            exifProperties[kCGImagePropertyExifDateTimeDigitized] = dateTimeString as CFString
+            options[kCGImagePropertyExifDictionary] = exifProperties as CFDictionary
         }
         
         guard let destination = CGImageDestinationCreateWithURL(output as CFURL, utType.identifier as CFString, 1, nil) else {
@@ -98,7 +107,7 @@ class Converter {
         CGImageDestinationSetProperties(destination, options as CFDictionary)
 
         if let image = image?.cgImage {
-            CGImageDestinationAddImage(destination, image, nil)
+            CGImageDestinationAddImage(destination, image, options as CFDictionary)
         } else {
             let frameCount = CGImageSourceGetCount(source)
             guard frameCount > 0 else {
@@ -108,7 +117,7 @@ class Converter {
             // Iterate through all frames in the source image and add them to the destination.
             for i in 0..<frameCount {
                 // Passing nil for the properties dictionary copies the frame's original properties.
-                CGImageDestinationAddImageFromSource(destination, source, i, nil)
+                CGImageDestinationAddImageFromSource(destination, source, i, options as CFDictionary)
             }
         }
 

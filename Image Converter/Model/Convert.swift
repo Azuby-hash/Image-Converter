@@ -34,6 +34,10 @@ enum ConvertMime: String, CaseIterable {
         }
     }
     
+    func canCompression() -> Bool {
+        return ConvertMime.supportCompression().contains(self)
+    }
+    
     static func supportCompression() -> [ConvertMime] {
         return [.jpg, .heic, .tiff]
     }
@@ -53,6 +57,16 @@ class Convert {
     private var selecteds: [ConvertItem] = []
     private var mimeType: ConvertMime = DEFAULT_MIME
     private var compression: CGFloat = DEFAULT_COMPRESSION
+    
+    private var keepInfo: Bool {
+        get { UserDefaults.standard.object(forKey: "2b4dfb67-088e-461b-a36d-304d5586ebea") as? Bool ?? true }
+        set { UserDefaults.standard.set(newValue, forKey: "2b4dfb67-088e-461b-a36d-304d5586ebea") }
+    }
+    
+    private var keepDate: Bool {
+        get { UserDefaults.standard.object(forKey: "65cc9ab8-0b34-4a38-9ea1-7e72730111c5") as? Bool ?? true }
+        set { UserDefaults.standard.set(newValue, forKey: "65cc9ab8-0b34-4a38-9ea1-7e72730111c5") }
+    }
     
     private var queues: [ConvertQueue] = []
     
@@ -80,7 +94,8 @@ class Convert {
                     if selecteds.contains(where: { $0.getOutput() == nil }) {
                         queues.append(contentsOf: selecteds.filter({ $0.getOutput() == nil }).map({ selected in
                             return .init(completion: { [self] in
-                                await selected.convert(to: mimeType, compression: compression)
+                                await selected.convert(to: mimeType, compression: compression,
+                                                       keepInfo: keepInfo, keepDate: keepDate)
                             }, item: selected)
                         }))
                     }
@@ -108,6 +123,14 @@ class Convert {
         return selecteds
     }
     
+    func isKeepInfo() -> Bool {
+        return keepInfo
+    }
+    
+    func isKeepDate() -> Bool {
+        return keepDate
+    }
+    
     func setMimeType(_ mimeType: ConvertMime) {
         let oldMimeType = self.mimeType
         self.mimeType = mimeType
@@ -118,7 +141,8 @@ class Convert {
                 selected.reset()
                 
                 return .init(completion: { [self] in
-                    await selected.convert(to: mimeType, compression: compression)
+                    await selected.convert(to: mimeType, compression: compression,
+                                           keepInfo: keepInfo, keepDate: keepDate)
                 }, item: selected)
             }))
         }
@@ -134,7 +158,8 @@ class Convert {
                 selected.reset()
                 
                 return .init(completion: { [self] in
-                    await selected.convert(to: mimeType, compression: compression)
+                    await selected.convert(to: mimeType, compression: compression,
+                                           keepInfo: keepInfo, keepDate: keepDate)
                 }, item: selected)
             }))
         }
@@ -149,9 +174,44 @@ class Convert {
             selected.reset()
             
             return .init(completion: { [self] in
-                await selected.convert(to: mimeType, compression: compression)
+                await selected.convert(to: mimeType, compression: compression,
+                                       keepInfo: keepInfo, keepDate: keepDate)
             }, item: selected)
         }))
+    }
+    
+    func setKeepInfo(_ keep: Bool) {
+        let oldKeepInfo = self.keepInfo
+        self.keepInfo = keep
+        
+        if oldKeepInfo != keep {
+            queues.removeAll()
+            queues.append(contentsOf: selecteds.map({ selected in
+                selected.reset()
+                
+                return .init(completion: { [self] in
+                    await selected.convert(to: mimeType, compression: compression,
+                                           keepInfo: keepInfo, keepDate: keepDate)
+                }, item: selected)
+            }))
+        }
+    }
+    
+    func setKeepDate(_ keep: Bool) {
+        let oldKeepDate = self.keepDate
+        self.keepDate = keep
+        
+        if oldKeepDate != keep {
+            queues.removeAll()
+            queues.append(contentsOf: selecteds.map({ selected in
+                selected.reset()
+                
+                return .init(completion: { [self] in
+                    await selected.convert(to: mimeType, compression: compression,
+                                           keepInfo: keepInfo, keepDate: keepDate)
+                }, item: selected)
+            }))
+        }
     }
 }
 
@@ -192,7 +252,7 @@ class ConvertItem: Equatable {
         output = nil
     }
     
-    func convert(to mime: ConvertMime, compression: CGFloat) async {
+    func convert(to mime: ConvertMime, compression: CGFloat, keepInfo: Bool, keepDate: Bool) async {
         do {
             for type in ConvertMime.allCases {
                 if let fileExtension = type.getUTType().preferredFilenameExtension {
@@ -206,7 +266,7 @@ class ConvertItem: Equatable {
             
             var url = FileManager.url(name: "\(id).\(fileExtension)")
             
-            try Converter.convert(to: mime.getUTType(), image: nil, from: data, creationDate: .date(date), output: &url, compression: compression)
+            try Converter.convert(to: mime.getUTType(), image: nil, from: data, creationDate: keepDate ? .date(date) : .now, output: &url, compression: compression)
             
             output = url
         } catch {

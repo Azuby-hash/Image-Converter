@@ -60,6 +60,18 @@ class CHome {
         return Model.convert.getCompression()
     }
     
+    func getMime() -> ConvertMime {
+        return Model.convert.getMimeType()
+    }
+    
+    func isKeepInfo() -> Bool {
+        return Model.convert.isKeepInfo()
+    }
+    
+    func isKeepDate() -> Bool {
+        return Model.convert.isKeepDate()
+    }
+    
     func setMime(_ mime: ConvertMime) {
         Model.convert.setMimeType(mime)
         NotificationCenter.default.post(name: CHome.convertSettingsUpdate, object: nil)
@@ -67,6 +79,16 @@ class CHome {
     
     func setCompression(_ compression: CGFloat) {
         Model.convert.setCompression(compression)
+        NotificationCenter.default.post(name: CHome.convertSettingsUpdate, object: nil)
+    }
+    
+    func setKeepInfo(_ keep: Bool) {
+        Model.convert.setKeepInfo(keep)
+        NotificationCenter.default.post(name: CHome.convertSettingsUpdate, object: nil)
+    }
+    
+    func setKeepDate(_ keep: Bool) {
+        Model.convert.setKeepDate(keep)
         NotificationCenter.default.post(name: CHome.convertSettingsUpdate, object: nil)
     }
     
