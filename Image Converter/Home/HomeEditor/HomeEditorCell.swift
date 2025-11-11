@@ -68,6 +68,16 @@ class HomeEditorCell: UICollectionViewCell {
             }
         }
         
+        try? item.getType { [weak self] type in
+            guard let self = self else { return }
+            
+            if delegate?.indexPath(for: self)?.row == cHome.getSelecteds().firstIndex(of: item) {
+                UIView.transition(with: imageExtension, duration: 0.25, options: .transitionCrossDissolve) {
+                    self.imageExtension.text = type?.rawValue.uppercased()
+                }
+            }
+        }
+        
         updateInfo()
     }
     
@@ -116,7 +126,5 @@ extension HomeEditorCell {
         } else {
             lowerLabel.text = "Loading..."
         }
-        
-        imageExtension.text = "JPG"
     }
 }

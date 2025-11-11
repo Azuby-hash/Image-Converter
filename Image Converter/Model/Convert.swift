@@ -13,6 +13,21 @@ extension Model {
     static let convert = Convert()
 }
 
+extension UTType {
+    func getMime() -> ConvertMime? {
+        switch self {
+            case .jpeg: return .jpg
+            case .png: return .png
+            case .heic: return .heic
+            case .pdf: return .pdf
+            case .gif: return .gif
+            case .tiff: return .tiff
+            case .bmp: return .bmp
+            default: return nil
+        }
+    }
+}
+
 enum ConvertMime: String, CaseIterable {
     case jpg = "jpg"
     case png = "png"
@@ -233,6 +248,19 @@ class ConvertItem: Equatable {
            let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, [kCGImageSourceCreateThumbnailWithTransform: true] as CFDictionary) {
             DispatchQueue.main.async {
                 completion(UIImage(cgImage: cgImage))
+            }
+            return
+        }
+        
+        throw ConvertError.data("No preview")
+    }
+    
+    func getType(completion: @escaping (ConvertMime?) -> Void) throws {
+        if let source = CGImageSourceCreateWithData(data as CFData, nil),
+           let string = CGImageSourceGetType(source) as? String,
+           let type = UTType(string) {
+            DispatchQueue.main.async {
+                completion(type.getMime())
             }
             return
         }

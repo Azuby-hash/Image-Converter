@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -62,17 +63,44 @@
                                                                 <constraint firstItem="LHl-Rz-awJ" firstAttribute="centerY" secondItem="KSj-EI-n15" secondAttribute="centerY" id="XA6-WR-GiB"/>
                                                             </constraints>
                                                         </view>
+                                                        <button opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0e-Zv-kBZ">
+                                                            <rect key="frame" x="73" y="100" width="47" height="20"/>
+                                                            <color key="backgroundColor" name="White"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                                                <backgroundConfiguration key="background"/>
+                                                                <directionalEdgeInsets key="contentInsets" top="4" leading="12" bottom="4" trailing="12"/>
+                                                                <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </buttonConfiguration>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="backgroundAlpha">
+                                                                    <integer key="value" value="100"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PNG" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GH2-Yj-ELW">
+                                                            <rect key="frame" x="85" y="104" width="23" height="12"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="10"/>
+                                                            <color key="textColor" name="Black"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstItem="GH2-Yj-ELW" firstAttribute="centerX" secondItem="H0e-Zv-kBZ" secondAttribute="centerX" id="1FU-8o-dJP"/>
                                                         <constraint firstItem="lT2-MY-7pR" firstAttribute="height" secondItem="bCR-5l-oFL" secondAttribute="height" id="B5f-2u-zwx"/>
                                                         <constraint firstItem="KSj-EI-n15" firstAttribute="centerX" secondItem="bCR-5l-oFL" secondAttribute="centerX" id="Eun-fF-Rfz"/>
                                                         <constraint firstItem="lT2-MY-7pR" firstAttribute="centerY" secondItem="bCR-5l-oFL" secondAttribute="centerY" id="Hbm-Zc-whl"/>
                                                         <constraint firstItem="KSj-EI-n15" firstAttribute="height" secondItem="bCR-5l-oFL" secondAttribute="height" id="Luz-qS-XSX"/>
+                                                        <constraint firstItem="GH2-Yj-ELW" firstAttribute="height" secondItem="H0e-Zv-kBZ" secondAttribute="height" constant="-8" id="OAS-AT-sMK"/>
                                                         <constraint firstItem="lT2-MY-7pR" firstAttribute="width" secondItem="bCR-5l-oFL" secondAttribute="width" id="SLk-TO-dvf"/>
                                                         <constraint firstItem="KSj-EI-n15" firstAttribute="width" secondItem="bCR-5l-oFL" secondAttribute="width" id="TYW-pH-JoC"/>
+                                                        <constraint firstAttribute="bottom" secondItem="H0e-Zv-kBZ" secondAttribute="bottom" constant="8" id="ZVc-oA-vrg"/>
                                                         <constraint firstItem="KSj-EI-n15" firstAttribute="centerY" secondItem="bCR-5l-oFL" secondAttribute="centerY" id="cci-vG-WTc"/>
                                                         <constraint firstItem="lT2-MY-7pR" firstAttribute="centerX" secondItem="bCR-5l-oFL" secondAttribute="centerX" id="kDu-sG-N2I"/>
+                                                        <constraint firstItem="GH2-Yj-ELW" firstAttribute="width" secondItem="H0e-Zv-kBZ" secondAttribute="width" constant="-24" id="m6O-dK-kUR"/>
+                                                        <constraint firstAttribute="trailing" secondItem="H0e-Zv-kBZ" secondAttribute="trailing" constant="8" id="zEX-Ul-0Xt"/>
+                                                        <constraint firstItem="GH2-Yj-ELW" firstAttribute="centerY" secondItem="H0e-Zv-kBZ" secondAttribute="centerY" id="zy3-Ou-p0U"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -90,6 +118,7 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
+                                            <outlet property="imageExtension" destination="GH2-Yj-ELW" id="9Ab-5m-jOr"/>
                                             <outlet property="imgV" destination="lT2-MY-7pR" id="yyS-dt-oUe"/>
                                             <outlet property="selector" destination="KSj-EI-n15" id="KEW-Jc-mN0"/>
                                         </connections>
@@ -193,6 +222,11 @@
                                     <color key="baseForegroundColor" name="White"/>
                                     <color key="baseBackgroundColor" name="Primary"/>
                                 </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="backgroundAlpha">
+                                        <integer key="value" value="100"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="convertNow:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="ImJ-Hx-M2c"/>
                                 </connections>
@@ -209,6 +243,11 @@
                                     <color key="baseForegroundColor" name="White"/>
                                     <color key="baseBackgroundColor" name="Primary"/>
                                 </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="backgroundAlpha">
+                                        <integer key="value" value="100"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="limitAdd:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="OLQ-ol-Bvn"/>
                                 </connections>

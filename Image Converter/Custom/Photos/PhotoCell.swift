@@ -11,6 +11,7 @@ class PhotoCell: UICollectionViewCell {
     
     @IBOutlet weak var imgV: UIImageView!
     @IBOutlet weak var selector: UIView!
+    @IBOutlet weak var imageExtension: UILabel!
     
     weak var collection: UICollectionView?
     
@@ -28,6 +29,18 @@ class PhotoCell: UICollectionViewCell {
                 }
             }
         }
+        
+        guard let resource = PHAssetResource.assetResources(for: asset).first else { return }
+        
+        let contentType: UTType?
+        
+        if #available(iOS 26.0, *) {
+            contentType = resource.contentType
+        } else {
+            contentType = UTType(resource.uniformTypeIdentifier)
+        }
+        
+        imageExtension.text = contentType?.getMime()?.rawValue.uppercased()
     }
     
     func select(_ bool: Bool) {

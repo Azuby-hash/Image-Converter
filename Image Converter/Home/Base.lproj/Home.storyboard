@@ -357,9 +357,9 @@
                                                                                                 <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerCurve" value="continuous"/>
                                                                                             </userDefinedRuntimeAttributes>
                                                                                         </imageView>
-                                                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mvH-dW-FJ4" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
-                                                                                            <rect key="frame" x="74.333333333333329" y="101" width="46.666666666666671" height="20"/>
-                                                                                            <color key="backgroundColor" name="Sort"/>
+                                                                                        <button opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mvH-dW-FJ4" customClass="UIButtonPro" customModule="Image_Converter" customModuleProvider="target">
+                                                                                            <rect key="frame" x="74" y="101" width="47" height="20"/>
+                                                                                            <color key="backgroundColor" name="White"/>
                                                                                             <state key="normal" title="Button"/>
                                                                                             <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
                                                                                                 <backgroundConfiguration key="background"/>
@@ -373,9 +373,9 @@
                                                                                             </userDefinedRuntimeAttributes>
                                                                                         </button>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PNG" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sY7-4N-mC7">
-                                                                                            <rect key="frame" x="86.333333333333329" y="105" width="22.666666666666671" height="12"/>
-                                                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                                                                            <color key="textColor" name="Primary"/>
+                                                                                            <rect key="frame" x="86" y="105" width="23" height="12"/>
+                                                                                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="10"/>
+                                                                                            <color key="textColor" name="Black"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
                                                                                     </subviews>
@@ -1171,9 +1171,6 @@
         </namedColor>
         <namedColor name="Red">
             <color red="1" green="0.23100000619888306" blue="0.18799999356269836" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Sort">
-            <color red="0.92500001192092896" green="0.89399999380111694" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
