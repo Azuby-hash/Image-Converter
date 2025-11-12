@@ -33,21 +33,44 @@ class Converter {
     ///   - sourceURL: The URL of the source image file.
     ///   - destinationURL: The URL where the converted JPEG file will be saved.
     ///   - compressionQuality: The quality of the resulting JPEG image, from 0.0 (lowest) to 1.0 (highest).
-    static func convert(to utType: UTType, image: UIImage?, from sourceData: Data, creationDate: ConverterDate, output: inout URL, compression: CGFloat) throws {
+    static func convert(to utType: UTType, image: UIImage?, from sourceData: Data, creationDate: ConverterDate, output: inout URL, info: Bool, compression: CGFloat) throws {
 
         guard let source = CGImageSourceCreateWithData(sourceData as CFData, nil) else {
             throw ConversionError.failedToCreateImageSource("Image source invalid")
         }
         
-        var options = [CFString: Any]()
         var i = 0
+        var options = [CFString: Any]()
         
-        while let props = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as? [CFString: Any] {
-            props.keys.forEach { key in
-                options[key] = props[key]
+        if info {
+            while let props = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as? [CFString: Any] {
+                props.keys.forEach { key in
+                    options[key] = props[key]
+                }
+                
+                i += 1
             }
-            
-            i += 1
+        } else {
+            while let props = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as? [CFString: Any] {
+                props.keys.forEach { key in
+                    if key == kCGImagePropertyOrientation {
+                        options[key] = props[key]
+                        return
+                    }
+                    
+                    if key == kCGImagePropertyTIFFDictionary {
+                        if let tiffProperties = props[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
+                            options[kCGImagePropertyTIFFDictionary] = [
+                                kCGImagePropertyTIFFOrientation: tiffProperties[kCGImagePropertyTIFFOrientation]
+                            ] as? CFDictionary
+                        }
+                        
+                        return
+                    }
+                }
+                
+                i += 1
+            }
         }
         
         var resourceValues = URLResourceValues()
@@ -71,6 +94,7 @@ class Converter {
         
         if var tiffProperties = options[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
             tiffProperties[kCGImagePropertyTIFFDateTime] = dateTimeString as CFString
+            tiffProperties[kCGImagePropertyTIFFOrientation] = 1
             options[kCGImagePropertyTIFFDictionary] = tiffProperties as CFDictionary
         }
         
@@ -93,7 +117,7 @@ class Converter {
             return
         }
         
-        try performImageIOConversion(image: image, from: source, to: destination, as: utType, options: options)
+        try performImageIOConversion(image: image, from: sourceData, to: destination, as: utType, options: options)
         try output.setResourceValues(resourceValues)
         
         return
@@ -102,24 +126,15 @@ class Converter {
     /// The core conversion function that takes a CGImageSource and writes to a destination using ImageIO.
     /// This approach is highly efficient as it avoids fully decoding and re-encoding image data into memory (e.g., a CGImage).
     /// It also preserves metadata and handles multi-frame images (like animated GIFs) correctly.
-    private static func performImageIOConversion(image: UIImage?, from source: CGImageSource, to destination: CGImageDestination, as utType: UTType, options: [CFString: Any]) throws {
+    private static func performImageIOConversion(image: UIImage?, from source: Data, to destination: CGImageDestination, as utType: UTType, options: [CFString: Any]) throws {
+        
+        guard let image = image?.cgImage ?? UIImage(data: source)?.cgImage else {
+            throw ConversionError.sourceImageNotFound
+        }
+        
         // Set properties for the destination, such as compression quality.
         CGImageDestinationSetProperties(destination, options as CFDictionary)
-
-        if let image = image?.cgImage {
-            CGImageDestinationAddImage(destination, image, options as CFDictionary)
-        } else {
-            let frameCount = CGImageSourceGetCount(source)
-            guard frameCount > 0 else {
-                throw ConversionError.sourceImageNotFound
-            }
-            
-            // Iterate through all frames in the source image and add them to the destination.
-            for i in 0..<frameCount {
-                // Passing nil for the properties dictionary copies the frame's original properties.
-                CGImageDestinationAddImageFromSource(destination, source, i, options as CFDictionary)
-            }
-        }
+        CGImageDestinationAddImage(destination, image, options as CFDictionary)
 
         if !CGImageDestinationFinalize(destination) {
             throw ConversionError.failedToFinalizeImage
