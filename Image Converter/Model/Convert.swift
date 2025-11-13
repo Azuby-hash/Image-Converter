@@ -268,6 +268,16 @@ class ConvertItem: Equatable {
         throw ConvertError.data("No preview")
     }
     
+    func getType() throws -> ConvertMime? {
+        if let source = CGImageSourceCreateWithData(data as CFData, nil),
+           let string = CGImageSourceGetType(source) as? String,
+           let type = UTType(string) {
+            return type.getMime()
+        }
+        
+        throw ConvertError.data("No preview")
+    }
+    
     func getData() -> Data? {
         return data
     }

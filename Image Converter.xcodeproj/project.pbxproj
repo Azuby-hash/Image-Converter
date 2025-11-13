@@ -114,6 +114,11 @@
 		CEA4F9872EAA384A0041BDAC /* VisionUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4F9482EAA384A0041BDAC /* VisionUsage.swift */; };
 		CEA4F9892EAA384A0041BDAC /* VisionHorizonDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4F9362EAA384A0041BDAC /* VisionHorizonDetection.swift */; };
 		CEA4F98F2EAA5A850041BDAC /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4F98E2EAA5A820041BDAC /* Colors.swift */; };
+		CEA864B92EC633430064A3AE /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA864B62EC633430064A3AE /* Rating.swift */; };
+		CEA864BA2EC633430064A3AE /* Rating.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEA864B72EC633430064A3AE /* Rating.xcassets */; };
+		CEA864BB2EC633430064A3AE /* Rating.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA864B52EC633430064A3AE /* Rating.xib */; };
+		CEA864BF2EC633600064A3AE /* Pageup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA864BC2EC633600064A3AE /* Pageup.swift */; };
+		CEA864C02EC633600064A3AE /* Pageup.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA864BD2EC633600064A3AE /* Pageup.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -226,6 +231,11 @@
 		CEA4F9472EAA384A0041BDAC /* VisionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionRequest.swift; sourceTree = "<group>"; };
 		CEA4F9482EAA384A0041BDAC /* VisionUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionUsage.swift; sourceTree = "<group>"; };
 		CEA4F98E2EAA5A820041BDAC /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		CEA864B52EC633430064A3AE /* Rating.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Rating.xib; sourceTree = "<group>"; };
+		CEA864B62EC633430064A3AE /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
+		CEA864B72EC633430064A3AE /* Rating.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Rating.xcassets; sourceTree = "<group>"; };
+		CEA864BC2EC633600064A3AE /* Pageup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pageup.swift; sourceTree = "<group>"; };
+		CEA864BD2EC633600064A3AE /* Pageup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Pageup.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,6 +335,7 @@
 				AFA30FB82EB994D0008C9023 /* Converter.swift */,
 				CE3D9D042EB3B95C002C29B5 /* Slider.swift */,
 				CE3D9CED2EAB01E9002C29B5 /* BoxGradient.swift */,
+				CEA864BE2EC633600064A3AE /* Pageup */,
 				CEA4D4502EBCD01F00525D42 /* GlobalDelegate */,
 				CEA4F9492EAA384A0041BDAC /* Vision */,
 				CEA4F89D2EAA35CA0041BDAC /* Metal */,
@@ -517,10 +528,30 @@
 			children = (
 				CE3D9D082EB3B99E002C29B5 /* CSlider.swift */,
 				CE72D2792EAA670A00DDE5A8 /* Shadow.swift */,
+				CEA864B82EC633430064A3AE /* Rating */,
 				CEA4F8A92EAA35CE0041BDAC /* SVGConverter */,
 				CE3D9CEA2EAB00F0002C29B5 /* Photos */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		CEA864B82EC633430064A3AE /* Rating */ = {
+			isa = PBXGroup;
+			children = (
+				CEA864B52EC633430064A3AE /* Rating.xib */,
+				CEA864B62EC633430064A3AE /* Rating.swift */,
+				CEA864B72EC633430064A3AE /* Rating.xcassets */,
+			);
+			path = Rating;
+			sourceTree = "<group>";
+		};
+		CEA864BE2EC633600064A3AE /* Pageup */ = {
+			isa = PBXGroup;
+			children = (
+				CEA864BC2EC633600064A3AE /* Pageup.swift */,
+				CEA864BD2EC633600064A3AE /* Pageup.xib */,
+			);
+			path = Pageup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -584,6 +615,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA864BA2EC633430064A3AE /* Rating.xcassets in Resources */,
+				CEA864BB2EC633430064A3AE /* Rating.xib in Resources */,
 				CE3D9CEC2EAB0126002C29B5 /* PhotosVC.storyboard in Resources */,
 				CE72D2752EAA617900DDE5A8 /* Colors.xcassets in Resources */,
 				CEA4F8822EA914670041BDAC /* Assets.xcassets in Resources */,
@@ -591,6 +624,7 @@
 				CE72D2732EAA616F00DDE5A8 /* Icons.xcassets in Resources */,
 				CE72D2772EAA61F300DDE5A8 /* Materials.xcassets in Resources */,
 				CEA4F8852EA914670041BDAC /* Home.storyboard in Resources */,
+				CEA864C02EC633600064A3AE /* Pageup.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +647,7 @@
 				CEA4F8A22EAA35CA0041BDAC /* MetalWrapper.metal in Sources */,
 				CEA4F8A42EAA35CA0041BDAC /* MetalInput.swift in Sources */,
 				CEA4F8D92EAA36190041BDAC /* CIImageHelpers.swift in Sources */,
+				CEA864B92EC633430064A3AE /* Rating.swift in Sources */,
 				CEA4F8DA2EAA36190041BDAC /* UIViewBiggerPoint.swift in Sources */,
 				CEA4F8DB2EAA36190041BDAC /* UIViewShadow.swift in Sources */,
 				CEA4F8DC2EAA36190041BDAC /* CVPixelBufferHelpers.swift in Sources */,
@@ -684,6 +719,7 @@
 				CE72D26A2EAA5BA300DDE5A8 /* Config.swift in Sources */,
 				CEA4F8F62EAA36190041BDAC /* UIViewParallax.swift in Sources */,
 				CE72D26D2EAA5BBA00DDE5A8 /* Model.swift in Sources */,
+				CEA864BF2EC633600064A3AE /* Pageup.swift in Sources */,
 				CEA4F8F72EAA36190041BDAC /* UIStackViewSegmentPage.swift in Sources */,
 				CE3D9D052EB3B95C002C29B5 /* Slider.swift in Sources */,
 				CEA4F8F82EAA36190041BDAC /* UIViewFindViewController.swift in Sources */,

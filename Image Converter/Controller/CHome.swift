@@ -35,12 +35,16 @@ enum CHomeTab: Int {
     case convert
     case utility
     case edit
+    case process
+    case summary
     
     func getTitle() -> String {
         switch self {
             case .convert: return "Image Converter"
             case .utility: return "Image Utility"
             case .edit: return "Image Converter"
+            case .process: return "Image Converter"
+            case .summary: return "Image Converter"
         }
     }
 }
@@ -103,6 +107,17 @@ class CHome {
         NotificationCenter.default.post(name: CHome.tabUpdate, object: nil)
     }
     
+    func setTab(_ tab: CHomeTab) {
+        selectTab = tab
+        
+        if selectTab != .edit && selectTab != .process && selectTab != .summary {
+            Model.convert.reset()
+            NotificationCenter.default.post(name: CHome.convertResetSettings, object: nil)
+        }
+        
+        NotificationCenter.default.post(name: CHome.tabUpdate, object: nil)
+    }
+    
     func appendSelected(_ item: (data: Data, date: Date)) {
         Model.convert.setSelecteds(Model.convert.getSelecteds() + [ConvertItem(data: item.data, date: item.date)])
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
@@ -118,7 +133,7 @@ class CHome {
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
 
         if Model.convert.getSelecteds().isEmpty {
-            setTab(CHomeTab.convert.rawValue)
+            setTab(CHomeTab.convert)
         }
     }
     
@@ -127,7 +142,7 @@ class CHome {
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
         
         if Model.convert.getSelecteds().isEmpty {
-            setTab(CHomeTab.convert.rawValue)
+            setTab(CHomeTab.convert)
         }
     }
     
@@ -136,17 +151,23 @@ class CHome {
         NotificationCenter.default.post(name: CHome.convertNumberUpdate, object: nil)
         
         if Model.convert.getSelecteds().isEmpty {
-            setTab(CHomeTab.convert.rawValue)
+            setTab(CHomeTab.convert)
         }
     }
     
-    func save(item: ConvertItem, view: UIView) throws {
-        guard let url = item.getOutput() else {
+    func save(item: ConvertItem, view: UIView, toPhotos: @escaping () -> Void, toFiles: UIDocumentPickerDelegate?) throws {
+        guard var url = item.getOutput() else {
             throw CHomeError.save("Item undone.")
         }
         
         if Model.convert.getMimeType() == .pdf {
-            GDSender.request(with: GDObjectOpenFiles<Home>(source: view, delegate: nil, files: [url], selectMultiple: false))
+            let newUrl = FileManager.url(name: "\(UUID().uuidString).pdf")
+            try? FileManager.default.copyItem(at: url, to: newUrl)
+            url = newUrl
+        }
+        
+        if Model.convert.getMimeType() == .pdf {
+            GDSender.request(with: GDObjectOpenFiles<Home>(source: view, delegate: toFiles, files: [url], selectMultiple: false))
         } else {
             PHPhotoLibrary.shared().performChanges({
                 PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: url)
@@ -154,11 +175,13 @@ class CHome {
                 if !success {
                     print(error!)
                 }
+                
+                toPhotos()
             }
         }
     }
     
-    func save(view: UIView) throws {
+    func save(view: UIView, toPhotos: @escaping () -> Void, toFiles: UIDocumentPickerDelegate?) throws {
         if Model.convert.getSelecteds().first(where: { $0.getOutput() == nil }) != nil {
             throw CHomeError.save("Have some items undone.")
         }
@@ -166,8 +189,14 @@ class CHome {
         var urls: [URL] = []
         
         for item in Model.convert.getSelecteds() {
-            guard let url = item.getOutput() else {
+            guard var url = item.getOutput() else {
                 continue
+            }
+            
+            if Model.convert.getMimeType() == .pdf {
+                let newUrl = FileManager.url(name: "\(UUID().uuidString).pdf")
+                try? FileManager.default.copyItem(at: url, to: newUrl)
+                url = newUrl
             }
             
             urls.append(url)
@@ -178,7 +207,7 @@ class CHome {
         }
 
         if Model.convert.getMimeType() == .pdf {
-            GDSender.request(with: GDObjectOpenFiles<Home>(source: view, delegate: nil, files: urls, selectMultiple: false))
+            GDSender.request(with: GDObjectOpenFiles<Home>(source: view, delegate: toFiles, files: urls, selectMultiple: false))
         } else {
             urls.forEach { url in
                 PHPhotoLibrary.shared().performChanges({
@@ -187,6 +216,8 @@ class CHome {
                     if !success {
                         print(error!)
                     }
+                    
+                    toPhotos()
                 }
             }
         }

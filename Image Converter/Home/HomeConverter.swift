@@ -59,7 +59,7 @@ class HomeConverterStatic: UIView {
 
 extension HomeConverterStatic: PhotosDelegate {
     func didSelectPHAssets(controller: PhotosVC, assets: [PHAsset]) {
-        cHome.setTab(CHomeTab.edit.rawValue)
+        cHome.setTab(CHomeTab.edit)
     }
     
     func didSelectPHAsset(controller: PhotosVC, asset: PHAsset) {
@@ -113,6 +113,6 @@ extension HomeConverterStatic: UIDocumentPickerDelegate {
         }
         
         cHome.appendSelecteds(items)
-        cHome.setTab(CHomeTab.edit.rawValue)
+        cHome.setTab(CHomeTab.edit)
     }
 }

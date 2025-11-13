@@ -1,0 +1,287 @@
+//
+//  Pageup.swift
+//  ModuleTest
+//
+//  Created by Azuby on 1/5/24.
+//
+
+import UIKit
+
+fileprivate let DRAGGER_RANGE = CGFloat(-20)...CGFloat(50)
+
+extension UIView {
+    /**
+     - Important: Pageup binding must inherit from ``Pageup`` and have XIB file as its owner. Bonus design programmatically on return binding of pageup() such as shadow view....
+     - 3 Ways init
+        - let pageup: YourPageupClass = sourceView.pageup()
+        - let pageup = sourceView.pageup() as YourPageupClass
+        - sourceView.pageup(YourPageupClass.self)
+     - Design require
+        - Design layout must have heightAnchor set
+        - If have widthAnchor, its must priority < 950, recommend remove widthAnchor
+     */
+    
+    @discardableResult
+    func pageup<T: Pageup>(_ binding: T.Type) -> T {
+        let pageup = T()
+        pageup.attachPageup(to: self)
+        
+        return pageup
+    }
+}
+
+protocol PageupDelegate: AnyObject {
+    func pageupDismiss(pageup: Pageup)
+}
+
+class Pageup: UIView {
+    private let backgroundView: UIView = {
+        let background = UIView()
+        background.translatesAutoresizingMaskIntoConstraints = false
+        background.backgroundColor = .init(white: 0, alpha: 0.2)
+        
+        return background
+    } ()
+    
+    private let content: PageupContent = {
+        let content = PageupContent()
+        content.translatesAutoresizingMaskIntoConstraints = false
+        
+        return content
+    } ()
+    
+    private var didLoad = false
+    private var outsideTapDismiss = true
+    
+    weak var delegate: PageupDelegate?
+    
+    required init() {
+        super.init(frame: .init(x: 0, y: 0, width: 10, height: 10))
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        translatesAutoresizingMaskIntoConstraints = false
+        addSubview(backgroundView)
+        addSubview(content)
+        __loadNib(to: content)
+        
+        NSLayoutConstraint.activate([
+            content.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, constant: -32),
+            content.widthAnchor.constraint(equalToConstant: 450).__with(950),
+            content.centerXAnchor.constraint(equalTo: centerXAnchor),
+            content.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
+        backgroundView.__addConstraintFitBoundsTo(self)
+        
+        applyGesture()
+        
+        layoutIfNeeded()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        if didLoad { return }
+        didLoad = true
+        
+        layoutIfNeeded()
+        
+        appear(true)
+    }
+    
+    private func appear(_ animated: Bool) {
+        UIView.animate(withDuration: animated ? 0.25 : 0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut) { [self] in
+            content.transform = .identity
+            backgroundView.alpha = 1
+        }
+    }
+    
+    private func disappear(_ animated: Bool) {
+        guard let vc = __findViewController() else { return }
+        
+        UIView.animate(withDuration: animated ? 0.25 : 0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut) { [self] in
+            content.transform = .init(translationX: 0, y: vc.view.bounds.height - safeAreaLayoutGuide.layoutFrame.maxY + content.bounds.height)
+            backgroundView.alpha = 0
+        }
+    }
+    
+    /** Close animation immediately */
+    func close(_ animated: Bool) {
+        delegate?.pageupDismiss(pageup: self)
+        
+        if animated{
+            disappear(animated)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                self.removeFromSuperview()
+            }
+        } else {
+            removeFromSuperview()
+        }
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if content.point(inside: convert(point, to: content), with: event) {
+            return super.hitTest(point, with: event)
+        } else {
+            if outsideTapDismiss {
+                close(true)
+            }
+            return super.hitTest(point, with: event)
+        }
+    }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        return true
+    }
+}
+
+extension Pageup: UIGestureRecognizerDelegate {
+    private func applyGesture() {
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(pan))
+        pan.delegate = self
+        content.gestureRecognizers = [pan]
+    }
+    
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return DRAGGER_RANGE.contains(gestureRecognizer.location(in: content).y)
+    }
+    
+    @objc private func pan(g: UIPanGestureRecognizer) {
+        let tran = g.translation(in: self)
+        
+        let height = content.bounds.height
+        
+        var value = tran.y
+        
+        if value < 0 {
+            value = -height * 0.2 * atan(-value / 100) / (.pi / 2)
+        }
+        
+        if g.state == .ended || g.state == .cancelled {
+            if value > (height * 0.6) || (value > (height * 0.2) && g.velocity(in: self).y > 500) {
+                close(true)
+                return
+            } else {
+                value = 0
+            }
+        }
+        
+        UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.allowUserInteraction, .curveEaseInOut]) { [self] in
+            
+            content.transform = .init(translationX: 0, y: value)
+        }
+    }
+}
+
+extension Pageup {
+    /**
+     Set false if you dont want close pageup when click outside of pageup
+     */
+    func setOutsideTapDismiss(_ bool: Bool) {
+        outsideTapDismiss = bool
+    }
+    
+    /**
+     Set false if you dont want prevent pageup dragger
+     */
+    func setPageDragger(_ bool: Bool) {
+        content.pageDragger = bool
+        
+        if bool {
+            applyGesture()
+        } else {
+            content.gestureRecognizers = []
+        }
+    }
+}
+
+extension Pageup {
+    fileprivate func attachPageup(to sourceView: UIView) {
+        guard let vc = sourceView.__findViewController() else { return }
+        
+        vc.view.addSubview(self)
+        __addConstraintFitBoundsTo(vc.view)
+        disappear(false)
+    }
+}
+
+fileprivate extension UIView {
+    func __findViewController() -> UIViewController? {
+        if let nextResponder = self.next as? UIViewController {
+            return nextResponder
+        } else if let nextResponder = self.next as? UIView {
+            return nextResponder.__findViewController()
+        } else {
+            return nil
+        }
+    }
+    func __loadNib(to contentView: UIView) {
+        guard let className = NSStringFromClass(type(of: self)).split(separator: ".").last else {
+            return
+        }
+        
+        let nib = UINib(nibName: String(className), bundle: nil)
+        guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else { return }
+        
+        view.clipsToBounds = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        contentView.addSubview(view)
+        NSLayoutConstraint.activate([
+            view.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            view.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            view.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            view.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+        ])
+    }
+    func __addConstraintFitBoundsTo(_ view: UIView?) {
+        guard let view = view
+        else { return }
+        
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topAnchor.constraint(equalTo: view.topAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+    }
+}
+
+fileprivate extension NSLayoutConstraint {
+    func __with(_ priority: Float) -> NSLayoutConstraint {
+        self.priority = .init(rawValue: priority)
+        
+        return self
+    }
+}
+
+class PageupContent: UIView {
+    fileprivate var pageDragger = true
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if pageDragger && DRAGGER_RANGE.contains(point.y) {
+            return true
+        }
+        
+        var pointViews = [UIView]()
+        for view in subviews {
+            if view.isUserInteractionEnabled && view.alpha > 0.01 {
+                pointViews.append(view)
+            }
+        }
+        
+        for pointView in pointViews {
+            if pointView.bounds.insetBy(dx: -20, dy: -20).contains(convert(point, to: pointView)) {
+                return true
+            }
+        }
+        
+        return false
+    }
+}

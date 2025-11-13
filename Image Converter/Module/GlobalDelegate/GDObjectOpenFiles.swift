@@ -52,13 +52,14 @@ class GDObjectOpenFiles<GD: GDReceiverProtocol & UIViewController>: GDObjectCore
 
     override func show(from viewController: UIViewController) {
         var fileCol = UIDocumentPickerViewController(forOpeningContentTypes: [.image], asCopy: true)
-        fileCol.delegate = delegate
         fileCol.allowsMultipleSelection = selectMultiple
         fileCol.modalPresentationStyle = .fullScreen
         
         if let files = files {
             fileCol = UIDocumentPickerViewController(forExporting: files)
         }
+        
+        fileCol.delegate = delegate
         
         viewController.present(fileCol, animated: true)
     }

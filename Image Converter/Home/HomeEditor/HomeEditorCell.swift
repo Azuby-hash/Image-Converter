@@ -47,7 +47,6 @@ class HomeEditorCell: UICollectionViewCell {
             addPhoto.isUserInteractionEnabled = true
             remove.removeTarget(self, action: #selector(removePhoto), for: .touchUpInside)
             stack.alpha = 0
-            remove.alpha = 0
             return
         }
         
@@ -56,7 +55,6 @@ class HomeEditorCell: UICollectionViewCell {
         addPhoto.isUserInteractionEnabled = false
         remove.addTarget(self, action: #selector(removePhoto), for: .touchUpInside)
         stack.alpha = 1
-        remove.alpha = 1
         
         try? item.getPreview { [weak self] image in
             guard let self = self else { return }
@@ -108,9 +106,13 @@ extension HomeEditorCell {
     private func noti() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateInfo), name: Controller.globalTimer01, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateInfo), name: CHome.convertSettingsUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateInfo), name: CHome.tabUpdate, object: nil)
     }
     
     @objc private func updateInfo() {
+        alpha = item == nil && (cHome.getTab() == .process || cHome.getTab() == .summary) ? 0 : 1
+        remove.alpha = item == nil || cHome.getTab() == .process || cHome.getTab() == .summary ? 0 : 1
+        
         guard let item = item else { return }
         
         if let output = item.getOutput(),
@@ -121,10 +123,23 @@ extension HomeEditorCell {
             upperLabel.text = "Calculating..."
         }
         
-        if let data = item.getData() {
-            lowerLabel.text = "Original: \(data.count.toSizeString())"
-        } else {
+        guard let data = item.getData() else {
             lowerLabel.text = "Loading..."
+            lowerLabel.textColor = ._gray60
+            
+            return
+        }
+        
+        lowerLabel.text = "Original: \(data.count.toSizeString())"
+        lowerLabel.textColor = ._gray60
+        
+        if cHome.getTab() == .process {
+            lowerLabel.text = "Processing..."
+        }
+        
+        if cHome.getTab() == .summary {
+            lowerLabel.textColor = ._green
+            lowerLabel.text = "Completed!"
         }
     }
 }
