@@ -1,15 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Frame 414.pdf",
+      "filename" : "Frame 417.pdf",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

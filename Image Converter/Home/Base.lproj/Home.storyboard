@@ -98,6 +98,9 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="filled" title="Open photos" cornerStyle="capsule">
+                                                            <backgroundConfiguration key="background" image="Radial">
+                                                                <color key="backgroundColor" name="Primary"/>
+                                                            </backgroundConfiguration>
                                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="16"/>
                                                             <color key="baseForegroundColor" name="White"/>
                                                             <color key="baseBackgroundColor" name="Primary"/>
@@ -1263,6 +1266,9 @@
                                                                 </constraints>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="CONVERT" cornerStyle="capsule">
+                                                                    <backgroundConfiguration key="background" image="Radial">
+                                                                        <color key="backgroundColor" name="Primary"/>
+                                                                    </backgroundConfiguration>
                                                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="16"/>
                                                                     <color key="baseForegroundColor" name="White"/>
                                                                     <color key="baseBackgroundColor" name="Primary"/>
@@ -1491,6 +1497,7 @@
         <image name="ConvertEmpty" width="324" height="324"/>
         <image name="File" width="24" height="24"/>
         <image name="GIF" width="154" height="154"/>
+        <image name="Radial" width="250" height="250"/>
         <image name="Remove" width="24" height="24"/>
         <image name="SVG" width="154" height="154"/>
         <image name="Upscale" width="154" height="154"/>
