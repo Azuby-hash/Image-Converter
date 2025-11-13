@@ -77,7 +77,7 @@ extension HomeTab {
         tabTitle.text = cHome.getTab().getTitle()
         
         UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [self] in
-            alpha = cHome.getTab() == .edit ? 0 : 1
+            alpha = cHome.getTab() == .convert || cHome.getTab() == .utility ? 1 : 0
         }
     }
 }

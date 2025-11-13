@@ -10,6 +10,9 @@ import UIKit
 class HomeEditor: UIView {
     @IBOutlet weak var clear: UIButton!
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var convertB: UIView!
+    @IBOutlet weak var progressBox: UIView!
+    @IBOutlet weak var progressWidth: NSLayoutConstraint!
     
     private var didLoad = false
     
@@ -55,8 +58,8 @@ extension HomeEditor {
     
     @objc private func tabUpdate() {
         UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [self] in
-            alpha = cHome.getTab() == .edit ? 1 : 0
-            clear.alpha = cHome.getTab() == .edit ? 1 : 0
+            alpha = cHome.getTab() != .convert && cHome.getTab() != .utility ? 1 : 0
+            clear.alpha = cHome.getTab() != .convert && cHome.getTab() != .utility ? 1 : 0
         }
     }
     
