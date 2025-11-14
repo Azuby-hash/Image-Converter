@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF7453AB2EC6CF6B0005DF5C /* Upscale.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7453AA2EC6CF670005DF5C /* Upscale.swift */; };
+		AF7453B02EC6CF9C0005DF5C /* Upscale.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF7453AF2EC6CF9C0005DF5C /* Upscale.storyboard */; };
+		AF7453B22EC6E85D0005DF5C /* UpscaleEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7453B12EC6E8590005DF5C /* UpscaleEmpty.swift */; };
 		AF97C0202EAEFF3B00F317FB /* UIButtonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */; };
 		AFA30FB92EB994D5008C9023 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA30FB82EB994D0008C9023 /* Converter.swift */; };
 		CE3D9CE72EAA979B002C29B5 /* HomeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D9CE62EAA9794002C29B5 /* HomeConverter.swift */; };
@@ -122,6 +125,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF7453AA2EC6CF670005DF5C /* Upscale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upscale.swift; sourceTree = "<group>"; };
+		AF7453AF2EC6CF9C0005DF5C /* Upscale.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Upscale.storyboard; sourceTree = "<group>"; };
+		AF7453B12EC6E8590005DF5C /* UpscaleEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpscaleEmpty.swift; sourceTree = "<group>"; };
 		AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonHelpers.swift; sourceTree = "<group>"; };
 		AFA30FB82EB994D0008C9023 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		CE3D9CE62EAA9794002C29B5 /* HomeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeConverter.swift; sourceTree = "<group>"; };
@@ -250,6 +256,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF7453AD2EC6CF860005DF5C /* Upscale */ = {
+			isa = PBXGroup;
+			children = (
+				AF7453AF2EC6CF9C0005DF5C /* Upscale.storyboard */,
+				AF7453AA2EC6CF670005DF5C /* Upscale.swift */,
+				AF7453B12EC6E8590005DF5C /* UpscaleEmpty.swift */,
+			);
+			path = Upscale;
+			sourceTree = "<group>";
+		};
 		CE3D9CEA2EAB00F0002C29B5 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +335,7 @@
 				CEA4F98B2EAA3E850041BDAC /* Model */,
 				CEA4F98C2EAA3E8C0041BDAC /* Controller */,
 				CEA4F98A2EAA389D0041BDAC /* Home */,
+				AF7453AD2EC6CF860005DF5C /* Upscale */,
 				CEA4F8792EA914670041BDAC /* Assets.xcassets */,
 				CE72D2742EAA617900DDE5A8 /* Colors.xcassets */,
 				CE72D2722EAA616F00DDE5A8 /* Icons.xcassets */,
@@ -624,6 +641,7 @@
 				CE72D2732EAA616F00DDE5A8 /* Icons.xcassets in Resources */,
 				CE72D2772EAA61F300DDE5A8 /* Materials.xcassets in Resources */,
 				CEA4F8852EA914670041BDAC /* Home.storyboard in Resources */,
+				AF7453B02EC6CF9C0005DF5C /* Upscale.storyboard in Resources */,
 				CEA864C02EC633600064A3AE /* Pageup.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -685,6 +703,7 @@
 				CE3D9CEE2EAB01E9002C29B5 /* BoxGradient.swift in Sources */,
 				CEA4F9772EAA384A0041BDAC /* VisionPromise.swift in Sources */,
 				CEA4F9792EAA384A0041BDAC /* VisionSaliency.swift in Sources */,
+				AF7453AB2EC6CF6B0005DF5C /* Upscale.swift in Sources */,
 				CEA4F97A2EAA384A0041BDAC /* VisionBAHPoseDetection.swift in Sources */,
 				CEA4F97C2EAA384A0041BDAC /* VisionRequest.swift in Sources */,
 				CEA4F97E2EAA384A0041BDAC /* VisionObjectTrack.swift in Sources */,
@@ -693,6 +712,7 @@
 				CE3D9CFF2EAFD135002C29B5 /* HomeEditorCell.swift in Sources */,
 				CE3D9D0F2EBA5214002C29B5 /* HomeEditorSettings.swift in Sources */,
 				CE3D9CF22EAC8941002C29B5 /* AssetLibrary.swift in Sources */,
+				AF7453B22EC6E85D0005DF5C /* UpscaleEmpty.swift in Sources */,
 				CE72D26F2EAA5BCE00DDE5A8 /* CHome.swift in Sources */,
 				CEA4F9812EAA384A0041BDAC /* VisionContourDetection.swift in Sources */,
 				CEA4F9842EAA384A0041BDAC /* VisionImageAlignment.swift in Sources */,

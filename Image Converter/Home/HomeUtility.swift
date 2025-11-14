@@ -19,6 +19,22 @@ class HomeUtility: UIStackView {
         setup()
         noti()
     }
+    
+    @IBAction func upscale(_ sender: Any) {
+        findViewController()?.present(Upscale.create(), animated: true)
+    }
+    
+    @IBAction func svg(_ sender: Any) {
+        
+    }
+    
+    @IBAction func gif(_ sender: Any) {
+        
+    }
+    
+    @IBAction func compare(_ sender: Any) {
+        
+    }
 }
 
 extension HomeUtility {
