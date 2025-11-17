@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -82,12 +82,16 @@
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="zvA-Dc-azL" firstAttribute="centerY" secondItem="qk2-up-bZP" secondAttribute="centerY" id="GPH-Y1-iwe"/>
                                             <constraint firstItem="zvA-Dc-azL" firstAttribute="centerX" secondItem="qk2-up-bZP" secondAttribute="centerX" id="JhJ-nG-xTJ"/>
                                             <constraint firstAttribute="width" secondItem="qk2-up-bZP" secondAttribute="height" multiplier="3:4" id="beW-jd-Wou"/>
                                             <constraint firstAttribute="width" priority="900" constant="450" id="tgq-e6-CUk"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="euC-gj-wFH" appends="YES" id="hrH-bh-gBp"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -104,16 +108,16 @@
                                 <rect key="frame" x="0.0" y="608" width="393" height="244"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="iZe-yj-xGU">
-                                        <rect key="frame" x="158.33333333333334" y="24" width="76.666666666666657" height="16"/>
+                                        <rect key="frame" x="155.66666666666666" y="24" width="82" height="16"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0x0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QlD-No-AJv">
-                                                <rect key="frame" x="0.0" y="0.0" width="24.333333333333332" height="16"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="27" height="16"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <color key="textColor" name="Black"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="To" translatesAutoresizingMaskIntoConstraints="NO" id="yiq-Th-vPt">
-                                                <rect key="frame" x="30.333333333333314" y="0.0" width="16" height="16"/>
+                                                <rect key="frame" x="33" y="0.0" width="16" height="16"/>
                                                 <color key="tintColor" name="Black"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="yiq-Th-vPt" secondAttribute="height" id="tDi-Xa-KqV"/>
@@ -121,8 +125,8 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0x0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9K3-Za-vbV">
-                                                <rect key="frame" x="52.333333333333321" y="0.0" width="24.333333333333336" height="16"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                <rect key="frame" x="55" y="0.0" width="27" height="16"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <color key="textColor" name="Black"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -254,6 +258,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="28" id="HIX-je-RgB"/>
                                             <constraint firstAttribute="width" secondItem="Tm0-FG-CYy" secondAttribute="height" id="dQk-VR-m0L"/>
+                                            <constraint firstAttribute="width" secondItem="Tm0-FG-CYy" secondAttribute="height" id="le7-Lv-MUF"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" image="Close" cornerStyle="capsule">
@@ -270,7 +275,6 @@
                                     <constraint firstItem="6DK-iE-HFj" firstAttribute="leading" secondItem="VSf-v7-3zU" secondAttribute="leading" constant="24" id="JtC-7N-ONu"/>
                                     <constraint firstAttribute="bottom" secondItem="6DK-iE-HFj" secondAttribute="bottom" constant="24" id="XCI-Pa-ih0"/>
                                     <constraint firstAttribute="trailing" secondItem="Tm0-FG-CYy" secondAttribute="trailing" constant="24" id="bgC-Ts-rgz"/>
-                                    <constraint firstItem="Tm0-FG-CYy" firstAttribute="width" secondItem="Tm0-FG-CYy" secondAttribute="height" id="le7-Lv-MUF"/>
                                     <constraint firstItem="Tm0-FG-CYy" firstAttribute="centerY" secondItem="6DK-iE-HFj" secondAttribute="centerY" id="nL3-tU-LYW"/>
                                 </constraints>
                             </view>
@@ -293,6 +297,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="box" destination="7tj-G3-M11" id="TPI-gQ-P3K"/>
+                        <outlet property="empty" destination="qk2-up-bZP" id="gZN-Qd-kdn"/>
                         <outlet property="height" destination="xD6-vL-Bkp" id="p2J-za-2BJ"/>
                         <outlet property="imageView" destination="GMC-ZT-RoG" id="PFR-8I-27J"/>
                         <outlet property="saveB" destination="q1o-kv-OeW" id="2YZ-DN-S5b"/>
@@ -303,6 +309,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="euC-gj-wFH" userLabel="Open">
+                    <connections>
+                        <action selector="openPhoto:" destination="Y6W-OH-hqX" id="Vjg-eQ-W2z"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="140" y="92"/>
         </scene>

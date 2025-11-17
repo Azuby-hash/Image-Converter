@@ -36,6 +36,9 @@
 		CE72D2772EAA61F300DDE5A8 /* Materials.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE72D2762EAA61F300DDE5A8 /* Materials.xcassets */; };
 		CE72D27A2EAA671300DDE5A8 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE72D2792EAA670A00DDE5A8 /* Shadow.swift */; };
 		CE72D27C2EAA75D000DDE5A8 /* HomeTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE72D27B2EAA75CD00DDE5A8 /* HomeTab.swift */; };
+		CE9211EC2EC824BE006B472F /* CUpscale.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9211EB2EC824BA006B472F /* CUpscale.swift */; };
+		CE9211EF2EC8376A006B472F /* MergeUpscale.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9211ED2EC8376A006B472F /* MergeUpscale.swift */; };
+		CE9211F12EC837D9006B472F /* RealESRGan512.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CE9211F02EC837D9006B472F /* RealESRGan512.mlmodel */; };
 		CEA4D4572EBCD02000525D42 /* GDObjectOpenFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4D4472EBCD01F00525D42 /* GDObjectOpenFiles.swift */; };
 		CEA4D45D2EBCD02000525D42 /* GlobalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4D44F2EBCD01F00525D42 /* GlobalDelegate.swift */; };
 		CEA4D45E2EBCD02000525D42 /* GDObjectSystemAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4D44D2EBCD01F00525D42 /* GDObjectSystemAlert.swift */; };
@@ -154,6 +157,9 @@
 		CE72D2762EAA61F300DDE5A8 /* Materials.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Materials.xcassets; sourceTree = "<group>"; };
 		CE72D2792EAA670A00DDE5A8 /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
 		CE72D27B2EAA75CD00DDE5A8 /* HomeTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTab.swift; sourceTree = "<group>"; };
+		CE9211EB2EC824BA006B472F /* CUpscale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CUpscale.swift; sourceTree = "<group>"; };
+		CE9211ED2EC8376A006B472F /* MergeUpscale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeUpscale.swift; sourceTree = "<group>"; };
+		CE9211F02EC837D9006B472F /* RealESRGan512.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = RealESRGan512.mlmodel; sourceTree = "<group>"; };
 		CEA4D4472EBCD01F00525D42 /* GDObjectOpenFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDObjectOpenFiles.swift; sourceTree = "<group>"; };
 		CEA4D44D2EBCD01F00525D42 /* GDObjectSystemAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDObjectSystemAlert.swift; sourceTree = "<group>"; };
 		CEA4D44F2EBCD01F00525D42 /* GlobalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDelegate.swift; sourceTree = "<group>"; };
@@ -295,6 +301,15 @@
 			path = HomeEditor;
 			sourceTree = "<group>";
 		};
+		CE9211EE2EC8376A006B472F /* Upscale */ = {
+			isa = PBXGroup;
+			children = (
+				CE9211ED2EC8376A006B472F /* MergeUpscale.swift */,
+				CE9211F02EC837D9006B472F /* RealESRGan512.mlmodel */,
+			);
+			path = Upscale;
+			sourceTree = "<group>";
+		};
 		CEA4D4502EBCD01F00525D42 /* GlobalDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +371,7 @@
 				CEA4D4502EBCD01F00525D42 /* GlobalDelegate */,
 				CEA4F9492EAA384A0041BDAC /* Vision */,
 				CEA4F89D2EAA35CA0041BDAC /* Metal */,
+				CE9211EE2EC8376A006B472F /* Upscale */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -536,6 +552,7 @@
 			children = (
 				CE72D2702EAA5BD200DDE5A8 /* Controller.swift */,
 				CE72D26E2EAA5BCA00DDE5A8 /* CHome.swift */,
+				CE9211EB2EC824BA006B472F /* CUpscale.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -678,6 +695,7 @@
 				CEA4F8E32EAA36190041BDAC /* DataSizeHelpers.swift in Sources */,
 				CEA4F8E42EAA36190041BDAC /* UIImageGif.swift in Sources */,
 				CEA4F8E52EAA36190041BDAC /* UIImageHelpers.swift in Sources */,
+				CE9211EC2EC824BE006B472F /* CUpscale.swift in Sources */,
 				CE3D9D0D2EB90EAB002C29B5 /* HomeEditorMime.swift in Sources */,
 				CEA4F8E62EAA36190041BDAC /* UIViewPointSubview.swift in Sources */,
 				CEA4F94E2EAA384A0041BDAC /* Vision3DBPoseDetection.swift in Sources */,
@@ -715,6 +733,7 @@
 				AF7453B22EC6E85D0005DF5C /* UpscaleEmpty.swift in Sources */,
 				CE72D26F2EAA5BCE00DDE5A8 /* CHome.swift in Sources */,
 				CEA4F9812EAA384A0041BDAC /* VisionContourDetection.swift in Sources */,
+				CE9211EF2EC8376A006B472F /* MergeUpscale.swift in Sources */,
 				CEA4F9842EAA384A0041BDAC /* VisionImageAlignment.swift in Sources */,
 				AFA30FB92EB994D5008C9023 /* Converter.swift in Sources */,
 				CE3D9CE92EAA9871002C29B5 /* HomeUtility.swift in Sources */,
@@ -722,6 +741,7 @@
 				CEA4F9892EAA384A0041BDAC /* VisionHorizonDetection.swift in Sources */,
 				CEA4F8E72EAA36190041BDAC /* JSONHelpers.swift in Sources */,
 				CEA4F8E82EAA36190041BDAC /* UIViewMask.swift in Sources */,
+				CE9211F12EC837D9006B472F /* RealESRGan512.mlmodel in Sources */,
 				CEA4F8E92EAA36190041BDAC /* UITextFieldPlaceholder.swift in Sources */,
 				CEA4F8EA2EAA36190041BDAC /* IdiomHelpers.swift in Sources */,
 				CEA4F8EB2EAA36190041BDAC /* UIImageViewDarkMode.swift in Sources */,

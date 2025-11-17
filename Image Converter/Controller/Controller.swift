@@ -16,6 +16,7 @@ class Controller {
     static let shared = Controller()
     
     let cHome = CHome()
+    let cUpscale = CUpscale()
     
     private init() {
         FileManager.eraseDocumentAndData()
