@@ -92,9 +92,17 @@ class Converter {
             resourceValues.contentModificationDate = Date.now
         }
         
+        if image != nil {
+            options[kCGImagePropertyOrientation] = 1
+        }
+        
         if var tiffProperties = options[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
             tiffProperties[kCGImagePropertyTIFFDateTime] = dateTimeString as CFString
-            tiffProperties[kCGImagePropertyTIFFOrientation] = 1
+            
+            if image != nil {
+                tiffProperties[kCGImagePropertyTIFFOrientation] = 1
+            }
+            
             options[kCGImagePropertyTIFFDictionary] = tiffProperties as CFDictionary
         }
         

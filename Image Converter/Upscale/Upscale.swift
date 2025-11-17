@@ -71,7 +71,8 @@ extension Upscale {
     
     @objc private func update() {
         do {
-            let size = try cUpscale.getInputImage().size.aspectFit(to: box.bounds.insetBy(dx: 48, dy: 48).size)
+            let image = try cUpscale.getInputImage()
+            let size = image.size.aspectFit(to: box.bounds.insetBy(dx: 48, dy: 48).size)
             
             width.constant = size.width
             height.constant = size.height
@@ -81,6 +82,18 @@ extension Upscale {
             empty.alpha = 0
             upscaleB.alpha = 1
             upscaleB.isUserInteractionEnabled = true
+            
+            do {
+                let output = try cUpscale.getOutputImage()
+    
+                UIView.transition(with: imageView, duration: 0.25, options: [.transitionCrossDissolve, .curveEaseInOut]) { [self] in
+                    imageView.image = output
+                }
+            } catch {
+                UIView.transition(with: imageView, duration: 0.25, options: [.transitionCrossDissolve, .curveEaseInOut]) { [self] in
+                    imageView.image = image
+                }
+            }
         } catch {
             print(error)
         }

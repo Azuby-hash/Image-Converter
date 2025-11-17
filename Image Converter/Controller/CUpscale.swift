@@ -79,7 +79,13 @@ class CUpscale {
             throw CUpscaleError.upscale("No selected.")
         }
         
-        guard let upscale = MergeUpscale.shared.inference(image: selected.image) else {
+        var image = selected.image
+        
+        if selected.image.size.aspectFit(to: UPSCALE_SIZE).width < selected.image.size.width {
+            image = selected.image.resizeStretch(size: selected.image.size.aspectFit(to: UPSCALE_SIZE).intSize())
+        }
+        
+        guard let upscale = MergeUpscale.shared.inference(image: image) else {
             throw CUpscaleError.upscale("Upscale failed.")
         }
         
