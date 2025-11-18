@@ -30,6 +30,8 @@ class Upscale: UIViewController {
         saveB.alpha = 0
         upscaleB.alpha = 0.5
         upscaleB.isUserInteractionEnabled = false
+        
+        noti()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +54,19 @@ class Upscale: UIViewController {
     }
     
     @IBAction func upscale(_ sender: Any) {
+        procLoading(srcV: view)
         
+        DispatchQueue.global(qos: .default).async { [self] in
+            do {
+                try cUpscale.upscale()
+            } catch {
+                print(error)
+            }
+
+            DispatchQueue.main.async { [self] in
+                endLoading(on: view)
+            }
+        }
     }
     
     @IBAction func save(_ sender: Any) {
@@ -102,7 +116,7 @@ extension Upscale {
 
 extension Upscale: PhotosDelegate {
     func didSelectPHAssets(controller: PhotosVC, assets: [PHAsset]) {
-        cHome.setTab(CHomeTab.edit)
+        
     }
     
     func didSelectPHAsset(controller: PhotosVC, asset: PHAsset) {

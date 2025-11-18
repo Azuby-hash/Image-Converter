@@ -66,14 +66,6 @@ class CUpscale {
         NotificationCenter.default.post(name: CUpscale.update, object: nil)
     }
     
-    func canUpscale() throws -> Bool {
-        guard let selected = selected else {
-            throw CUpscaleError.upscale("No selected.")
-        }
-        
-        return MergeUpscale.shared.canUpscale(from: selected.image.size)
-    }
-    
     func upscale() throws {
         guard let selected = selected else {
             throw CUpscaleError.upscale("No selected.")
@@ -81,8 +73,10 @@ class CUpscale {
         
         var image = selected.image
         
-        if selected.image.size.aspectFit(to: UPSCALE_SIZE).width < selected.image.size.width {
-            image = selected.image.resizeStretch(size: selected.image.size.aspectFit(to: UPSCALE_SIZE).intSize())
+        let expectSize = selected.image.size.aspectFit(to: UPSCALE_SIZE / 4).intSize()
+        
+        if expectSize.width < selected.image.size.width || expectSize.height < selected.image.size.height {
+            image = selected.image.resize(size: expectSize)
         }
         
         guard let upscale = MergeUpscale.shared.inference(image: image) else {
@@ -96,6 +90,10 @@ class CUpscale {
         var url = FileManager.url(name: "\(id).\(fileExtension)")
         
         try Converter.convert(to: try selected.getType(), image: upscale, from: selected.data, creationDate: .now, output: &url, info: true, compression: 1)
+        
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: CUpscale.update, object: nil)
+        }
     }
     
     func save(view: UIView, toPhotos: @escaping () -> Void) throws {
