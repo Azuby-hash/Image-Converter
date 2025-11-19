@@ -21,4 +21,3 @@ let PREVIEW_WIDTH: CGFloat = 512
 let PREVIEW_SIZE: CGSize = CGSize(width: 512, height: 512)
 let DEFAULT_MIME: ConvertMime = .jpg
 let DEFAULT_COMPRESSION: CGFloat = 1
-let UPSCALE_SIZE: CGSize = CGSize(width: 8000, height: 8000)

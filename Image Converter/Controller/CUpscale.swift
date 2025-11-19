@@ -37,6 +37,10 @@ class CUpscale {
     
     private let id = UUID().uuidString
     
+    func resetToDefaults() {
+        selected = nil
+    }
+    
     func getInputImage() throws -> UIImage {
         guard let selected = selected else {
             throw CUpscaleError.get("No selected")
@@ -61,6 +65,20 @@ class CUpscale {
         return image
     }
     
+    func getOutput() throws -> URL {
+        guard let fileExtension = try selected?.getType().preferredFilenameExtension else {
+            throw CUpscaleError.ext("No file extension")
+        }
+        
+        let url = FileManager.url(name: "\(id).\(fileExtension)")
+        
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            throw CUpscaleError.ext("File not exist")
+        }
+        
+        return url
+    }
+    
     func selectItem(data: Data, date: Date) throws {
         self.selected = try CUpscaleItem(data: data, date: date)
         NotificationCenter.default.post(name: CUpscale.update, object: nil)
@@ -71,17 +89,7 @@ class CUpscale {
             throw CUpscaleError.upscale("No selected.")
         }
         
-        var image = selected.image
-        
-        let expectSize = selected.image.size.aspectFit(to: UPSCALE_SIZE / 4).intSize()
-        
-        if expectSize.width < selected.image.size.width || expectSize.height < selected.image.size.height {
-            image = selected.image.resize(size: expectSize)
-        }
-        
-        guard let upscale = MergeUpscale.shared.inference(image: image) else {
-            throw CUpscaleError.upscale("Upscale failed.")
-        }
+        let upscale = try ModelUpscale.shared.inference(image: selected.image)
         
         guard let fileExtension = try selected.getType().preferredFilenameExtension else {
             throw CUpscaleError.ext("No file extension")

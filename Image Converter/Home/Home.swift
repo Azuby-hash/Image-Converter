@@ -16,6 +16,14 @@ class Home: UIViewController {
         
         globalDelegate.attach(destinition: self)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        DispatchQueue.global(qos: .default).async {
+            ModelUpscale.shared.loadModel()
+        }
+    }
 }
 
 extension Home: GDReceiverProtocol { }
