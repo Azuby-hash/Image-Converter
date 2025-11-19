@@ -304,7 +304,7 @@ class ConvertItem: Equatable {
             
             var url = FileManager.url(name: "\(id).\(fileExtension)")
             
-            try Converter.convert(to: mime.getUTType(), image: nil, from: data, creationDate: keepDate ? .date(date) : .now, output: &url, info: keepInfo, compression: compression)
+            try Converter.convert(to: mime.getUTType(), image: nil, from: data, creationDate: keepDate ? .date(date) : .now, output: &url, info: keepInfo, compression: compression, orientation: true)
             
             output = url
         } catch {

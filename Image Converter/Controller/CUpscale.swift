@@ -97,7 +97,7 @@ class CUpscale {
         
         var url = FileManager.url(name: "\(id).\(fileExtension)")
         
-        try Converter.convert(to: try selected.getType(), image: upscale, from: selected.data, creationDate: .now, output: &url, info: true, compression: 1)
+        try Converter.convert(to: try selected.getType(), image: upscale, from: selected.data, creationDate: .now, output: &url, info: true, compression: 1, orientation: true)
         
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: CUpscale.update, object: nil)

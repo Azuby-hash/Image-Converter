@@ -13,14 +13,14 @@
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController storyboardIdentifier="main" modalPresentationStyle="fullScreen" id="Y6W-OH-hqX" customClass="Upscale" customModule="Image_Converter" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7tj-G3-M11">
                                 <rect key="frame" x="0.0" y="196" width="393" height="468"/>
                                 <subviews>
-                                    <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="CbP-bO-nCe" customClass="UIScrollViewPointOut" customModule="Image_Converter" customModuleProvider="target">
+                                    <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="CbP-bO-nCe" customClass="UIScrollViewPointOut" customModule="Image_Converter" customModuleProvider="target">
                                         <rect key="frame" x="24" y="40" width="345" height="388"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y4d-Fo-fWE">

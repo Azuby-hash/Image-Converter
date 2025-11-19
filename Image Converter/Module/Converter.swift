@@ -33,7 +33,7 @@ class Converter {
     ///   - sourceURL: The URL of the source image file.
     ///   - destinationURL: The URL where the converted JPEG file will be saved.
     ///   - compressionQuality: The quality of the resulting JPEG image, from 0.0 (lowest) to 1.0 (highest).
-    static func convert(to utType: UTType, image: UIImage?, from sourceData: Data, creationDate: ConverterDate, output: inout URL, info: Bool, compression: CGFloat) throws {
+    static func convert(to utType: UTType, image: UIImage?, from sourceData: Data, creationDate: ConverterDate, output: inout URL, info: Bool, compression: CGFloat, orientation: Bool) throws {
 
         guard let source = CGImageSourceCreateWithData(sourceData as CFData, nil) else {
             throw ConversionError.failedToCreateImageSource("Image source invalid")
@@ -92,14 +92,14 @@ class Converter {
             resourceValues.contentModificationDate = Date.now
         }
         
-        if image != nil {
+        if !orientation {
             options[kCGImagePropertyOrientation] = 1
         }
         
         if var tiffProperties = options[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
             tiffProperties[kCGImagePropertyTIFFDateTime] = dateTimeString as CFString
             
-            if image != nil {
+            if !orientation {
                 tiffProperties[kCGImagePropertyTIFFOrientation] = 1
             }
             
