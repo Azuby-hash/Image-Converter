@@ -118,7 +118,7 @@ extension HomeEditorCell {
         if let output = item.getOutput(),
            let fileAttrs = try? FileManager.default.attributesOfItem(atPath: output.path),
            let count = fileAttrs[.size] as? Int {
-            upperLabel.text = "Estimate: \(count.toSizeString())"
+            upperLabel.text = "Estimate: \(Double(count).toSizeString())"
         } else {
             upperLabel.text = "Calculating..."
         }
@@ -130,7 +130,7 @@ extension HomeEditorCell {
             return
         }
         
-        lowerLabel.text = "Original: \(data.count.toSizeString())"
+        lowerLabel.text = "Original: \(Double(data.count).toSizeString())"
         lowerLabel.textColor = ._gray60
         
         if cHome.getTab() == .process {

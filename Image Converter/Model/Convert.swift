@@ -230,7 +230,7 @@ class Convert {
     }
 }
 
-class ConvertItem: Equatable {
+class ConvertItem: Equatable, Hashable {
     private let id = UUID().uuidString
     
     private var data: Data
@@ -241,6 +241,10 @@ class ConvertItem: Equatable {
     init(data: Data, date: Date) {
         self.data = data
         self.date = date
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
     func getPreview(completion: @escaping (UIImage) -> Void) throws {

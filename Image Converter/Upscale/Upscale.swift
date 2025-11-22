@@ -71,8 +71,6 @@ class Upscale: UIViewController, GDReceiverProtocol {
     @objc private func pan(g: UIPanGestureRecognizer) {
         let position = g.location(in: imageBefore)
         
-        print(position)
-        
         top.constant = min(imageBefore.bounds.height - dragger.bounds.midY - 5,
                            max(dragger.bounds.midY + 5, position.y))
         imageLead.constant = min(imageBefore.bounds.width, max(0, imageBefore.bounds.width - position.x))
@@ -107,7 +105,7 @@ class Upscale: UIViewController, GDReceiverProtocol {
     }
     
     @IBAction func openPhoto(_ sender: Any) {
-        PhotosVC.present(vc: self, delegate: self)
+        PhotosVC.present(vc: self, delegate: self, config: .init(doneTitle: nil))
     }
     
 }

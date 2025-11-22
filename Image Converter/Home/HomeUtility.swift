@@ -33,7 +33,7 @@ class HomeUtility: UIStackView {
     }
     
     @IBAction func compare(_ sender: Any) {
-        
+        findViewController()?.present(Compare.create(), animated: true)
     }
 }
 

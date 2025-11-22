@@ -23,9 +23,9 @@ extension PhotosDelegate {
 }
 
 class PhotosConfig {
-    let doneTitle: String
+    let doneTitle: String?
     
-    init(doneTitle: String = "Convert Now") {
+    init(doneTitle: String? = "Convert Now") {
         self.doneTitle = doneTitle
     }
 }
@@ -44,7 +44,8 @@ class PhotosVC: UIViewController {
     private var selectedAsset: [PHAsset] = []
     
     weak var delegate: PhotosDelegate?
-    weak var config: PhotosConfig?
+    
+    private var config: PhotosConfig?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,10 +206,12 @@ extension PhotosVC {
     private func updateButtonAppear() {
         UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [self] in
             
-            limitAdd.alpha = library.getCurrentStatus() == .limited && selectedAsset.isEmpty ? 1 : 0
-            convertNow.alpha = selectedAsset.isEmpty ? 0 : 1
-            botBlur.alpha = library.getCurrentStatus() != .limited && selectedAsset.isEmpty ? 0 : 1
-            botConstant.constant = library.getCurrentStatus() != .limited && selectedAsset.isEmpty ? -200 : 44
+            let condi = selectedAsset.isEmpty || config?.doneTitle == nil
+            
+            limitAdd.alpha = library.getCurrentStatus() == .limited && condi ? 1 : 0
+            convertNow.alpha = condi ? 0 : 1
+            botBlur.alpha = library.getCurrentStatus() != .limited && condi ? 0 : 1
+            botConstant.constant = library.getCurrentStatus() != .limited && condi ? -200 : 44
             
             view.layoutIfNeeded()
         }

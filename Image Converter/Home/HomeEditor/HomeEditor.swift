@@ -176,8 +176,8 @@ extension HomeEditor {
             }
         }
         
-        summaryOriSize.text = oriSize.toSizeString()
-        summaryOutSize.text = outSize.toSizeString()
+        summaryOriSize.text = Double(oriSize).toSizeString()
+        summaryOutSize.text = Double(outSize).toSizeString()
         summaryOriType.text = types.map({ $0.rawValue.uppercased() }).joined(separator: ", ")
         summaryOutType.text = cHome.getMime().rawValue.uppercased()
     }

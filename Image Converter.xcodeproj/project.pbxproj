@@ -13,6 +13,10 @@
 		AF97C0202EAEFF3B00F317FB /* UIButtonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */; };
 		AFA30FB92EB994D5008C9023 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA30FB82EB994D0008C9023 /* Converter.swift */; };
 		CE27C5312ECBF92100DB7004 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27C5302ECBF92100DB7004 /* Loader.swift */; };
+		CE27C5362ED0A8E700DB7004 /* CompareEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27C5342ED0A8E600DB7004 /* CompareEmpty.swift */; };
+		CE27C5372ED0A8E700DB7004 /* Compare.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27C5332ED0A8E600DB7004 /* Compare.swift */; };
+		CE27C5382ED0A8E700DB7004 /* Compare.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE27C5322ED0A8E600DB7004 /* Compare.storyboard */; };
+		CE27C53A2ED0AD1B00DB7004 /* CCompare.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27C5392ED0AD1800DB7004 /* CCompare.swift */; };
 		CE3D9CE72EAA979B002C29B5 /* HomeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D9CE62EAA9794002C29B5 /* HomeConverter.swift */; };
 		CE3D9CE92EAA9871002C29B5 /* HomeUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D9CE82EAA986A002C29B5 /* HomeUtility.swift */; };
 		CE3D9CEC2EAB0126002C29B5 /* PhotosVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3D9CEB2EAB0126002C29B5 /* PhotosVC.storyboard */; };
@@ -135,6 +139,10 @@
 		AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonHelpers.swift; sourceTree = "<group>"; };
 		AFA30FB82EB994D0008C9023 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		CE27C5302ECBF92100DB7004 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		CE27C5322ED0A8E600DB7004 /* Compare.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Compare.storyboard; sourceTree = "<group>"; };
+		CE27C5332ED0A8E600DB7004 /* Compare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compare.swift; sourceTree = "<group>"; };
+		CE27C5342ED0A8E600DB7004 /* CompareEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareEmpty.swift; sourceTree = "<group>"; };
+		CE27C5392ED0AD1800DB7004 /* CCompare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCompare.swift; sourceTree = "<group>"; };
 		CE3D9CE62EAA9794002C29B5 /* HomeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeConverter.swift; sourceTree = "<group>"; };
 		CE3D9CE82EAA986A002C29B5 /* HomeUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUtility.swift; sourceTree = "<group>"; };
 		CE3D9CEB2EAB0126002C29B5 /* PhotosVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PhotosVC.storyboard; sourceTree = "<group>"; };
@@ -274,6 +282,16 @@
 			path = Upscale;
 			sourceTree = "<group>";
 		};
+		CE27C5352ED0A8E600DB7004 /* Compare */ = {
+			isa = PBXGroup;
+			children = (
+				CE27C5322ED0A8E600DB7004 /* Compare.storyboard */,
+				CE27C5332ED0A8E600DB7004 /* Compare.swift */,
+				CE27C5342ED0A8E600DB7004 /* CompareEmpty.swift */,
+			);
+			path = Compare;
+			sourceTree = "<group>";
+		};
 		CE3D9CEA2EAB00F0002C29B5 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +371,7 @@
 				CEA4F98C2EAA3E8C0041BDAC /* Controller */,
 				CEA4F98A2EAA389D0041BDAC /* Home */,
 				AF7453AD2EC6CF860005DF5C /* Upscale */,
+				CE27C5352ED0A8E600DB7004 /* Compare */,
 				CEA4F8792EA914670041BDAC /* Assets.xcassets */,
 				CE72D2742EAA617900DDE5A8 /* Colors.xcassets */,
 				CE72D2722EAA616F00DDE5A8 /* Icons.xcassets */,
@@ -556,6 +575,7 @@
 				CE72D2702EAA5BD200DDE5A8 /* Controller.swift */,
 				CE72D26E2EAA5BCA00DDE5A8 /* CHome.swift */,
 				CE9211EB2EC824BA006B472F /* CUpscale.swift */,
+				CE27C5392ED0AD1800DB7004 /* CCompare.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -656,6 +676,7 @@
 				CEA864BB2EC633430064A3AE /* Rating.xib in Resources */,
 				CE3D9CEC2EAB0126002C29B5 /* PhotosVC.storyboard in Resources */,
 				CE72D2752EAA617900DDE5A8 /* Colors.xcassets in Resources */,
+				CE27C5382ED0A8E700DB7004 /* Compare.storyboard in Resources */,
 				CEA4F8822EA914670041BDAC /* Assets.xcassets in Resources */,
 				CEA4F8842EA914670041BDAC /* LaunchScreen.storyboard in Resources */,
 				CE72D2732EAA616F00DDE5A8 /* Icons.xcassets in Resources */,
@@ -758,7 +779,10 @@
 				CE3D9CF02EAC87F2002C29B5 /* PhotosVC.swift in Sources */,
 				CEA4F8F22EAA36190041BDAC /* AsyncHelpers.swift in Sources */,
 				CEA4F8F32EAA36190041BDAC /* UIViewPointDetect.swift in Sources */,
+				CE27C53A2ED0AD1B00DB7004 /* CCompare.swift in Sources */,
 				CEA4F8F42EAA36190041BDAC /* DateHelpers.swift in Sources */,
+				CE27C5362ED0A8E700DB7004 /* CompareEmpty.swift in Sources */,
+				CE27C5372ED0A8E700DB7004 /* Compare.swift in Sources */,
 				CEA4F8F52EAA36190041BDAC /* UIStackViewShadow.swift in Sources */,
 				CE72D26A2EAA5BA300DDE5A8 /* Config.swift in Sources */,
 				CEA4F8F62EAA36190041BDAC /* UIViewParallax.swift in Sources */,
