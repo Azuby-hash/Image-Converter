@@ -18,6 +18,7 @@ class Controller {
     let cHome = CHome()
     let cUpscale = CUpscale()
     let cCompare = CCompare()
+    let cGIF = CGIF()
     
     private init() {
         FileManager.eraseDocumentAndData()

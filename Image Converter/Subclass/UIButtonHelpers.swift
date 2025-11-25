@@ -9,7 +9,7 @@ import UIKit
 
 class UIButtonPro: UIButton {
     @IBInspectable var inset: CGPoint = .init(x: -10, y: -10)
-    @IBInspectable var backgroundAlpha: Int = 80 {
+    @IBInspectable var backgroundAlpha: Int = 100 {
         didSet {
             updateUI()
         }

@@ -7,9 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF634A8D2ED5A82800249A30 /* GIFCombineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF634A8C2ED5A82400249A30 /* GIFCombineCell.swift */; };
 		AF7453AB2EC6CF6B0005DF5C /* Upscale.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7453AA2EC6CF670005DF5C /* Upscale.swift */; };
 		AF7453B02EC6CF9C0005DF5C /* Upscale.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF7453AF2EC6CF9C0005DF5C /* Upscale.storyboard */; };
 		AF7453B22EC6E85D0005DF5C /* UpscaleEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7453B12EC6E8590005DF5C /* UpscaleEmpty.swift */; };
+		AF7E28572ED5938A009EF3BF /* GIFCombine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF7E28532ED5938A009EF3BF /* GIFCombine.storyboard */; };
+		AF7E28582ED5938A009EF3BF /* GIFCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7E28542ED5938A009EF3BF /* GIFCombine.swift */; };
+		AF7E28592ED5938A009EF3BF /* GIFCombineEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7E28552ED5938A009EF3BF /* GIFCombineEmpty.swift */; };
+		AF7E285B2ED5977E009EF3BF /* GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7E285A2ED59776009EF3BF /* GIF.swift */; };
+		AF7E285D2ED598DC009EF3BF /* CGIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7E285C2ED598D9009EF3BF /* CGIF.swift */; };
+		AF7E285F2ED59D67009EF3BF /* GIFCombineSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7E285E2ED59D62009EF3BF /* GIFCombineSettings.swift */; };
 		AF97C0202EAEFF3B00F317FB /* UIButtonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */; };
 		AFA30FB92EB994D5008C9023 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA30FB82EB994D0008C9023 /* Converter.swift */; };
 		CE27C5312ECBF92100DB7004 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27C5302ECBF92100DB7004 /* Loader.swift */; };
@@ -133,9 +140,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF634A8C2ED5A82400249A30 /* GIFCombineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFCombineCell.swift; sourceTree = "<group>"; };
 		AF7453AA2EC6CF670005DF5C /* Upscale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upscale.swift; sourceTree = "<group>"; };
 		AF7453AF2EC6CF9C0005DF5C /* Upscale.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Upscale.storyboard; sourceTree = "<group>"; };
 		AF7453B12EC6E8590005DF5C /* UpscaleEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpscaleEmpty.swift; sourceTree = "<group>"; };
+		AF7E28532ED5938A009EF3BF /* GIFCombine.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GIFCombine.storyboard; sourceTree = "<group>"; };
+		AF7E28542ED5938A009EF3BF /* GIFCombine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFCombine.swift; sourceTree = "<group>"; };
+		AF7E28552ED5938A009EF3BF /* GIFCombineEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFCombineEmpty.swift; sourceTree = "<group>"; };
+		AF7E285A2ED59776009EF3BF /* GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIF.swift; sourceTree = "<group>"; };
+		AF7E285C2ED598D9009EF3BF /* CGIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGIF.swift; sourceTree = "<group>"; };
+		AF7E285E2ED59D62009EF3BF /* GIFCombineSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFCombineSettings.swift; sourceTree = "<group>"; };
 		AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonHelpers.swift; sourceTree = "<group>"; };
 		AFA30FB82EB994D0008C9023 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		CE27C5302ECBF92100DB7004 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
@@ -282,6 +296,18 @@
 			path = Upscale;
 			sourceTree = "<group>";
 		};
+		AF7E28562ED5938A009EF3BF /* GIFCombine */ = {
+			isa = PBXGroup;
+			children = (
+				AF7E28532ED5938A009EF3BF /* GIFCombine.storyboard */,
+				AF7E28542ED5938A009EF3BF /* GIFCombine.swift */,
+				AF634A8C2ED5A82400249A30 /* GIFCombineCell.swift */,
+				AF7E285E2ED59D62009EF3BF /* GIFCombineSettings.swift */,
+				AF7E28552ED5938A009EF3BF /* GIFCombineEmpty.swift */,
+			);
+			path = GIFCombine;
+			sourceTree = "<group>";
+		};
 		CE27C5352ED0A8E600DB7004 /* Compare */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +398,7 @@
 				CEA4F98A2EAA389D0041BDAC /* Home */,
 				AF7453AD2EC6CF860005DF5C /* Upscale */,
 				CE27C5352ED0A8E600DB7004 /* Compare */,
+				AF7E28562ED5938A009EF3BF /* GIFCombine */,
 				CEA4F8792EA914670041BDAC /* Assets.xcassets */,
 				CE72D2742EAA617900DDE5A8 /* Colors.xcassets */,
 				CE72D2722EAA616F00DDE5A8 /* Icons.xcassets */,
@@ -565,6 +592,7 @@
 			children = (
 				CE72D26C2EAA5BB800DDE5A8 /* Model.swift */,
 				CE3D9D002EAFD9C2002C29B5 /* Convert.swift */,
+				AF7E285A2ED59776009EF3BF /* GIF.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -576,6 +604,7 @@
 				CE72D26E2EAA5BCA00DDE5A8 /* CHome.swift */,
 				CE9211EB2EC824BA006B472F /* CUpscale.swift */,
 				CE27C5392ED0AD1800DB7004 /* CCompare.swift */,
+				AF7E285C2ED598D9009EF3BF /* CGIF.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -675,6 +704,7 @@
 				CEA864BA2EC633430064A3AE /* Rating.xcassets in Resources */,
 				CEA864BB2EC633430064A3AE /* Rating.xib in Resources */,
 				CE3D9CEC2EAB0126002C29B5 /* PhotosVC.storyboard in Resources */,
+				AF7E28572ED5938A009EF3BF /* GIFCombine.storyboard in Resources */,
 				CE72D2752EAA617900DDE5A8 /* Colors.xcassets in Resources */,
 				CE27C5382ED0A8E700DB7004 /* Compare.storyboard in Resources */,
 				CEA4F8822EA914670041BDAC /* Assets.xcassets in Resources */,
@@ -729,6 +759,8 @@
 				CEA4F95B2EAA384A0041BDAC /* VisionStillImage.swift in Sources */,
 				CEA4F95E2EAA384A0041BDAC /* VisionImageSequence.swift in Sources */,
 				CEA4F9632EAA384A0041BDAC /* VisionFABDetection.swift in Sources */,
+				AF7E28582ED5938A009EF3BF /* GIFCombine.swift in Sources */,
+				AF7E28592ED5938A009EF3BF /* GIFCombineEmpty.swift in Sources */,
 				AF97C0202EAEFF3B00F317FB /* UIButtonHelpers.swift in Sources */,
 				CEA4F9642EAA384A0041BDAC /* VisionHandler.swift in Sources */,
 				CE3D9CE72EAA979B002C29B5 /* HomeConverter.swift in Sources */,
@@ -775,9 +807,11 @@
 				CEA4F8EE2EAA36190041BDAC /* ArrayHelpers.swift in Sources */,
 				CEA4F8EF2EAA36190041BDAC /* UIViewLoadNib.swift in Sources */,
 				CEA4F8F02EAA36190041BDAC /* UIStackViewPointSubview.swift in Sources */,
+				AF7E285B2ED5977E009EF3BF /* GIF.swift in Sources */,
 				CEA4F8F12EAA36190041BDAC /* UIViewFindView.swift in Sources */,
 				CE3D9CF02EAC87F2002C29B5 /* PhotosVC.swift in Sources */,
 				CEA4F8F22EAA36190041BDAC /* AsyncHelpers.swift in Sources */,
+				AF7E285F2ED59D67009EF3BF /* GIFCombineSettings.swift in Sources */,
 				CEA4F8F32EAA36190041BDAC /* UIViewPointDetect.swift in Sources */,
 				CE27C53A2ED0AD1B00DB7004 /* CCompare.swift in Sources */,
 				CEA4F8F42EAA36190041BDAC /* DateHelpers.swift in Sources */,
@@ -787,6 +821,7 @@
 				CE72D26A2EAA5BA300DDE5A8 /* Config.swift in Sources */,
 				CEA4F8F62EAA36190041BDAC /* UIViewParallax.swift in Sources */,
 				CE72D26D2EAA5BBA00DDE5A8 /* Model.swift in Sources */,
+				AF7E285D2ED598DC009EF3BF /* CGIF.swift in Sources */,
 				CEA864BF2EC633600064A3AE /* Pageup.swift in Sources */,
 				CEA4F8F72EAA36190041BDAC /* UIStackViewSegmentPage.swift in Sources */,
 				CE3D9D052EB3B95C002C29B5 /* Slider.swift in Sources */,
@@ -803,6 +838,7 @@
 				CEA4F9002EAA36190041BDAC /* UIImageStroke.swift in Sources */,
 				CEA4F8A52EAA35CA0041BDAC /* MetalReput.swift in Sources */,
 				CEA4F8A62EAA35CA0041BDAC /* MetalWrapper.swift in Sources */,
+				AF634A8D2ED5A82800249A30 /* GIFCombineCell.swift in Sources */,
 				CEA4F88B2EA9148C0041BDAC /* SVGConverter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

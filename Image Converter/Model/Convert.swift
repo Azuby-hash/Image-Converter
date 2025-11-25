@@ -249,7 +249,11 @@ class ConvertItem: Equatable, Hashable {
     
     func getPreview(completion: @escaping (UIImage) -> Void) throws {
         if let source = CGImageSourceCreateWithData(data as CFData, nil),
-           let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, [kCGImageSourceCreateThumbnailWithTransform: true] as CFDictionary) {
+           let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, [
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
+            kCGImageSourceThumbnailMaxPixelSize: 300 as NSNumber
+           ] as CFDictionary) {
             DispatchQueue.main.async {
                 completion(UIImage(cgImage: cgImage))
             }

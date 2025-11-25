@@ -29,7 +29,7 @@ class HomeUtility: UIStackView {
     }
     
     @IBAction func gif(_ sender: Any) {
-        
+        findViewController()?.present(GIFCombine.create(), animated: true)
     }
     
     @IBAction func compare(_ sender: Any) {
