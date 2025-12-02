@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -188,6 +188,7 @@
                                                                                     <rect key="frame" x="38" y="0.0" width="24" height="24"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" constant="24" id="N2t-dJ-THI"/>
+                                                                                        <constraint firstAttribute="width" secondItem="HIr-bh-b7S" secondAttribute="height" id="hpe-d1-k93"/>
                                                                                     </constraints>
                                                                                     <state key="normal" title="Button"/>
                                                                                     <buttonConfiguration key="configuration" style="filled" image="Remove">
@@ -208,7 +209,6 @@
                                                                                 <constraint firstItem="hoC-Cm-JFR" firstAttribute="width" secondItem="1Df-ke-F8T" secondAttribute="width" constant="-8" id="EZy-g5-9ec"/>
                                                                                 <constraint firstItem="ido-mG-UVX" firstAttribute="leading" secondItem="1Df-ke-F8T" secondAttribute="leading" id="SFn-E7-i8b"/>
                                                                                 <constraint firstItem="hoC-Cm-JFR" firstAttribute="height" secondItem="1Df-ke-F8T" secondAttribute="height" constant="-8" id="SMg-xx-XXg"/>
-                                                                                <constraint firstItem="HIr-bh-b7S" firstAttribute="width" secondItem="HIr-bh-b7S" secondAttribute="height" id="hpe-d1-k93"/>
                                                                                 <constraint firstItem="HIr-bh-b7S" firstAttribute="top" secondItem="1Df-ke-F8T" secondAttribute="top" id="kYg-S7-ZGM"/>
                                                                                 <constraint firstAttribute="bottom" secondItem="ido-mG-UVX" secondAttribute="bottom" id="sGl-tX-7gO"/>
                                                                                 <constraint firstItem="ido-mG-UVX" firstAttribute="height" secondItem="1Df-ke-F8T" secondAttribute="height" constant="-8" id="ssn-Y5-vpf"/>
@@ -421,7 +421,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" image="Close" cornerStyle="capsule">
                                             <color key="baseForegroundColor" name="Gray60"/>
-                                            <color key="baseBackgroundColor" name="Light10"/>
+                                            <color key="baseBackgroundColor" name="Light20"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="close:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="4iD-ai-lRg"/>
@@ -492,8 +492,8 @@
         <namedColor name="Gray60">
             <color red="0.23499999940395355" green="0.23499999940395355" blue="0.2630000114440918" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="Light10">
-            <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Light20">
+            <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Primary">
             <color red="0.3059999942779541" green="0.51399999856948853" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -21,6 +21,7 @@ class GDReceiver<GD: GDReceiverProtocol> {
     @objc private func executeTask(_ noti: Notification) {
         receiveSystemAlert(noti)
         receiveOpenFiles(noti)
+        receivePresent(noti)
     }
 }
 

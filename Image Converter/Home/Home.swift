@@ -14,6 +14,8 @@ class Home: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        overrideUserInterfaceStyle = .light
+        
         globalDelegate.attach(destinition: self)
     }
     

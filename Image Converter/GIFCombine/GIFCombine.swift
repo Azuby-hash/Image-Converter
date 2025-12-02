@@ -29,6 +29,8 @@ class GIFCombine: UIViewController, GDReceiverProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        overrideUserInterfaceStyle = .light
+        
         scroll.delegate = self
         globalDelegate.attach(destinition: self)
         
@@ -51,7 +53,7 @@ class GIFCombine: UIViewController, GDReceiverProtocol {
     }
     
     @IBAction func openPhoto(_ sender: Any) {
-        PhotosVC.present(vc: self, delegate: GIFCombineStatic.shared, config: .init(doneTitle: "Add Photos"))
+//        PhotosVC.present(vc: self, delegate: GIFCombineStatic.shared, config: .init(doneTitle: "Add Photos"))
     }
     
     override func viewDidLayoutSubviews() {

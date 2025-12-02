@@ -134,7 +134,7 @@ class Loader: UIView {
         
         isUserInteractionEnabled = true
         alpha = 0
-        background.backgroundColor = UIColor(white: 0, alpha: 0.2)
+        background.backgroundColor = UIColor(white: 0, alpha: 0)
         
         gradient.frame = CGRect(x: -size, y: -size, width: size * 2, height: size * 2).insetBy(dx: -10, dy: -15)
         

@@ -60,7 +60,7 @@ class GIFCombineCell: UICollectionViewCell {
     @objc private func addMorePhoto() {
         guard let vc = findViewController() else { return }
         
-        PhotosVC.present(vc: vc, delegate: GIFCombineStatic.shared, config: .init(doneTitle: "Add Photos"))
+//        PhotosVC.present(vc: vc, delegate: GIFCombineStatic.shared, config: .init(doneTitle: "Add Photos"))
     }
     
     @objc private func removePhoto() {

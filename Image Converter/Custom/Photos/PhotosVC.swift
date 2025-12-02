@@ -50,6 +50,8 @@ class PhotosVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        overrideUserInterfaceStyle = .light
+        
         collection.delegate = self
         collection.dataSource = self
         collection.allowsSelection = true
@@ -70,15 +72,6 @@ class PhotosVC: UIViewController {
         didLoad = true
         
         albumSelect(self)
-    }
-    
-    ///```
-    ///Reload data when back from other screen
-    ///```
-    func photoLibraryDidChange(_ changeInstance: PHChange) {
-        AssetLibrary.shared.request() { [self] _ in
-            reload()
-        }
     }
     
     private func reload() {
@@ -110,27 +103,32 @@ class PhotosVC: UIViewController {
     @IBAction func convertNow(_ sender: Any) {
         delegate?.didSelectPHAssets(controller: self, assets: selectedAsset)
         dismiss(animated: true)
+        albumSelect.menu = nil
     }
     
     @IBAction func close(_ sender: Any) {
         dismiss(animated: true)
+        albumSelect.menu = nil
     }
     
-    static func present(vc: UIViewController, delegate: PhotosDelegate, config: PhotosConfig = .init()) {
+    static func present<T: UIViewController & GDReceiverProtocol>(vc: T.Type, sourceView: UIView, delegate: PhotosDelegate, config: PhotosConfig = .init()) {
         AssetLibrary.shared.request { status in
             if status == .authorized || status == .limited {
                 let nextVC = PhotosVC.create()
                 (nextVC as? PhotosVC)?.delegate = delegate
                 (nextVC as? PhotosVC)?.config = config
-                vc.present(nextVC, animated: true)
+                
+                GDSender.request(with: GDObjectPresent<T>(sourceVC: nextVC))
+                
                 return
             }
             
-            let alert = UIAlertController(title: "Access Required", message: "Please allow this app to import from your selected photos for editing.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .destructive))
-            alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
-                AssetLibrary.shared.request(forceSettings: true)
-            }))
+            GDSender.request(with: GDObjectSystemAlert<T>(source: sourceView, title: "Access Required", message: "Please allow this app to import from your selected photos for editing.", style: .alert, actions: [
+                UIAlertAction(title: "Cancel", style: .destructive),
+                UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                    AssetLibrary.shared.request(forceSettings: true)
+                })
+            ]))
         }
     }
 }

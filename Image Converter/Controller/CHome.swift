@@ -33,20 +33,12 @@ extension CHome {
 
 enum CHomeTab: Int {
     case convert
-    case utility
+    case upscale
+    case compare
+    case settings
     case edit
     case process
     case summary
-    
-    func getTitle() -> String {
-        switch self {
-            case .convert: return "Image Converter"
-            case .utility: return "Image Utility"
-            case .edit: return "Image Converter"
-            case .process: return "Image Converter"
-            case .summary: return "Image Converter"
-        }
-    }
 }
 
 class CHome {
@@ -102,6 +94,14 @@ class CHome {
         if selectTab != .edit {
             Model.convert.reset()
             NotificationCenter.default.post(name: CHome.convertResetSettings, object: nil)
+        }
+        
+        if selectTab != .upscale {
+            Controller.shared.cUpscale.resetToDefaults()
+        }
+        
+        if selectTab != .compare {
+            Controller.shared.cCompare.resetToDefaults()
         }
         
         NotificationCenter.default.post(name: CHome.tabUpdate, object: nil)

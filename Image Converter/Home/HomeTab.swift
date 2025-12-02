@@ -13,8 +13,6 @@ class HomeTab: UIView {
     @IBOutlet weak var tabOldIOSLeading: NSLayoutConstraint!
     @IBOutlet weak var tabIOS26: UITabBar!
     
-    @IBOutlet weak var tabTitle: UILabel!
-    
     private var didLoad = false
     
     override func draw(_ rect: CGRect) {
@@ -29,7 +27,7 @@ class HomeTab: UIView {
     
     @objc private func oldTap(g: UITapGestureRecognizer) {
         let count = tabOldStack.arrangedSubviews.count
-        let index = min(Int(floor(g.location(in: tabOldIOS).x / tabOldIOS.bounds.midX)), count - 1)
+        let index = min(Int(floor(g.location(in: tabOldIOS).x / (tabOldIOS.bounds.width / CGFloat(count)))), count - 1)
         
         tabOldIOSLeading.constant = CGFloat(index) * (tabOldStack.bounds.width / CGFloat(count))
         
@@ -74,10 +72,8 @@ extension HomeTab {
     }
     
     @objc private func tabUpdate() {
-        tabTitle.text = cHome.getTab().getTitle()
-        
         UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [self] in
-            alpha = cHome.getTab() == .convert || cHome.getTab() == .utility ? 1 : 0
+            alpha = cHome.getTab() == .convert || cHome.getTab() == .upscale || cHome.getTab() == .compare || cHome.getTab() == .settings ? 1 : 0
         }
     }
 }

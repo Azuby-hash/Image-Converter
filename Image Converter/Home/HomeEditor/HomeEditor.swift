@@ -56,7 +56,7 @@ class HomeEditor: UIView {
                 cHome.setTab(CHomeTab.summary)
                 
                 if !UserDefaults.standard.bool(forKey: "414eba80-a41c-4052-a9e7-72ea23a3c883") {
-                    findViewController()?.view?.pageup(Rating.self)
+                    GDSender.request(with: GDObjectPageup<Home, Rating, GDObjectPageupDelegateIgnore>(delegate: nil))
                 }
             }
         }
@@ -126,8 +126,8 @@ extension HomeEditor {
         progressHidden.isUserInteractionEnabled = cHome.getTab() != .process && cHome.getTab() != .summary
         
         UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [self] in
-            alpha = cHome.getTab() != .convert && cHome.getTab() != .utility ? 1 : 0
-            clear.alpha = cHome.getTab() != .convert && cHome.getTab() != .utility ? 1 : 0
+            alpha = cHome.getTab() == .edit || cHome.getTab() == .process || cHome.getTab() == .summary ? 1 : 0
+            clear.alpha = cHome.getTab() == .edit || cHome.getTab() == .process || cHome.getTab() == .summary ? 1 : 0
             convertB.alpha = cHome.getTab() == .edit ? 1 : 0
             progressBox.alpha = cHome.getTab() == .process ? 1 : 0
             

@@ -36,6 +36,8 @@ class Compare: UIViewController, GDReceiverProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        overrideUserInterfaceStyle = .light
+        
         compare.alpha = 0
         
         scroll.delegate = self
@@ -52,7 +54,6 @@ class Compare: UIViewController, GDReceiverProtocol {
         if didLoad { return }
         didLoad = true
         
-        openPhoto(self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -73,13 +74,9 @@ class Compare: UIViewController, GDReceiverProtocol {
                            max(dragger.bounds.midY + 5, position.y))
         imageLead.constant = min(imageFirst.bounds.width, max(0, imageFirst.bounds.width - position.x))
     }
-    
-    @IBAction func close(_ sender: Any) {
-        dismiss(animated: true)
-    }
-    
-    @IBAction func openPhoto(_ sender: Any) {
-        PhotosVC.present(vc: self, delegate: self, config: .init(doneTitle: nil))
+
+    @IBAction func openPhoto(_ button: UIButton) {
+        PhotosVC.present(vc: Home.self, sourceView: button, delegate: self, config: .init(doneTitle: nil))
     }
     
 }
@@ -93,7 +90,7 @@ extension Compare {
         do {
             let first = try cCompare.getFirst()
             let second = try cCompare.getSecond()
-            let size = first.image.size.aspectFit(to: box.bounds.insetBy(dx: 48, dy: 48).size)
+            let size = first.image.size.aspectFit(to: box.bounds.insetBy(dx: 48, dy: 0).size)
             
             width.constant = size.width
             height.constant = size.height

@@ -81,10 +81,8 @@ class HomeEditorCell: UICollectionViewCell {
     
     @objc private func addMorePhoto() {
         GDSender.request(with: GDObjectSystemAlert<Home>(source: addPhoto, title: "Add Photos From", message: nil, style: .actionSheet, actions: [
-            .init(title: "Library", style: .default, handler: { [self] _ in
-                guard let vc = findViewController() as? Home else { return }
-                
-                PhotosVC.present(vc: vc, delegate: HomeConverterStatic.shared,
+            .init(title: "Library", style: .default, handler: { _ in
+                PhotosVC.present(vc: Home.self, sourceView: self, delegate: HomeConverterStatic.shared,
                                  config: .init(doneTitle: "Add Photos"))
             }),
             .init(title: "Files", style: .default, handler: { [self] _ in

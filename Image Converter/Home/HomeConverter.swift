@@ -8,11 +8,13 @@
 import UIKit
 import Photos
 
-class HomeConverter: UIStackView {
+class HomeConverter: UIViewController {
+    @IBOutlet weak var onboardConverter: UIStackView!
+    
     private var didLoad = false
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         if didLoad { return }
         didLoad = true
@@ -26,10 +28,8 @@ class HomeConverter: UIStackView {
                                                        files: nil, selectMultiple: true))
     }
     
-    @IBAction func openPhotos(_ sender: Any) {
-        guard let vc = findViewController() as? Home else { return }
-        
-        PhotosVC.present(vc: vc, delegate: HomeConverterStatic.shared)
+    @IBAction func openPhotos(_ button: UIButton) {
+        PhotosVC.present(vc: Home.self, sourceView: button, delegate: HomeConverterStatic.shared)
     }
 }
 
@@ -48,7 +48,7 @@ extension HomeConverter {
     
     @objc private func tabUpdate() {
         UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [self] in
-            alpha = cHome.getTab() == .convert ? 1 : 0
+            onboardConverter.alpha = cHome.getTab() != .edit && cHome.getTab() != .process && cHome.getTab() != .summary ? 1 : 0
         }
     }
 }
