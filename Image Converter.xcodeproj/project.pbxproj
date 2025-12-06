@@ -19,6 +19,11 @@
 		AF7E285F2ED59D67009EF3BF /* GIFCombineSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7E285E2ED59D62009EF3BF /* GIFCombineSettings.swift */; };
 		AF97C0202EAEFF3B00F317FB /* UIButtonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */; };
 		AFA30FB92EB994D5008C9023 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA30FB82EB994D0008C9023 /* Converter.swift */; };
+		CE273CC72EE3D20B00E74EED /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE273CC62EE3D20800E74EED /* Settings.swift */; };
+		CE273CC92EE3D22400E74EED /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE273CC82EE3D22400E74EED /* Settings.storyboard */; };
+		CE273CCB2EE3DBDF00E74EED /* GDObjectPageup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE273CCA2EE3DBDF00E74EED /* GDObjectPageup.swift */; };
+		CE273CCF2EE3DBE700E74EED /* Pageup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE273CCC2EE3DBE700E74EED /* Pageup.swift */; };
+		CE273CD02EE3DBE700E74EED /* Pageup.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE273CCD2EE3DBE700E74EED /* Pageup.xib */; };
 		CE27C5312ECBF92100DB7004 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27C5302ECBF92100DB7004 /* Loader.swift */; };
 		CE27C5362ED0A8E700DB7004 /* CompareEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27C5342ED0A8E600DB7004 /* CompareEmpty.swift */; };
 		CE27C5372ED0A8E700DB7004 /* Compare.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27C5332ED0A8E600DB7004 /* Compare.swift */; };
@@ -134,12 +139,9 @@
 		CEA864B92EC633430064A3AE /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA864B62EC633430064A3AE /* Rating.swift */; };
 		CEA864BA2EC633430064A3AE /* Rating.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEA864B72EC633430064A3AE /* Rating.xcassets */; };
 		CEA864BB2EC633430064A3AE /* Rating.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA864B52EC633430064A3AE /* Rating.xib */; };
-		CEA864BF2EC633600064A3AE /* Pageup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA864BC2EC633600064A3AE /* Pageup.swift */; };
-		CEA864C02EC633600064A3AE /* Pageup.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA864BD2EC633600064A3AE /* Pageup.xib */; };
 		CEB646992EDDDDD600A99077 /* HomeConverter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB646982EDDDDD600A99077 /* HomeConverter.storyboard */; };
 		CEB6469B2EDDDF4100A99077 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB6469A2EDDDF4100A99077 /* HomePage.swift */; };
 		CEB6469F2EDDE37F00A99077 /* GDObjectPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB6469E2EDDE37F00A99077 /* GDObjectPresent.swift */; };
-		CEB646A12EDDE62600A99077 /* GDObjectPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB646A02EDDE62600A99077 /* GDObjectPopup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +157,11 @@
 		AF7E285E2ED59D62009EF3BF /* GIFCombineSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFCombineSettings.swift; sourceTree = "<group>"; };
 		AF97C01F2EAEFF3400F317FB /* UIButtonHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonHelpers.swift; sourceTree = "<group>"; };
 		AFA30FB82EB994D0008C9023 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
+		CE273CC62EE3D20800E74EED /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		CE273CC82EE3D22400E74EED /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		CE273CCA2EE3DBDF00E74EED /* GDObjectPageup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDObjectPageup.swift; sourceTree = "<group>"; };
+		CE273CCC2EE3DBE700E74EED /* Pageup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pageup.swift; sourceTree = "<group>"; };
+		CE273CCD2EE3DBE700E74EED /* Pageup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Pageup.xib; sourceTree = "<group>"; };
 		CE27C5302ECBF92100DB7004 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		CE27C5322ED0A8E600DB7004 /* Compare.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Compare.storyboard; sourceTree = "<group>"; };
 		CE27C5332ED0A8E600DB7004 /* Compare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compare.swift; sourceTree = "<group>"; };
@@ -272,12 +279,9 @@
 		CEA864B52EC633430064A3AE /* Rating.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Rating.xib; sourceTree = "<group>"; };
 		CEA864B62EC633430064A3AE /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		CEA864B72EC633430064A3AE /* Rating.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Rating.xcassets; sourceTree = "<group>"; };
-		CEA864BC2EC633600064A3AE /* Pageup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pageup.swift; sourceTree = "<group>"; };
-		CEA864BD2EC633600064A3AE /* Pageup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Pageup.xib; sourceTree = "<group>"; };
 		CEB646982EDDDDD600A99077 /* HomeConverter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeConverter.storyboard; sourceTree = "<group>"; };
 		CEB6469A2EDDDF4100A99077 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		CEB6469E2EDDE37F00A99077 /* GDObjectPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDObjectPresent.swift; sourceTree = "<group>"; };
-		CEB646A02EDDE62600A99077 /* GDObjectPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDObjectPopup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,6 +316,24 @@
 				AF7E28552ED5938A009EF3BF /* GIFCombineEmpty.swift */,
 			);
 			path = GIFCombine;
+			sourceTree = "<group>";
+		};
+		CE273CC52EE3D20000E74EED /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CE273CC82EE3D22400E74EED /* Settings.storyboard */,
+				CE273CC62EE3D20800E74EED /* Settings.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		CE273CCE2EE3DBE700E74EED /* Pageup */ = {
+			isa = PBXGroup;
+			children = (
+				CE273CCD2EE3DBE700E74EED /* Pageup.xib */,
+				CE273CCC2EE3DBE700E74EED /* Pageup.swift */,
+			);
+			path = Pageup;
 			sourceTree = "<group>";
 		};
 		CE27C5352ED0A8E600DB7004 /* Compare */ = {
@@ -367,7 +389,7 @@
 			children = (
 				CEA4D4472EBCD01F00525D42 /* GDObjectOpenFiles.swift */,
 				CEB6469E2EDDE37F00A99077 /* GDObjectPresent.swift */,
-				CEB646A02EDDE62600A99077 /* GDObjectPopup.swift */,
+				CE273CCA2EE3DBDF00E74EED /* GDObjectPageup.swift */,
 				CEA4D44D2EBCD01F00525D42 /* GDObjectSystemAlert.swift */,
 				CEA4D44F2EBCD01F00525D42 /* GlobalDelegate.swift */,
 			);
@@ -407,6 +429,7 @@
 				AF7453AD2EC6CF860005DF5C /* Upscale */,
 				CE27C5352ED0A8E600DB7004 /* Compare */,
 				AF7E28562ED5938A009EF3BF /* GIFCombine */,
+				CE273CC52EE3D20000E74EED /* Settings */,
 				CEA4F8792EA914670041BDAC /* Assets.xcassets */,
 				CE72D2742EAA617900DDE5A8 /* Colors.xcassets */,
 				CE72D2722EAA616F00DDE5A8 /* Icons.xcassets */,
@@ -424,7 +447,7 @@
 				CE3D9D042EB3B95C002C29B5 /* Slider.swift */,
 				CE3D9CED2EAB01E9002C29B5 /* BoxGradient.swift */,
 				CE27C5302ECBF92100DB7004 /* Loader.swift */,
-				CEA864BE2EC633600064A3AE /* Pageup */,
+				CE273CCE2EE3DBE700E74EED /* Pageup */,
 				CEA4D4502EBCD01F00525D42 /* GlobalDelegate */,
 				CEA4F9492EAA384A0041BDAC /* Vision */,
 				CEA4F89D2EAA35CA0041BDAC /* Metal */,
@@ -640,15 +663,6 @@
 			path = Rating;
 			sourceTree = "<group>";
 		};
-		CEA864BE2EC633600064A3AE /* Pageup */ = {
-			isa = PBXGroup;
-			children = (
-				CEA864BC2EC633600064A3AE /* Pageup.swift */,
-				CEA864BD2EC633600064A3AE /* Pageup.xib */,
-			);
-			path = Pageup;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -719,11 +733,12 @@
 				CE27C5382ED0A8E700DB7004 /* Compare.storyboard in Resources */,
 				CEA4F8822EA914670041BDAC /* Assets.xcassets in Resources */,
 				CEA4F8842EA914670041BDAC /* LaunchScreen.storyboard in Resources */,
+				CE273CD02EE3DBE700E74EED /* Pageup.xib in Resources */,
+				CE273CC92EE3D22400E74EED /* Settings.storyboard in Resources */,
 				CE72D2732EAA616F00DDE5A8 /* Icons.xcassets in Resources */,
 				CE72D2772EAA61F300DDE5A8 /* Materials.xcassets in Resources */,
 				CEA4F8852EA914670041BDAC /* Home.storyboard in Resources */,
 				AF7453B02EC6CF9C0005DF5C /* Upscale.storyboard in Resources */,
-				CEA864C02EC633600064A3AE /* Pageup.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,7 +785,6 @@
 				CEA4F95B2EAA384A0041BDAC /* VisionStillImage.swift in Sources */,
 				CEA4F95E2EAA384A0041BDAC /* VisionImageSequence.swift in Sources */,
 				CEA4F9632EAA384A0041BDAC /* VisionFABDetection.swift in Sources */,
-				CEB646A12EDDE62600A99077 /* GDObjectPopup.swift in Sources */,
 				CEB6469B2EDDDF4100A99077 /* HomePage.swift in Sources */,
 				AF7E28582ED5938A009EF3BF /* GIFCombine.swift in Sources */,
 				AF7E28592ED5938A009EF3BF /* GIFCombineEmpty.swift in Sources */,
@@ -822,6 +836,7 @@
 				AF7E285B2ED5977E009EF3BF /* GIF.swift in Sources */,
 				CEA4F8F12EAA36190041BDAC /* UIViewFindView.swift in Sources */,
 				CE3D9CF02EAC87F2002C29B5 /* PhotosVC.swift in Sources */,
+				CE273CC72EE3D20B00E74EED /* Settings.swift in Sources */,
 				CEA4F8F22EAA36190041BDAC /* AsyncHelpers.swift in Sources */,
 				AF7E285F2ED59D67009EF3BF /* GIFCombineSettings.swift in Sources */,
 				CEA4F8F32EAA36190041BDAC /* UIViewPointDetect.swift in Sources */,
@@ -831,10 +846,11 @@
 				CE27C5372ED0A8E700DB7004 /* Compare.swift in Sources */,
 				CEA4F8F52EAA36190041BDAC /* UIStackViewShadow.swift in Sources */,
 				CE72D26A2EAA5BA300DDE5A8 /* Config.swift in Sources */,
+				CE273CCB2EE3DBDF00E74EED /* GDObjectPageup.swift in Sources */,
+				CE273CCF2EE3DBE700E74EED /* Pageup.swift in Sources */,
 				CEA4F8F62EAA36190041BDAC /* UIViewParallax.swift in Sources */,
 				CE72D26D2EAA5BBA00DDE5A8 /* Model.swift in Sources */,
 				AF7E285D2ED598DC009EF3BF /* CGIF.swift in Sources */,
-				CEA864BF2EC633600064A3AE /* Pageup.swift in Sources */,
 				CEA4F8F72EAA36190041BDAC /* UIStackViewSegmentPage.swift in Sources */,
 				CE3D9D052EB3B95C002C29B5 /* Slider.swift in Sources */,
 				CEA4F8F82EAA36190041BDAC /* UIViewFindViewController.swift in Sources */,

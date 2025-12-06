@@ -151,6 +151,12 @@ extension HomeEditor {
                 layoutIfNeeded()
             }
         }
+        
+        if cHome.getTab() == .summary || (cHome.getTab() != .edit && cHome.getTab() != .process) {
+            UIView.transition(with: collection, duration: 0.25, options: .curveEaseInOut) { [self] in
+                collection.reloadData()
+            }
+        }
     }
     
     @objc private func summayUpdate() {
@@ -208,7 +214,7 @@ extension HomeEditor {
 
 extension HomeEditor: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count + 1
+        return cHome.getTab() == .summary ? items.count : (items.count + 1)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

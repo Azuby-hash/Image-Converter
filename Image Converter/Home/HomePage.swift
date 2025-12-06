@@ -9,10 +9,12 @@ import UIKit
 
 class HomePage: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     private let converter = HomeConverter.create()
+    
     private lazy var pages: [() -> UIViewController] = [
         { self.converter },
         { Upscale.create() },
         { Compare.create() },
+        { Settings.create() },
     ]
     
     private var didLoad = false

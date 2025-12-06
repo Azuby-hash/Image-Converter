@@ -66,16 +66,6 @@ class HomeEditorCell: UICollectionViewCell {
             }
         }
         
-        try? item.getType { [weak self] type in
-            guard let self = self else { return }
-            
-            if delegate?.indexPath(for: self)?.row == cHome.getSelecteds().firstIndex(of: item) {
-                UIView.transition(with: imageExtension, duration: 0.25, options: .transitionCrossDissolve) {
-                    self.imageExtension.text = type?.rawValue.uppercased()
-                }
-            }
-        }
-        
         updateInfo()
     }
     
@@ -138,6 +128,16 @@ extension HomeEditorCell {
         if cHome.getTab() == .summary {
             lowerLabel.textColor = ._green
             lowerLabel.text = "Completed!"
+        }
+        
+        try? item.getType { [weak self] type in
+            guard let self = self else { return }
+            
+            if delegate?.indexPath(for: self)?.row == cHome.getSelecteds().firstIndex(of: item) {
+                UIView.transition(with: imageExtension, duration: 0.25, options: .transitionCrossDissolve) {
+                    self.imageExtension.text = self.cHome.getTab() == .summary ? self.cHome.getMime().rawValue.uppercased() : "\(type?.rawValue.uppercased() ?? "") → \(self.cHome.getMime().rawValue.uppercased())"
+                }
+            }
         }
     }
 }

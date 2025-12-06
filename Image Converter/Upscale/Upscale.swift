@@ -72,9 +72,8 @@ class Upscale: UIViewController, GDReceiverProtocol {
     @objc private func pan(g: UIPanGestureRecognizer) {
         let position = g.location(in: imageBefore)
         
-        top.constant = min(imageBefore.bounds.height - dragger.bounds.midY - 5,
-                           max(dragger.bounds.midY + 5, position.y))
-        imageLead.constant = min(imageBefore.bounds.width, max(0, imageBefore.bounds.width - position.x))
+        top.constant = position.y
+        imageLead.constant = imageBefore.bounds.width - position.x
     }
     
     @IBAction func upscale(_ sender: Any) {
@@ -89,6 +88,12 @@ class Upscale: UIViewController, GDReceiverProtocol {
             
             DispatchQueue.main.async { [self] in
                 endLoading(on: view)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    if !UserDefaults.standard.bool(forKey: "414eba80-a41c-4052-a9e7-72ea23a3c883") {
+                        GDSender.request(with: GDObjectPageup<Home, Rating, GDObjectPageupDelegateIgnore>(delegate: nil))
+                    }
+                }
             }
         }
     }

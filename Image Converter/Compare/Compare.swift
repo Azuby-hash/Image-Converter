@@ -70,9 +70,8 @@ class Compare: UIViewController, GDReceiverProtocol {
     @objc private func pan(g: UIPanGestureRecognizer) {
         let position = g.location(in: imageFirst)
         
-        top.constant = min(imageFirst.bounds.height - dragger.bounds.midY - 5,
-                           max(dragger.bounds.midY + 5, position.y))
-        imageLead.constant = min(imageFirst.bounds.width, max(0, imageFirst.bounds.width - position.x))
+        top.constant = position.y
+        imageLead.constant = imageFirst.bounds.width - position.x
     }
 
     @IBAction func openPhoto(_ button: UIButton) {
@@ -152,6 +151,12 @@ extension Compare: PhotosDelegate {
                 pendingItems = []
                 
                 controller.dismiss(animated: true)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    if !UserDefaults.standard.bool(forKey: "414eba80-a41c-4052-a9e7-72ea23a3c883") {
+                        GDSender.request(with: GDObjectPageup<Home, Rating, GDObjectPageupDelegateIgnore>(delegate: nil))
+                    }
+                }
             }
         }
     }

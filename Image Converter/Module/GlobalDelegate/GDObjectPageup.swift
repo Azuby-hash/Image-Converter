@@ -18,6 +18,8 @@ extension GDReceiver {
 }
 
 class GDObjectCorePageup<GD: GDReceiverProtocol>: GDObject<GD> {
+    fileprivate override init() { }
+    
     fileprivate func show(from viewController: UIViewController) { }
 }
 
@@ -27,14 +29,16 @@ class GDObjectPageupDelegateIgnore: PageupDelegate {
 
 class GDObjectPageup<GD: GDReceiverProtocol & UIViewController, T: Pageup, D: PageupDelegate>: GDObjectCorePageup<GD> {
     private weak var delegate: D?
+    private var supportOrientation: Bool
     
-    init(delegate: D?) {
-        super.init()
+    init(delegate: D?, supportOrientation: Bool = false) {
+        self.supportOrientation = supportOrientation
         self.delegate = delegate
+        super.init()
     }
     
     override func show(from viewController: UIViewController) {
-        let pageup = viewController.view.pageup(T.self)
+        let pageup = viewController.view.pageup(T.self, supportOrientation: supportOrientation)
         pageup.delegate = delegate
     }
 }

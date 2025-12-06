@@ -10,13 +10,17 @@ import StoreKit
 
 class Rating: Pageup {
     required init() {
-        super.init()
+        super.init(supportOrientation: false)
         commonInit()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
+    }
+    
+    required init(supportOrientation: Bool) {
+        super.init(supportOrientation: supportOrientation)
     }
     
     private func commonInit() {
