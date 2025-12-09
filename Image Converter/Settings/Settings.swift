@@ -22,9 +22,9 @@ class Settings: UIViewController {
     }
     
     @IBAction func share(_ sender: Any) {
-//        if let url = URL(string: "https://apps.apple.com/us/app/photo-stitch/id6746974251") {
-//            UIApplication.shared.open(url)
-//        }
+        if let url = URL(string: "https://apps.apple.com/us/app/image-converter/id6756318437") {
+            UIApplication.shared.open(url)
+        }
     }
     
     @IBAction func term(_ sender: Any) {
