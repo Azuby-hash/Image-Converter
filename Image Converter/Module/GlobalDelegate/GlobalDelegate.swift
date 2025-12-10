@@ -22,6 +22,7 @@ class GDReceiver<GD: GDReceiverProtocol> {
         receiveSystemAlert(noti)
         receiveOpenFiles(noti)
         receivePresent(noti)
+        receivePageup(noti)
     }
 }
 
