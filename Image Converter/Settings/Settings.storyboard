@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -114,7 +114,7 @@
                                                                                     </label>
                                                                                 </subviews>
                                                                             </stackView>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow" translatesAutoresizingMaskIntoConstraints="NO" id="SGs-XN-CLE">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow 1" translatesAutoresizingMaskIntoConstraints="NO" id="SGs-XN-CLE">
                                                                                 <rect key="frame" x="299" y="16" width="24" height="24"/>
                                                                                 <color key="tintColor" name="Gray60"/>
                                                                                 <constraints>
@@ -223,7 +223,7 @@
                                                                                     </label>
                                                                                 </subviews>
                                                                             </stackView>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow" translatesAutoresizingMaskIntoConstraints="NO" id="s7e-qA-2Tq">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow 1" translatesAutoresizingMaskIntoConstraints="NO" id="s7e-qA-2Tq">
                                                                                 <rect key="frame" x="299" y="16" width="24" height="24"/>
                                                                                 <color key="tintColor" name="Gray60"/>
                                                                                 <constraints>
@@ -287,7 +287,7 @@
                                                                                     </label>
                                                                                 </subviews>
                                                                             </stackView>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow" translatesAutoresizingMaskIntoConstraints="NO" id="JQ1-js-wal">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow 1" translatesAutoresizingMaskIntoConstraints="NO" id="JQ1-js-wal">
                                                                                 <rect key="frame" x="299" y="16" width="24" height="24"/>
                                                                                 <color key="tintColor" name="Gray60"/>
                                                                                 <constraints>
@@ -382,7 +382,7 @@
                                                                                     </label>
                                                                                 </subviews>
                                                                             </stackView>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Tdl-S6-X1y">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow 1" translatesAutoresizingMaskIntoConstraints="NO" id="Tdl-S6-X1y">
                                                                                 <rect key="frame" x="299" y="16" width="24" height="24"/>
                                                                                 <color key="tintColor" name="Gray60"/>
                                                                                 <constraints>
@@ -446,7 +446,7 @@
                                                                                     </label>
                                                                                 </subviews>
                                                                             </stackView>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow" translatesAutoresizingMaskIntoConstraints="NO" id="CRk-ea-fna">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow 1" translatesAutoresizingMaskIntoConstraints="NO" id="CRk-ea-fna">
                                                                                 <rect key="frame" x="299" y="15.999999999999943" width="24" height="24"/>
                                                                                 <color key="tintColor" name="Gray60"/>
                                                                                 <constraints>
@@ -507,6 +507,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="HiZ-2q-GPy"/>
                         <color key="backgroundColor" name="Background"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="k2y-Xf-Dwm" secondAttribute="bottom" id="0mR-R5-HHK"/>
@@ -525,7 +526,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Arrow" width="24" height="24"/>
+        <image name="Arrow 1" width="192" height="192"/>
         <image name="Feedback" width="192" height="192"/>
         <image name="Key" width="192" height="192"/>
         <image name="Privacy" width="192" height="192"/>

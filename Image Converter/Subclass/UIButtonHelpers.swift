@@ -1,20 +1,15 @@
 //
-//  UIButtonHelpers.swift
-//  Image Converter
+//  UIButtonPro.swift
+//  PushUpCounter
 //
-//  Created by TapUniverse Dev9 on 27/10/25.
+//  Created by Hai Le Thanh on 27/10/25.
 //
 
 import UIKit
 
 class UIButtonPro: UIButton {
-    @IBInspectable var inset: CGPoint = .init(x: -10, y: -10)
-    @IBInspectable var backgroundAlpha: Int = 100 {
-        didSet {
-            updateUI()
-        }
-    }
-    
+    @IBInspectable var inset: CGPoint = .zero
+
     private var titleContainer = AttributeContainer()
     private var subtitleContainer = AttributeContainer()
     private var backgroundColorConfig = UIColor.clear
@@ -23,6 +18,17 @@ class UIButtonPro: UIButton {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        updateUI()
+        
+        if #available(iOS 17.0, *) {
+            registerForTraitChanges([UITraitUserInterfaceStyle.self], target: self, action: #selector(traitCollectionDidChange))
+        }
+    }
+
+    @objc override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        // Check if the user interface style has changed
         updateUI()
     }
     
@@ -46,14 +52,7 @@ class UIButtonPro: UIButton {
         })
         
         if !didLoad,
-           var backgroundColor = configuration?.baseBackgroundColor {
-            if #available(iOS 26, *) {
-                var (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
-                if backgroundColor.getRed(&r, green: &g, blue: &b, alpha: &a) {
-                    backgroundColor = UIColor(red: r, green: g, blue: b, alpha: a * CGFloat(backgroundAlpha) / 100)
-                }
-            }
-            
+           let backgroundColor = configuration?.baseBackgroundColor {
             self.backgroundColorConfig = backgroundColor
         }
 
@@ -82,8 +81,10 @@ class UIButtonPro: UIButton {
             updatedConfig.cornerStyle = button.configuration?.cornerStyle ?? updatedConfig.cornerStyle
             updatedConfig.titleLineBreakMode = .byTruncatingTail
             updatedConfig.background = button.configuration?.background ?? updatedConfig.background
-            updatedConfig.background.backgroundColor = backgroundColorConfig
-            updatedConfig.baseBackgroundColor = .clear
+            updatedConfig.background.backgroundColor = .clear
+            updatedConfig.baseBackgroundColor = backgroundColorConfig
+            updatedConfig.titlePadding = button.configuration?.titlePadding ?? updatedConfig.titlePadding
+            updatedConfig.titleAlignment = button.configuration?.titleAlignment ?? updatedConfig.titleAlignment
             
             if let title = button.configuration?.title {
                 if let foregroundColor = button.configuration?.baseForegroundColor {
@@ -120,8 +121,9 @@ class UIButtonPro: UIButton {
     func setBackgroundColor(_ color: UIColor) {
         backgroundColorConfig = color
         
-        configuration?.baseBackgroundColor = color
-        configuration?.background.backgroundColor = color
+        if configuration?.baseBackgroundColor != .clear {
+            configuration?.baseBackgroundColor = color
+        }
         
         updateUI()
     }
